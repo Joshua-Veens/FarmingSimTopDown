@@ -13,24 +13,30 @@
 
 
 
-Als speler moet ik een traktor kunnen kopen uit de winkel om vrij mee rond te kunnen rijden.
 
-Als speler moet ik een nieuwe seeder kunnen kopen die ik achter mijn traktor kan hangen om een gewas te kunnen planten op mijn veld.
+2. Als speler moet ik een traktor kunnen kopen uit de winkel om vrij mee rond te kunnen rijden.
 
-Als speler moet ik fertilizer spreader kunnen kopen die ik achter mijn traktor kan hangen om mijn gewassen te kunnen bemesten.
+2. Als speler moet ik een nieuwe seeder kunnen kopen die ik achter mijn traktor kan hangen om een gewas te kunnen planten op mijn veld.
 
-Als speler moet ik een nieuwe harvester kunnen kopen waarmee ik mijn gewassen kan oogsten.
+2. Als speler moet ik fertilizer spreader kunnen kopen die ik achter mijn traktor kan hangen om mijn gewassen te kunnen bemesten.
 
-Als speler moet ik een nieuwe trailer kunnen kopen om het geoogste gewas vanuit de harvester in te kunnen dumpen.
+2. Als speler moet ik een nieuwe harvester kunnen kopen waarmee ik mijn gewassen kan oogsten.
 
-Als speler moet ik extra land kunnen kopen.
+2. Als speler moet ik een nieuwe trailer kunnen kopen om het geoogste gewas vanuit de harvester in te kunnen dumpen.
 
-Als speler moet ik zaad kunnen kopen.
+2. Als speler moet ik extra land kunnen kopen.
 
-1Als speler moet ik kunnen zien hoeveel geld ik heb.
+2. Als speler moet ik zaad kunnen kopen.
 
-Als speler moet ik plekken hebben waar ik mijn gewassen kan verkopen.
+2. Als speler moet ik kunnen zien hoeveel geld ik heb.
 
-Als speler moet ik kunnen zien voor hoeveel een oogst verkocht is.
+2. Als speler moet ik plekken hebben waar ik mijn gewassen kan verkopen.
+
+2. Als speler moet ik kunnen zien voor hoeveel een oogst verkocht is.
+
+
+3. Je kan een drone kopen om automatisch je velden te fertilizen.
+
+
 
 
