@@ -1,0 +1,36 @@
+1. Als speler moet ik een traktor hebben.
+
+1. Als speler moet ik een harvester hebben.
+
+1. Als speler moet ik een seeder hebben.
+
+1. Als speler moet ik een silo hebben waar ik het geoogste gewas in op kan slaan.
+
+1. Als speler moet ik een stuk land hebben waarop ik gewassen kan verbouwen.
+
+1. Als speler moet ik een trailer hebben waarmee ik het gewas kan vervoeren.
+
+
+
+
+Als speler moet ik een traktor kunnen kopen uit de winkel om vrij mee rond te kunnen rijden.
+
+Als speler moet ik een nieuwe seeder kunnen kopen die ik achter mijn traktor kan hangen om een gewas te kunnen planten op mijn veld.
+
+Als speler moet ik fertilizer spreader kunnen kopen die ik achter mijn traktor kan hangen om mijn gewassen te kunnen bemesten.
+
+Als speler moet ik een nieuwe harvester kunnen kopen waarmee ik mijn gewassen kan oogsten.
+
+Als speler moet ik een nieuwe trailer kunnen kopen om het geoogste gewas vanuit de harvester in te kunnen dumpen.
+
+Als speler moet ik extra land kunnen kopen.
+
+Als speler moet ik zaad kunnen kopen.
+
+1Als speler moet ik kunnen zien hoeveel geld ik heb.
+
+Als speler moet ik plekken hebben waar ik mijn gewassen kan verkopen.
+
+Als speler moet ik kunnen zien voor hoeveel een oogst verkocht is.
+
+
