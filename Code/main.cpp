@@ -3,7 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "picture.hpp"
 
-
+bool busy = false;
 class action {
 private:
     std::function< bool() > condition;
@@ -21,7 +21,7 @@ public:
             std::function< void() > work
     ) :
             condition(
-                    [ key ]()->bool { return sf::Keyboard::isKeyPressed( key ); }
+                    [ key ]()->bool { return sf::Keyboard::isKeyPressed( key ) && !busy; }
             ),
             work(work)
     {}
@@ -32,7 +32,7 @@ public:
             std::function<void()> work
     ) :
             condition(
-                    [ key1, key2 ]() -> bool { return sf::Keyboard::isKeyPressed(key1) && sf::Keyboard::isKeyPressed(key2); }
+                    [ key1, key2 ]() -> bool { return sf::Keyboard::isKeyPressed(key1) && sf::Keyboard::isKeyPressed(key2) && !busy; }
             ),
             work(work)
     {}
@@ -58,6 +58,7 @@ public:
 
     void operator()(){
         if( condition() ){
+            busy = true;
             work();
         }
     }
@@ -70,8 +71,11 @@ int main() {
     picture image{ sf::Vector2f( 200, 200 ) ,sf::Texture(), sf::Sprite()};
 
     action actions[] = {
-            action( sf::Keyboard::W,    [&](){ image.move( sf::Vector2f(  0.0, -1.0 )); image.setRotation(0); }),
-
+            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ image.move( sf::Vector2f(  +1.0, -1.0 )); image.setRotation(45); }),
+            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ image.move( sf::Vector2f(  -1.0, -1.0 )); image.setRotation(315); }),
+            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ image.move( sf::Vector2f(  +1.0, +1.0 )); image.setRotation(135); }),
+            action( sf::Keyboard::S, sf::Keyboard::A,   [&](){ image.move( sf::Vector2f(  -1.0, +1.0 )); image.setRotation(225); }),
+            
             action( sf::Keyboard::W,    [&](){ image.move( sf::Vector2f(  0.0, -1.0 )); image.setRotation(0); }),
             action( sf::Keyboard::S,  [&](){ image.move( sf::Vector2f(  0.0, +1.0 )); image.setRotation(180); }),
             action( sf::Keyboard::A,  [&](){ image.move( sf::Vector2f( -1.0,  0.0 )); image.setRotation(270); }),
@@ -79,6 +83,7 @@ int main() {
     };
 
     while (window.isOpen()) {
+        busy = false;
         for( auto & action : actions ){
             action();
         }
