@@ -35,6 +35,7 @@
 2. Als speler moet ik kunnen zien voor hoeveel een oogst verkocht is.
 
 
+3. NPC's en verkeer over de wegen.
 3. Je kan een drone kopen om automatisch je velden te fertilizen.
 
 
