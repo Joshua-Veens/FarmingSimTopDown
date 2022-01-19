@@ -1,0 +1,3 @@
+(50,60) CIRCLE blue 10
+(10,10) RECTANGLE red (30,40)
+(110,50) PICTURE dog.jpg
