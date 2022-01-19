@@ -1,15 +1,16 @@
 #include "picture.hpp"
 #include <iostream>
 
-picture::picture( sf::Vector2f position, sf::Texture texture, sf::Sprite sprite):
-    position(position),
-    texture(texture),
-    sprite(sprite)
+picture::picture( std::string filename, sf::Vector2f position):
+    filename(filename),
+    position(position)
 {}
 
+picture::picture() {}
+
 void picture::draw(sf::RenderWindow &window) {
-    texture.loadFromFile("trekkerJurgen.png");
-    sprite.setTexture(texture);
+    image.loadFromFile(filename);
+    sprite.setTexture(image);
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);

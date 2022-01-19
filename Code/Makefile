@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := picture.cpp drawable.cpp
+SOURCES := drawable.cpp picture.cpp gameControl.cpp action.cpp
 
 # header files in this project
-HEADERS := picture.hpp drawable.hpp
+HEADERS := drawable.hpp picture.hpp gameControl.hpp action.hpp
 
 # other places to look for files for this project
 SEARCH  := 

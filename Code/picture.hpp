@@ -1,6 +1,5 @@
 //
 // Created by joshu on 01/12/2021.
-//
 
 #ifndef V2CPSE2_EXAMPLES_PICTURE_HPP
 #define V2CPSE2_EXAMPLES_PICTURE_HPP
@@ -10,13 +9,16 @@
 
 class picture : public drawable{
 private:
+    std::string filename;
     sf::Vector2f position;
-    sf::Texture texture;
+    sf::Texture image;
     sf::Sprite sprite;
 public:
-    picture( sf::Vector2f position, sf::Texture texture, sf::Sprite sprite );
+    picture( std::string filename, sf::Vector2f position );
 
-    void draw ( sf::RenderWindow & window );
+    picture();
+
+    void draw( sf::RenderWindow & window );
 
     void move( sf::Vector2f delta );
 
