@@ -10,6 +10,7 @@
 #include "picture.hpp"
 #include "action.hpp"
 #include "dirt.hpp"
+#include "tractor.hpp"
 
 class gameControl {
 private:
@@ -18,13 +19,13 @@ private:
     sf::Time elapsedTime, updateTime = sf::milliseconds(20);
     sf::Clock clock;
 
-    std::map<std::string, picture> backgroundlist = {
-            {"background", picture("level_1.png", sf::Vector2f(0,0))}
+    std::map<std::string, tractor> vehiclelist = {
+            {"Trekker", tractor("trekkerjurgen.png", sf::Vector2f( 200, 200 ), "trekker")}
     };
 
     std::map<std::string, picture> objectlist = {
-            {"Trekker", picture("trekkerjurgen.png", sf::Vector2f( 200, 200 ), "trekker")},
-            {"farmhouse", picture("farmhouse.png", sf::Vector2f(100, 450))}
+            {"farmhouse", picture("farmhouse.png", sf::Vector2f(100, 450))},
+            {"background", picture("level_1.png", sf::Vector2f(0,0))}
     };
 
     std::map<std::string, dirt> farmlandlist = {
@@ -48,10 +49,10 @@ private:
 //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
 //            action( sf::Keyboard::S, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, +1.0 )); objectlist["Trekker"].setRotation(225); }),
 
-            action( sf::Keyboard::W,    [&](){ objectlist["Trekker"].move( sf::Vector2f(  0.0, -4.0 )); objectlist["Trekker"].setRotation(0); }),
-            action( sf::Keyboard::S,    [&](){ objectlist["Trekker"].move( sf::Vector2f(  0.0, +4.0 )); objectlist["Trekker"].setRotation(180); }),
-            action( sf::Keyboard::A,    [&](){ objectlist["Trekker"].move( sf::Vector2f( -4.0,  0.0 )); objectlist["Trekker"].setRotation(270); }),
-            action( sf::Keyboard::D,    [&](){ objectlist["Trekker"].move( sf::Vector2f( +4.0,  0.0 )); objectlist["Trekker"].setRotation(90); }),
+            action( sf::Keyboard::W,    [&](){ vehiclelist["Trekker"].move( sf::Vector2f(  0.0, -4.0 )); vehiclelist["Trekker"].setRotation(0); }),
+            action( sf::Keyboard::S,    [&](){ vehiclelist["Trekker"].move( sf::Vector2f(  0.0, +4.0 )); vehiclelist["Trekker"].setRotation(180); }),
+            action( sf::Keyboard::A,    [&](){ vehiclelist["Trekker"].move( sf::Vector2f( -4.0,  0.0 )); vehiclelist["Trekker"].setRotation(270); }),
+            action( sf::Keyboard::D,    [&](){ vehiclelist["Trekker"].move( sf::Vector2f( +4.0,  0.0 )); vehiclelist["Trekker"].setRotation(90); }),
             action( sf::Keyboard::Num1, [&](){ changeToTractor(); }),
             action( sf::Keyboard::Num2, [&](){ changeToSeeder(); })
     };
@@ -93,30 +94,30 @@ public:
 
     void render(){
         window.clear();
-        for(auto & background : backgroundlist){
-            background.second.draw(window);
+        for(auto & picture : objectlist){
+            picture.second.draw(window);
         }
         for(auto & farmland : farmlandlist){
             farmland.second.draw(window);
         }
-        for(auto & picture : objectlist){
-            picture.second.draw(window);
+        for(auto & vehicles : vehiclelist){
+            vehicles.second.draw(window);
         }
         window.display();
     }
 
     void changeToTractor(){
-        sf::Vector2f position = objectlist["Trekker"].getPosition();
-        int rotatie = objectlist["Trekker"].getRotation();
-        objectlist.at("Trekker") = picture("trekkerjurgen.png", position, "trekker");
-        objectlist["Trekker"].setRotation(rotatie);
+        sf::Vector2f position = vehiclelist["Trekker"].getPosition();
+        int rotatie = vehiclelist["Trekker"].getRotation();
+        vehiclelist.at("Trekker") = tractor("trekkerjurgen.png", position, "trekker");
+        vehiclelist["Trekker"].setRotation(rotatie);
     }
 
     void changeToSeeder(){
-        sf::Vector2f position = objectlist["Trekker"].getPosition();
-        int rotatie = objectlist["Trekker"].getRotation();
-        objectlist.at("Trekker") = picture("trekkerseeder.png", position, "trekker");
-        objectlist["Trekker"].setRotation(rotatie);
+        sf::Vector2f position = vehiclelist["Trekker"].getPosition();
+        int rotatie = vehiclelist["Trekker"].getRotation();
+        vehiclelist.at("Trekker") = tractor("trekkerseeder.png", position, "trekker");
+        vehiclelist["Trekker"].setRotation(rotatie);
     }
 
 };
