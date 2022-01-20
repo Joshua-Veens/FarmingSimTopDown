@@ -5,9 +5,9 @@
 #define V2CPSE2_EXAMPLES_PICTURE_HPP
 
 #include "SFML/Graphics.hpp"
-//#include "drawable.hpp"
+#include "drawable.hpp"
 
-class picture {
+class picture : public drawable {
 private:
     std::string filename;
     sf::Vector2f position;

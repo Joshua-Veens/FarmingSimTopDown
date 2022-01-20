@@ -23,6 +23,7 @@ private:
     sf::Image image;
     sf::Texture texture;
     sf::Sprite sprite;
+
 public:
     dirt(sf::Vector2f position) : position(position) {}
     sf::FloatRect bounds;
