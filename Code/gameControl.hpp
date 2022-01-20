@@ -14,11 +14,16 @@ class gameControl {
 private:
     sf::RenderWindow window{ sf::VideoMode{ 1920, 1080 }, "SFML window" };
     bool busy = false;
+    sf::Time elapsedTime, updateTime = sf::milliseconds(20);
+    sf::Clock clock;
+
+    std::map<std::string, picture> backgroundlist = {
+            {"background", picture("level_1.png", sf::Vector2f(0,0))}
+    };
 
     std::map<std::string, picture> objectlist = {
-            {"trekker", picture("trekkerJurgen.png", sf::Vector2f( 200, 200 ))},
-            {"background", picture("level_1.png", sf::Vector2f(0,0))},
-            {"farmhouse", picture("Farmhouse.png", sf::Vector2f(100, 450))}
+            {"Trekker", picture("trekkerjurgen.png", sf::Vector2f( 200, 200 ), "trekker")},
+            {"farmhouse", picture("farmhouse.png", sf::Vector2f(100, 450))}
     };
 
     action actions[6] = {
@@ -46,8 +51,20 @@ public:
                 action();
             }
 
+            sf::sleep( sf::milliseconds(20));
+//            sf::Time lag = sf::milliseconds(0);
+//            clock.restart();
+//
+//            sf::Time elapsed = clock.getElapsedTime();
+//            lag += elapsed;
+//
+//            while (lag >= updateTime){
+//                update();
+//                lag -= updateTime;
+//            }
             render();
-            sf::sleep( sf::milliseconds( 2 ));
+//            clock.restart();
+
 
             sf::Event event;
             while (window.pollEvent(event)) {
@@ -60,6 +77,9 @@ public:
 
     void render(){
         window.clear();
+        for(auto & background : backgroundlist){
+            background.second.draw(window);
+        }
         for(auto & picture : objectlist){
             picture.second.draw(window);
         }
@@ -69,14 +89,14 @@ public:
     void changeToTractor(){
         sf::Vector2f position = objectlist["Trekker"].getPosition();
         int rotatie = objectlist["Trekker"].getRotation();
-        objectlist.at("Trekker") = picture("trekkerJurgen.png", position);
+        objectlist.at("Trekker") = picture("trekkerjurgen.png", position, "trekker");
         objectlist["Trekker"].setRotation(rotatie);
     }
 
     void changeToSeeder(){
         sf::Vector2f position = objectlist["Trekker"].getPosition();
         int rotatie = objectlist["Trekker"].getRotation();
-        objectlist.at("Trekker") = picture("Trekkerseeder.png", position);
+        objectlist.at("Trekker") = picture("trekkerseeder.png", position, "trekker");
         objectlist["Trekker"].setRotation(rotatie);
     }
 };

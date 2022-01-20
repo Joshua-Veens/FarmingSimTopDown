@@ -1,9 +1,10 @@
 #include "picture.hpp"
 #include <iostream>
 
-picture::picture( std::string filename, sf::Vector2f position):
+picture::picture( std::string filename, sf::Vector2f position, std::string type):
     filename(filename),
-    position(position)
+    position(position),
+    type(type)
 {}
 
 picture::picture() {}
@@ -12,7 +13,9 @@ void picture::draw(sf::RenderWindow &window) {
     image.loadFromFile(filename);
     sprite.setTexture(image);
     sprite.setPosition(position);
-    sprite.setOrigin(sf::Vector2f(64,64));
+    if(type == "trekker"){
+        sprite.setOrigin(sf::Vector2f(64,64));
+    }
     window.draw(sprite);
 }
 

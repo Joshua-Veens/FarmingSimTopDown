@@ -5,17 +5,18 @@
 #define V2CPSE2_EXAMPLES_PICTURE_HPP
 
 #include "SFML/Graphics.hpp"
-#include "drawable.hpp"
+//#include "drawable.hpp"
 
-class picture : public drawable{
+class picture {
 private:
     std::string filename;
     sf::Vector2f position;
+    std::string type;
     sf::Texture image;
     sf::Sprite sprite;
     int savedRotation = 0;
 public:
-    picture( std::string filename, sf::Vector2f position );
+    picture( std::string filename, sf::Vector2f position, std::string type = "" );
 
     picture();
 
