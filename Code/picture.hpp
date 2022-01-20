@@ -20,15 +20,7 @@ public:
 
     picture();
 
-    void draw( sf::RenderWindow & window );
-
-    void move( sf::Vector2f delta );
-
-    void setRotation( int rotation );
-
-    int getRotation();
-
-    sf::Vector2f getPosition();
+    void draw( sf::RenderWindow & window ) override;
 
 };
 
