@@ -13,6 +13,7 @@ private:
     sf::Vector2f position;
     sf::Texture image;
     sf::Sprite sprite;
+    int savedRotation = 0;
 public:
     picture( std::string filename, sf::Vector2f position );
 
@@ -23,6 +24,10 @@ public:
     void move( sf::Vector2f delta );
 
     void setRotation( int rotation );
+
+    int getRotation();
+
+    sf::Vector2f getPosition();
 
 };
 
