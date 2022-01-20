@@ -22,4 +22,13 @@ void picture::move(sf::Vector2f delta) {
 
 void picture::setRotation( int rotation ) {
     sprite.setRotation(rotation);
+    savedRotation = rotation;
+}
+
+int picture::getRotation() {
+    return savedRotation;
+}
+
+sf::Vector2f picture::getPosition(){
+    return position;
 }
