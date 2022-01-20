@@ -14,21 +14,12 @@ private:
     std::string type;
     sf::Texture image;
     sf::Sprite sprite;
-    int savedRotation = 0;
 public:
     picture( std::string filename, sf::Vector2f position, std::string type = "" );
 
     picture();
 
-    void draw( sf::RenderWindow & window );
-
-    void move( sf::Vector2f delta );
-
-    void setRotation( int rotation );
-
-    int getRotation();
-
-    sf::Vector2f getPosition();
+    void draw( sf::RenderWindow & window ) override;
 
 };
 
