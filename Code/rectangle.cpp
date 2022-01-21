@@ -23,3 +23,7 @@ void rectangle::jump(sf::Vector2f placement) {
 sf::FloatRect rectangle::getBounds() {
     return square.getGlobalBounds();
 }
+
+void rectangle::setSize(sf::Vector2f size){
+    square.setSize(size);
+}

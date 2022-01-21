@@ -22,8 +22,6 @@ private:
 public:
     tractor( sf::Vector2f position, std::string type = "" );
 
-//    tractor();
-
     void draw( sf::RenderWindow & window ) override;
 
     void move( sf::Vector2f delta );
@@ -38,7 +36,7 @@ public:
 
     void changeToSeeder();
 
-    void updateColliders();
+    void updateCollider();
 
 };
 

@@ -18,6 +18,8 @@ public:
     void jump(sf::Vector2f placement);
 
     sf::FloatRect getBounds();
+
+    void setSize(sf::Vector2f size);
 };
 
 #endif
