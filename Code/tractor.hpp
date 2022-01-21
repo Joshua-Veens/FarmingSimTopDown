@@ -7,6 +7,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "vehicle.hpp"
+#include "rectangle.hpp"
 
 class tractor : public vehicle{
 private:
@@ -16,10 +17,12 @@ private:
     sf::Texture image;
     sf::Sprite sprite;
     int savedRotation = 0;
+    sf::FloatRect collider;
+    rectangle blokje;
 public:
     tractor( sf::Vector2f position, std::string type = "" );
 
-    tractor();
+//    tractor();
 
     void draw( sf::RenderWindow & window ) override;
 
@@ -34,6 +37,8 @@ public:
     void changeToTractor();
 
     void changeToSeeder();
+
+    void updateColliders();
 
 };
 

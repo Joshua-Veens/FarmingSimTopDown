@@ -6,10 +6,12 @@
 
 tractor::tractor( sf::Vector2f position, std::string type):
         position(position),
-        type(type)
+        type(type),
+        collider(position.x-30, position.y+30, 60, 20),
+        blokje(sf::Vector2f(position.x-30,position.y+30), sf::Vector2f(60, 20))
 {}
 
-tractor::tractor() {}
+//tractor::tractor() {}
 
 void tractor::draw(sf::RenderWindow &window) {
     image.loadFromFile(filename);
@@ -17,6 +19,7 @@ void tractor::draw(sf::RenderWindow &window) {
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);
+    blokje.draw(window);
 }
 
 void tractor::move(sf::Vector2f delta) {
@@ -25,6 +28,7 @@ void tractor::move(sf::Vector2f delta) {
     }else if(type == "trekker"){
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
+    this->updateColliders();
 }
 
 void tractor::setRotation( int rotation ) {
@@ -48,4 +52,10 @@ void tractor::changeToTractor(){
 void tractor::changeToSeeder(){
     filename = "trekkerseeder.png";
     type = "seeder";
+}
+
+void tractor::updateColliders() {
+    collider.left = position.x - 30;
+    collider.top = position.y + 30;
+    blokje.jump(sf::Vector2f(position.x-30, position.y+30));
 }
