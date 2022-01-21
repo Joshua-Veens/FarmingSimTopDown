@@ -20,7 +20,7 @@ private:
     sf::Vector2f position;
     std::string img_file = "unseeded.png"; // this is going to be changed very often when the state changes
     int ticks = 0;                         // used to count if growing is done;
-    int wait_time = 10;                    // time between seeded and growing or growing and grown.
+    int wait_time = 100;                    // time between seeded and growing or growing and grown.
     sf::Image image;
     sf::Texture texture;
     sf::Sprite sprite;

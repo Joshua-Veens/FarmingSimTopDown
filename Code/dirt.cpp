@@ -26,7 +26,6 @@ void dirt::update()
     }
     else if (ticks == wait_time && state == growing)
     {
-        std::cout << "state: " << state << " ticks: " << ticks << std::endl;
         ticks = 0;
         state = grown;
         img_file = "grown.png";
