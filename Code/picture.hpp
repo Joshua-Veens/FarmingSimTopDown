@@ -14,6 +14,7 @@ private:
     std::string type;
     sf::Texture image;
     sf::Sprite sprite;
+    int savedRotation = 0;
 public:
     picture( std::string filename, sf::Vector2f position, std::string type = "" );
 

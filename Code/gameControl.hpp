@@ -7,95 +7,134 @@
 
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include <memory>
 #include "picture.hpp"
 #include "action.hpp"
 #include "dirt.hpp"
 #include "tractor.hpp"
+#include "menu.hpp"
 
-class gameControl {
+class gameControl
+{
 private:
-    sf::RenderWindow window{ sf::VideoMode{ 1920, 1080 }, "SFML window" };
+    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
-//    sf::Time elapsedTime, updateTime = sf::milliseconds(20);
-//    sf::Clock clock;
+    sf::Time elapsedTime, updateTime = sf::milliseconds(20);
+    sf::Clock clock;
 
-    std::vector<std::shared_ptr<drawable>> objects = {
-            std::shared_ptr<drawable>(new picture{"level_1.png", sf::Vector2f(0,0)}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(600, 200 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 200 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 200 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(600, 328 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 328 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 328 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(600, 456 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 456 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 456 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(600, 584 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 584 )}),
-            std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 584 )}),
-            std::shared_ptr<drawable>(new tractor{sf::Vector2f( 200, 200 ), "trekker"}),
-            std::shared_ptr<drawable>(new picture{"farmhouse.png", sf::Vector2f(100, 450)})
-    };
+    std::map<std::string, tractor> vehiclelist = {
+        {"Trekker", tractor("trekkerjurgen.png", sf::Vector2f(200, 200), "trekker")}};
 
-    tractor* trekker = dynamic_cast<tractor*>(objects[13].get());
+    std::map<std::string, picture> objectlist = {
+        {"farmhouse", picture("farmhouse.png", sf::Vector2f(100, 450))},
+        {"background", picture("level_1.png", sf::Vector2f(0, 0))}};
 
-    action actions[6] = {
-//            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
-//            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
-//            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
-//            action( sf::Keyboard::S, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, +1.0 )); objectlist["Trekker"].setRotation(225); }),
+    std::map<std::string, dirt> farmlandlist = {
+        {"farmlandR_1.1", sf::Vector2f(600, 200)},
+        {"farmlandR_1.2", sf::Vector2f(728, 200)},
+        {"farmland_R1.3", sf::Vector2f(856, 200)},
+        {"farmlandR_2.1", sf::Vector2f(600, 328)},
+        {"farmlandR_2.2", sf::Vector2f(728, 328)},
+        {"farmlandR_2.3", sf::Vector2f(856, 328)},
+        {"farmlandR_3.1", sf::Vector2f(600, 456)},
+        {"farmlandR_3.2", sf::Vector2f(728, 456)},
+        {"farmlandR_3.3", sf::Vector2f(856, 456)},
+        {"farmlandR_4.1", sf::Vector2f(600, 584)},
+        {"farmlandR_4.2", sf::Vector2f(728, 584)},
+        {"farmlandR_4.3", sf::Vector2f(856, 584)}};
 
-            action( sf::Keyboard::W,    [&](){ trekker->move( sf::Vector2f(  0.0, -4.0 )); trekker->setRotation(0); }),
-            action( sf::Keyboard::S,    [&](){ trekker->move( sf::Vector2f(  0.0, +4.0 )); trekker->setRotation(180); }),
-            action( sf::Keyboard::A,    [&](){ trekker->move( sf::Vector2f( -4.0,  0.0 )); trekker->setRotation(270); }),
-            action( sf::Keyboard::D,    [&](){ trekker->move( sf::Vector2f( +4.0,  0.0 )); trekker->setRotation(90); }),
-            action( sf::Keyboard::Num1, [&](){ trekker->changeToTractor(); }),
-            action( sf::Keyboard::Num2, [&](){ trekker->changeToSeeder(); })
-    };
+    action actions[7] = {
+        //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
+        //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
+        //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
+        //            action( sf::Keyboard::S, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, +1.0 )); objectlist["Trekker"].setRotation(225); }),
+
+        action(sf::Keyboard::W, [&]()
+               { vehiclelist["Trekker"].move( sf::Vector2f(  0.0, -4.0 )); vehiclelist["Trekker"].setRotation(0); }),
+        action(sf::Keyboard::S, [&]()
+               { vehiclelist["Trekker"].move( sf::Vector2f(  0.0, +4.0 )); vehiclelist["Trekker"].setRotation(180); }),
+        action(sf::Keyboard::A, [&]()
+               { vehiclelist["Trekker"].move( sf::Vector2f( -4.0,  0.0 )); vehiclelist["Trekker"].setRotation(270); }),
+        action(sf::Keyboard::D, [&]()
+               { vehiclelist["Trekker"].move( sf::Vector2f( +4.0,  0.0 )); vehiclelist["Trekker"].setRotation(90); }),
+        action(sf::Keyboard::Num1, [&]()
+               { changeToTractor(); }),
+        action(sf::Keyboard::Num2, [&]()
+               { changeToSeeder(); }),
+        action(sf::Keyboard::Escape, [this]{    pause_menu pMenu(window); pMenu.show();})};
 
 public:
-
-    void runGame() {
-        while (window.isOpen()) {
-            for (auto &action: actions) {
+    void runGame()
+    {
+        menu Menu(window);
+        Menu.show();
+        while (window.isOpen())
+        {
+            for (auto &action : actions)
+            {
                 action.setBusy(busy);
             }
-            for (auto &action: actions) {
+            for (auto &action : actions)
+            {
                 action();
             }
-
+            sf::sleep(sf::milliseconds(5));
+            //            sf::Time lag = sf::milliseconds(0);
+            //            clock.restart();
+            //
+            //            sf::Time elapsed = clock.getElapsedTime();
+            //            lag += elapsed;
+            //
+            //            while (lag >= updateTime){
+            //                update();
+            //                lag -= updateTime;
+            //            }
             render();
-            sf::sleep( sf::milliseconds(5));
-//            sf::Time lag = sf::milliseconds(0);
-//            clock.restart();
-//
-//            sf::Time elapsed = clock.getElapsedTime();
-//            lag += elapsed;
-//
-//            while (lag >= updateTime){
-//                update();
-//                lag -= updateTime;
-//            }
-//            clock.restart();
+            //            clock.restart();
 
             sf::Event event;
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
+            while (window.pollEvent(event))
+            {
+                if (event.type == sf::Event::Closed)
+                {
                     window.close();
                 }
             }
         }
     }
 
-    void render(){
+    void render()
+    {
         window.clear();
-        for(auto & object : objects){
-            object->draw(window);
+        for (auto &picture : objectlist)
+        {
+            picture.second.draw(window);
+        }
+        for (auto &farmland : farmlandlist)
+        {
+            farmland.second.draw(window);
+        }
+        for (auto &vehicles : vehiclelist)
+        {
+            vehicles.second.draw(window);
         }
         window.display();
     }
+
+    void changeToTractor()
+    {
+        sf::Vector2f position = vehiclelist["Trekker"].getPosition();
+        int rotatie = vehiclelist["Trekker"].getRotation();
+        vehiclelist.at("Trekker") = tractor("trekkerjurgen.png", position, "trekker");
+        vehiclelist["Trekker"].setRotation(rotatie);
+    }
+
+    void changeToSeeder()
+    {
+        sf::Vector2f position = vehiclelist["Trekker"].getPosition();
+        int rotatie = vehiclelist["Trekker"].getRotation();
+        vehiclelist.at("Trekker") = tractor("trekkerseeder.png", position, "trekker");
+        vehiclelist["Trekker"].setRotation(rotatie);
+    }
 };
 
-
-#endif //V2CPSE2_EXAMPLES_GAMECONTROL_HPP
+#endif // V2CPSE2_EXAMPLES_GAMECONTROL_HPP

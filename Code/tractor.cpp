@@ -4,7 +4,8 @@
 
 #include "tractor.hpp"
 
-tractor::tractor( sf::Vector2f position, std::string type):
+tractor::tractor( std::string filename, sf::Vector2f position, std::string type):
+        filename(filename),
         position(position),
         type(type)
 {}
@@ -15,16 +16,14 @@ void tractor::draw(sf::RenderWindow &window) {
     image.loadFromFile(filename);
     sprite.setTexture(image);
     sprite.setPosition(position);
-    sprite.setOrigin(sf::Vector2f(64,64));
+    if(type == "trekker"){
+        sprite.setOrigin(sf::Vector2f(64,64));
+    }
     window.draw(sprite);
 }
 
 void tractor::move(sf::Vector2f delta) {
-    if(type == "seeder"){
-        position += sf::Vector2f(delta.x/2, delta.y/2);
-    }else if(type == "trekker"){
-        position += sf::Vector2f(delta.x*2, delta.y*2);
-    }
+    position += delta;
 }
 
 void tractor::setRotation( int rotation ) {
@@ -38,14 +37,4 @@ int tractor::getRotation() {
 
 sf::Vector2f tractor::getPosition() {
     return position;
-}
-
-void tractor::changeToTractor(){
-    filename = "trekkerjurgen.png";
-    type = "trekker";
-}
-
-void tractor::changeToSeeder(){
-    filename = "trekkerseeder.png";
-    type = "seeder";
 }

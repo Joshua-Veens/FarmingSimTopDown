@@ -1,7 +1,9 @@
 #include "gameControl.hpp"
+#include "menu.hpp"
 
 int main() {
-    gameControl gameControl;
-    gameControl.runGame();
+    gameControl GameControl;
+    GameControl.runGame();
+
 
 }

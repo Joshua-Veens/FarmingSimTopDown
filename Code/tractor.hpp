@@ -10,14 +10,14 @@
 
 class tractor : public vehicle{
 private:
-    std::string filename = "trekkerjurgen.png";
+    std::string filename;
     sf::Vector2f position;
     std::string type;
     sf::Texture image;
     sf::Sprite sprite;
     int savedRotation = 0;
 public:
-    tractor( sf::Vector2f position, std::string type = "" );
+    tractor( std::string filename, sf::Vector2f position, std::string type = "" );
 
     tractor();
 
@@ -30,10 +30,6 @@ public:
     int getRotation();
 
     sf::Vector2f getPosition();
-
-    void changeToTractor();
-
-    void changeToSeeder();
 
 };
 
