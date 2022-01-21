@@ -8,6 +8,9 @@
 #include "SFML/Graphics.hpp"
 #include "vehicle.hpp"
 #include "rectangle.hpp"
+#include "dirt.hpp"
+#include <memory>
+#include <iostream>
 
 class tractor : public vehicle{
 private:
@@ -18,13 +21,15 @@ private:
     sf::Sprite sprite;
     int savedRotation = 0;
     sf::FloatRect collider;
-    rectangle blokje;
+//    rectangle blokje;
 public:
     tractor( sf::Vector2f position, std::string type = "" );
 
     void draw( sf::RenderWindow & window ) override;
 
     void move( sf::Vector2f delta );
+
+    void update(std::array<dirt *, 12> farmland);
 
     void setRotation( int rotation );
 

@@ -3,8 +3,9 @@
 
 dirt::dirt(sf::Vector2f position):
     position(position),
-    collider(position.x+54, position.y + 54, 20,20),
-    blokje(sf::Vector2f(position.x+54, position.y+54), sf::Vector2f(20,20)){}
+    collider(position.x+54, position.y + 54, 20,20)
+//    blokje(sf::Vector2f(position.x+54, position.y+54), sf::Vector2f(20,20))
+{}
 
 void dirt::seed()
 {
@@ -54,5 +55,9 @@ void dirt::draw(sf::RenderWindow &window)
     sprite.setTexture(texture, true);
     sprite.setPosition(position);
     window.draw(sprite);
-    blokje.draw(window);
+//    blokje.draw(window);
+}
+
+sf::FloatRect dirt::getBounds(){
+    return collider;
 }

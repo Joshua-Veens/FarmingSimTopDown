@@ -7,8 +7,8 @@
 tractor::tractor( sf::Vector2f position, std::string type):
         position(position),
         type(type),
-        collider(position.x-30, position.y+30, 60, 20),
-        blokje(sf::Vector2f(position.x-30,position.y+30), sf::Vector2f(60, 20))
+        collider(position.x-30, position.y+30, 60, 20)
+//        blokje(sf::Vector2f(position.x-30,position.y+30), sf::Vector2f(60, 20))
 {}
 
 void tractor::draw(sf::RenderWindow &window) {
@@ -17,7 +17,7 @@ void tractor::draw(sf::RenderWindow &window) {
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);
-    blokje.draw(window);
+//    blokje.draw(window);
 }
 
 void tractor::move(sf::Vector2f delta) {
@@ -27,6 +27,15 @@ void tractor::move(sf::Vector2f delta) {
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
     this->updateCollider();
+}
+
+void tractor::update(std::array<dirt *, 12> farmland){
+    for(auto & p : farmland){
+        if(p->getBounds().intersects(collider)){
+            p->seed();
+        }
+        p->update();
+    }
 }
 
 void tractor::setRotation( int rotation ) {
@@ -56,28 +65,34 @@ void tractor::updateCollider(){
     if(savedRotation == 0){
         collider.left = position.x - 30;
         collider.top = position.y + 30;
-        blokje.jump(sf::Vector2f(position.x-30, position.y+30));
+        collider.height = 20;
+        collider.width = 60;
+//        blokje.jump(sf::Vector2f(position.x-30, position.y+30));
+//        blokje.setSize(sf::Vector2f(60, 20));
     }
     else if(savedRotation == 180){
         collider.left = position.x - 30;
         collider.top = position.y - 50;
-        blokje.jump(sf::Vector2f(position.x-30, position.y-50));
+        collider.height = 20;
+        collider.width = 60;
+//        blokje.jump(sf::Vector2f(position.x-30, position.y-50));
+//        blokje.setSize(sf::Vector2f(60, 20));
     }
     else if(savedRotation == 270){
         collider.left = position.x + 30;
         collider.top = position.y - 30;
         collider.height = 60;
         collider.width = 20;
-        blokje.jump(sf::Vector2f(position.x+30, position.y-30));
-        blokje.setSize(sf::Vector2f(20, 60));
+//        blokje.jump(sf::Vector2f(position.x+30, position.y-30));
+//        blokje.setSize(sf::Vector2f(20, 60));
     }
     else if(savedRotation == 90){
         collider.left = position.x - 50;
         collider.top = position.y - 30;
         collider.height = 60;
         collider.width = 20;
-        blokje.jump(sf::Vector2f(position.x-50, position.y-30));
-        blokje.setSize(sf::Vector2f(20, 60));
+//        blokje.jump(sf::Vector2f(position.x-50, position.y-30));
+//        blokje.setSize(sf::Vector2f(20, 60));
     }
 }
 

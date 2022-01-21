@@ -25,13 +25,14 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::FloatRect collider;
-    rectangle blokje;
+//    rectangle blokje;
 public:
     dirt(sf::Vector2f position);
     void draw(sf::RenderWindow &window);
     void seed();
     bool harvest(); // changes img_file back to unseeded if it's possible to harvest and returns true, retruns false if it not possible ro harvest
     void update();
+    sf::FloatRect getBounds();
 };
 
 #endif

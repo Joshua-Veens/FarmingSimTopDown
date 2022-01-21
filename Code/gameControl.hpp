@@ -40,6 +40,20 @@ private:
 
     tractor* trekker = dynamic_cast<tractor*>(objects[13].get());
 
+    std::array<dirt *, 12> farmland = {dynamic_cast<dirt*>(objects[1].get()),
+                                       dynamic_cast<dirt*>(objects[2].get()),
+                                       dynamic_cast<dirt*>(objects[3].get()),
+                                       dynamic_cast<dirt*>(objects[4].get()),
+                                       dynamic_cast<dirt*>(objects[5].get()),
+                                       dynamic_cast<dirt*>(objects[6].get()),
+                                       dynamic_cast<dirt*>(objects[7].get()),
+                                       dynamic_cast<dirt*>(objects[8].get()),
+                                       dynamic_cast<dirt*>(objects[9].get()),
+                                       dynamic_cast<dirt*>(objects[10].get()),
+                                       dynamic_cast<dirt*>(objects[11].get()),
+                                       dynamic_cast<dirt*>(objects[12].get())
+                                       };
+
     action actions[6] = {
 //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
 //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
@@ -64,7 +78,7 @@ public:
             for (auto &action: actions) {
                 action();
             }
-
+            trekker->update(farmland);
             render();
             sf::sleep( sf::milliseconds(5));
 //            sf::Time lag = sf::milliseconds(0);
