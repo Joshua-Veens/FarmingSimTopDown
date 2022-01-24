@@ -13,6 +13,7 @@
 #include "dirt.hpp"
 #include "tractor.hpp"
 #include "menu.hpp"
+#include "pauseMenu.hpp"
 
 class gameControl
 {
