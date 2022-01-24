@@ -5,7 +5,6 @@
 #ifndef V2CPSE2_EXAMPLES_TRACTOR_HPP
 #define V2CPSE2_EXAMPLES_TRACTOR_HPP
 
-#include "SFML/Graphics.hpp"
 #include "vehicle.hpp"
 #include "rectangle.hpp"
 #include "dirt.hpp"

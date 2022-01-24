@@ -31,7 +31,7 @@ void tractor::move(sf::Vector2f delta) {
 
 void tractor::update(std::array<dirt *, 12> farmland){
     for(auto & p : farmland){
-        if(p->getBounds().intersects(collider)){
+        if(p->getBounds().intersects(collider) && type == "seeder"){
             p->seed();
         }
         p->update();

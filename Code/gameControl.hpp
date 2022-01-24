@@ -12,6 +12,7 @@
 #include "action.hpp"
 #include "dirt.hpp"
 #include "tractor.hpp"
+#include "farmhouse.hpp"
 #include "menu.hpp"
 #include "pauseMenu.hpp"
 
@@ -39,7 +40,7 @@ private:
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 584)}),
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 584)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
-        std::shared_ptr<drawable>(new picture{"farmhouse.png", sf::Vector2f(100, 450)})};
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(100, 450)})};
 
     tractor *trekker = dynamic_cast<tractor *>(objects[13].get());
 
