@@ -11,7 +11,6 @@ void dirt::seed()
 {
     if (state == unseeded)
     {
-
         state = seeded;
         img_file = "seeded.png";
     }
