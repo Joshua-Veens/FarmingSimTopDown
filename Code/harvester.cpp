@@ -1,17 +1,17 @@
 //
-// Created by joshu on 20-1-2022.
+// Created by joshu on 24-1-2022.
 //
 
-#include "tractor.hpp"
+#include "harvester.hpp"
 
-tractor::tractor( sf::Vector2f position, std::string type):
+harvester::harvester(sf::Vector2f position, std::string type) :
         position(position),
         type(type),
-        collider(position.x-30, position.y+30, 60, 20)
+        collider(position.x - 30, position.y + 30, 60, 20)
 //        blokje(sf::Vector2f(position.x-30,position.y+30), sf::Vector2f(60, 20))
 {}
 
-void tractor::draw(sf::RenderWindow &window) {
+void harvester::draw(sf::RenderWindow &window) {
     image.loadFromFile(filename);
     sprite.setTexture(image);
     sprite.setPosition(position);
@@ -20,42 +20,40 @@ void tractor::draw(sf::RenderWindow &window) {
 //    blokje.draw(window);
 }
 
-void tractor::move(sf::Vector2f delta) {
-    if(type == "seeder"){
+void harvester::move(sf::Vector2f delta) {
+    if(type == "harvesting"){
         position += sf::Vector2f(delta.x/2, delta.y/2);
-    }else if(type == "trekker"){
-        position += sf::Vector2f(delta.x*2, delta.y*2);
+    }else if(type == "notHarvesting"){
+        position += sf::Vector2f(delta.x, delta.y);
     }
     this->updateCollider();
 }
 
-void tractor::update(std::array<dirt *, 12> farmland){
+void harvester::update(std::array<dirt *, 12> farmland){
     for(auto & p : farmland){
-        if(p->getBounds().intersects(collider) && type == "seeder"){
+        if(p->getBounds().intersects(collider)){
             p->seed();
         }
         p->update();
     }
 }
 
-void tractor::setRotation( int rotation ) {
+void harvester::setRotation( int rotation ) {
     sprite.setRotation(rotation);
     savedRotation = rotation;
 }
 
-
-
-void tractor::changeToNormal(){
-    filename = "trekkerjurgen.png";
-    type = "trekker";
+void harvester::changeToNormal(){
+    filename = "harvester_closed.png";
+    type = "notHarvesting";
 }
 
-void tractor::changeToAction(){
-    filename = "trekkerseeder.png";
-    type = "seeder";
+void harvester::changeToAction(){
+    filename = "harvester.png";
+    type = "harvesting";
 }
 
-void tractor::updateCollider(){
+void harvester::updateCollider(){
     if(savedRotation == 0){
         collider.left = position.x - 30;
         collider.top = position.y + 30;
@@ -90,10 +88,10 @@ void tractor::updateCollider(){
     }
 }
 
-int tractor::getRotation() {
+int harvester::getRotation() {
     return savedRotation;
 }
 
-sf::Vector2f tractor::getPosition() {
+sf::Vector2f harvester::getPosition() {
     return position;
 }
