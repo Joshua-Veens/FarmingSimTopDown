@@ -31,7 +31,7 @@ void tractor::move(sf::Vector2f delta) {
 
 void tractor::update(std::array<dirt *, 12> farmland){
     for(auto & p : farmland){
-        if(p->getBounds().intersects(collider) && type == "seeder"){
+        if(p->getBounds().intersects(collider)){
             p->seed();
         }
         p->update();
@@ -42,8 +42,6 @@ void tractor::setRotation( int rotation ) {
     sprite.setRotation(rotation);
     savedRotation = rotation;
 }
-
-
 
 void tractor::changeToNormal(){
     filename = "trekkerjurgen.png";
