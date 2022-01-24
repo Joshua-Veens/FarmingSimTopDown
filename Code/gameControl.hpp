@@ -12,8 +12,11 @@
 #include "action.hpp"
 #include "dirt.hpp"
 #include "tractor.hpp"
+#include "pauseMenu.hpp"
+
 #include "harvester.hpp"
 #include "menu.hpp"
+
 
 class gameControl
 {
@@ -21,6 +24,7 @@ private:
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     //    sf::Time elapsedTime, updateTime = sf::milliseconds(20);
+
     sf::Clock clock;
     menu Menu = menu(window);
     bool tractorOrHarvester = true;
@@ -41,6 +45,7 @@ private:
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 584)}),
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 584)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
+
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), "notHarvesting"}),
         std::shared_ptr<drawable>(new picture{"farmhouse.png", sf::Vector2f(100, 450)})};
 
@@ -74,13 +79,13 @@ private:
         action(sf::Keyboard::Num1, [&](){ changeToNormal(); }),
         action(sf::Keyboard::Num2, [&](){ changeToAction(); }),
         action(sf::Keyboard::R, [&](){ swapVehicle(); }),
-
         action(sf::Keyboard::Escape, [this]
                {if(Menu.getActive() || pMenu.getActive()){
                 return;
             } pMenu.show(); })};
 
 public:
+
     void runGame() {
         if (window.isOpen()){
             Menu.show();
@@ -124,8 +129,10 @@ public:
         }
     }
 
-    void render(){
+    void render()
+    {
         window.clear();
+
         for (auto &object : objects) {
             object->draw(window);
         }
@@ -134,6 +141,7 @@ public:
 //        window.draw(particle);
         window.display();
     }
+
 
     void swapVehicle(){
         sf::Time time = clock.getElapsedTime();

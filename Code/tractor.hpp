@@ -10,6 +10,8 @@
 #include "rectangle.hpp"
 #include "dirt.hpp"
 #include <memory>
+#include <iostream>
+
 
 class tractor : public vehicle{
 private:
@@ -40,7 +42,12 @@ public:
 
     int getRotation();
 
+
+    void updateCollider();
+
+
     sf::Vector2f getPosition();
+
 };
 
 

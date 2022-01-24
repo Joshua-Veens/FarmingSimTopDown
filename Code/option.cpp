@@ -25,11 +25,11 @@ void option::update(sf::RenderWindow &window)
     text.setStyle(sf::Text::Bold);
     if (rect.contains(mouse_pos))
     {
-        color = sf::Color::White;
+        color = sf::Color::Black;
     }
     else
     {
-        color = sf::Color::Green;
+        color = sf::Color::White;
     }
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {

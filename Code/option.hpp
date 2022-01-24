@@ -11,7 +11,7 @@ class option : public drawable
 private:
     std::string text_string;
     sf::Vector2f position;
-    sf::Color color = sf::Color::Green;
+    sf::Color color = sf::Color::White;
     sf::FloatRect rect;
     std::function<void()> work;
     const std::string font_file;
