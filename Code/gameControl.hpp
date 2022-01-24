@@ -12,13 +12,8 @@
 #include "action.hpp"
 #include "dirt.hpp"
 #include "tractor.hpp"
-<<<<<<< Updated upstream
-#include "farmhouse.hpp"
-=======
 #include "harvester.hpp"
->>>>>>> Stashed changes
 #include "menu.hpp"
-#include "pauseMenu.hpp"
 
 class gameControl
 {
@@ -46,12 +41,8 @@ private:
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 584)}),
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 584)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
-<<<<<<< Updated upstream
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(100, 450)})};
-=======
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), "notHarvesting"}),
         std::shared_ptr<drawable>(new picture{"farmhouse.png", sf::Vector2f(100, 450)})};
->>>>>>> Stashed changes
 
     tractor *trekker = dynamic_cast<tractor *>(objects[13].get());
     harvester *combine = dynamic_cast<harvester *>(objects[14].get());

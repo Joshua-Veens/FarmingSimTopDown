@@ -7,6 +7,7 @@ picture::picture( std::string filename, sf::Vector2f position, std::string type)
     type(type)
 {}
 
+picture::picture() {}
 
 void picture::draw(sf::RenderWindow &window) {
     image.loadFromFile(filename);
