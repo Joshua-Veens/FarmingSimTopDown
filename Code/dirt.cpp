@@ -1,6 +1,12 @@
 #include "dirt.hpp"
 #include <iostream>
 
+dirt::dirt(sf::Vector2f position):
+    position(position),
+    collider(position.x+54, position.y + 54, 20,20)
+//    blokje(sf::Vector2f(position.x+54, position.y+54), sf::Vector2f(20,20))
+{}
+
 void dirt::seed()
 {
     if (state == unseeded)
@@ -20,7 +26,6 @@ void dirt::update()
     }
     else if (ticks == wait_time && state == growing)
     {
-        std::cout << "state: " << state << " ticks: " << ticks << std::endl;
         ticks = 0;
         state = grown;
         img_file = "grown.png";
@@ -49,5 +54,9 @@ void dirt::draw(sf::RenderWindow &window)
     sprite.setTexture(texture, true);
     sprite.setPosition(position);
     window.draw(sprite);
-    bounds = sprite.getGlobalBounds();
+//    blokje.draw(window);
+}
+
+sf::FloatRect dirt::getBounds(){
+    return collider;
 }
