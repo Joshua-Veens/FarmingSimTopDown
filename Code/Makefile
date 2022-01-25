@@ -10,42 +10,42 @@
 
 # source files in this project (main.cpp is automatically assumed)
 SOURCES += drawable.cpp
-SOURCES += picture.cpp
-SOURCES += gameControl.cpp
-SOURCES += action.cpp
-SOURCES += dirt.cpp
-SOURCES += vehicle.cpp
-SOURCES += tractor.cpp
-SOURCES += rectangle.cpp
-SOURCES += menu.cpp
-SOURCES += farmhouse.cpp
-SOURCES += harvester.cpp
-SOURCES += particleSystem.cpp
-SOURCES += pauseMenu.cpp
-SOURCES += option.cpp
-SOURCES +=
+        SOURCES += picture.cpp
+        SOURCES += gameControl.cpp
+        SOURCES += action.cpp
+        SOURCES += dirt.cpp
+        SOURCES += vehicle.cpp
+        SOURCES += tractor.cpp
+        SOURCES += rectangle.cpp
+        SOURCES += menu.cpp
+        SOURCES += farmhouse.cpp
+        SOURCES += harvester.cpp
+        SOURCES += particleSystem.cpp
+        SOURCES += pauseMenu.cpp
+        SOURCES += option.cpp
+        SOURCES +=
 
 # header files in this project
 HEADERS += drawable.hpp
-HEADERS += picture.hpp
-HEADERS += gameControl.hpp
-HEADERS += action.hpp
-HEADERS += dirt.hpp
-HEADERS += vehicle.hpp
-HEADERS += tractor.hpp
-HEADERS += rectangle.hpp
-HEADERS += menu.hpp
-HEADERS += farmhouse.hpp
-HEADERS += harvester.hpp
-HEADERS += particleSystem.hpp
-HEADERS += pauseMenu.hpp
-HEADERS += option.hpp
-HEADERS +=
+        HEADERS += picture.hpp
+        HEADERS += gameControl.hpp
+        HEADERS += action.hpp
+        HEADERS += dirt.hpp
+        HEADERS += vehicle.hpp
+        HEADERS += tractor.hpp
+        HEADERS += rectangle.hpp
+        HEADERS += menu.hpp
+        HEADERS += farmhouse.hpp
+        HEADERS += harvester.hpp
+        HEADERS += particleSystem.hpp
+        HEADERS += pauseMenu.hpp
+        HEADERS += option.hpp
+        HEADERS +=
 
 # other places to look for files for this project
-SEARCH  := 
+SEARCH  :=
 
-# set REATIVE to the next higher directory 
+# set REATIVE to the next higher directory
 # and defer to the Makefile.due there
 RELATIVE := $(RELATIVE)../
 include $(RELATIVE)Makefile.native

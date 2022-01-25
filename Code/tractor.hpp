@@ -1,3 +1,7 @@
+//
+// Created by joshu on 20-1-2022.
+//
+
 #ifndef V2CPSE2_EXAMPLES_TRACTOR_HPP
 #define V2CPSE2_EXAMPLES_TRACTOR_HPP
 
@@ -18,6 +22,7 @@ private:
     sf::FloatRect seeder_collider;
     sf::FloatRect tractor_collider;
     rectangle blokje;
+
 public:
     tractor( sf::Vector2f position, std::string type = "" );
 
@@ -25,7 +30,7 @@ public:
 
     void move( sf::Vector2f delta, drawable *object);
 
-    void update(std::array<dirt *, 12> farmland);
+    void update(std::vector<dirt *> farmland);
 
     void setRotation( int rotation );
 

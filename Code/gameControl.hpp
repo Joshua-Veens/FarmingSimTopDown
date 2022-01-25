@@ -26,44 +26,19 @@ private:
     sf::Clock clock;
     menu Menu = menu(window);
     bool tractorOrHarvester = true;
-//    particleSystem particle{7000};
     pause_menu pMenu = pause_menu(window);
+
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"level_1.png", sf::Vector2f(0, 0)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(600, 200)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 200)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 200)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(600, 328)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 328)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 328)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(600, 456)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 456)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 456)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(600, 584)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 584)}),
-        std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 584)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), "notHarvesting"}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
 
-    tractor *trekker = dynamic_cast<tractor *>(objects[13].get());
+    tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
+    harvester *combine = dynamic_cast<harvester *>(objects[2].get());
+    farmhouse *barn = dynamic_cast<farmhouse *>(objects[3].get());
 
-    harvester *combine = dynamic_cast<harvester *>(objects[14].get());
-
-    farmhouse *barn = dynamic_cast<farmhouse *>(objects[15].get());
-
-    std::array<dirt *, 12> farmland = {dynamic_cast<dirt *>(objects[1].get()),
-                                       dynamic_cast<dirt *>(objects[2].get()),
-                                       dynamic_cast<dirt *>(objects[3].get()),
-                                       dynamic_cast<dirt *>(objects[4].get()),
-                                       dynamic_cast<dirt *>(objects[5].get()),
-                                       dynamic_cast<dirt *>(objects[6].get()),
-                                       dynamic_cast<dirt *>(objects[7].get()),
-                                       dynamic_cast<dirt *>(objects[8].get()),
-                                       dynamic_cast<dirt *>(objects[9].get()),
-                                       dynamic_cast<dirt *>(objects[10].get()),
-                                       dynamic_cast<dirt *>(objects[11].get()),
-                                       dynamic_cast<dirt *>(objects[12].get())};
+    std::vector<dirt *> farmland {};
 
     action actions[8] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
@@ -87,6 +62,7 @@ private:
 
 public:
     void runGame() {
+        makeFarmLand(36,16);
         if (window.isOpen()){
             Menu.show();
         }
@@ -134,9 +110,6 @@ public:
         for (auto &object : objects) {
             object->draw(window);
         }
-//        sf::Time elapsed = clock.restart();
-//        particle.update(elapsed);
-//        window.draw(particle);
         window.display();
     }
 
@@ -169,6 +142,20 @@ public:
             trekker->changeToAction();
         }else{
             combine->changeToAction();
+        }
+    }
+
+    void makeFarmLand(unsigned int width, unsigned int height){
+        int x = 600;
+        int y = 200;
+        for(unsigned int i=0; i < height; i++){
+            for(unsigned int j=0; j < width; j++){
+                objects.insert( objects.begin()+1,std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock}));
+                farmland.push_back(dynamic_cast<dirt *>(objects[1].get()));
+                x += 32;
+            }
+            x = 600;
+            y += 32;
         }
     }
 };

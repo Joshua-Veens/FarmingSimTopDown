@@ -32,13 +32,14 @@ void tractor::move(sf::Vector2f delta, drawable *object) {
 
     }
     if(type == "seeder"){
-        position += sf::Vector2f(delta.x/2, delta.y/2);
+        position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
     }else if(type == "trekker"){
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
+    this->updateCollider();
 }
 
-void tractor::update(std::array<dirt *, 12> farmland){
+void tractor::update(std::vector<dirt *> farmland){
     for(auto & p : farmland){
         if(p->getBounds().intersects(seeder_collider) && type == "seeder"){
             p->seed();
