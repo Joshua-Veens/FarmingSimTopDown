@@ -9,7 +9,6 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-
 SOURCES += drawable.cpp
 SOURCES += picture.cpp
 SOURCES += gameControl.cpp
@@ -36,7 +35,6 @@ HEADERS += menu.hpp
 HEADERS += pauseMenu.Hpp
 HEADERS += option.hpp
 HEADERS += farmhouse.hpp
-
 
 # other places to look for files for this project
 SEARCH  := 

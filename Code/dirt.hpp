@@ -4,10 +4,8 @@
 #define DIRT_HPP
 #include "drawable.hpp"
 #include "rectangle.hpp"
-#include "particleSystem.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
-
 class dirt : public drawable
 {
 private:

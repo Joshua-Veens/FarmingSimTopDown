@@ -35,7 +35,6 @@ void menu::draw()
     text.setFillColor(sf::Color(91,127,0));
     text.setPosition((sf::Vector2f)window_middle - sf::Vector2f(300,320));
     window.draw(text);
-
     for (auto item : options)
     {
         item.draw(window);
@@ -45,12 +44,10 @@ void menu::draw()
 
 void menu::show()
 {
-
     if (options.size() == 0)
     {
         create();
     }
-
     active = true;
     while (active)
     {
@@ -84,7 +81,6 @@ void menu::showHelp()
     window.display();
     sf::sleep(sf::milliseconds(1000));
 }
-
 
 bool menu::getActive()
 {

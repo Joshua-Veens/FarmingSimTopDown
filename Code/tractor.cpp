@@ -43,51 +43,6 @@ void tractor::setRotation( int rotation ) {
     savedRotation = rotation;
 }
 
-void tractor::changeToNormal(){
-    filename = "trekkerjurgen.png";
-    type = "trekker";
-}
-
-void tractor::changeToAction(){
-    filename = "trekkerseeder.png";
-    type = "seeder";
-}
-
-void tractor::updateCollider(){
-    if(savedRotation == 0){
-        collider.left = position.x - 30;
-        collider.top = position.y + 30;
-        collider.height = 20;
-        collider.width = 60;
-//        blokje.jump(sf::Vector2f(position.x-30, position.y+30));
-//        blokje.setSize(sf::Vector2f(60, 20));
-    }
-    else if(savedRotation == 180){
-        collider.left = position.x - 30;
-        collider.top = position.y - 50;
-        collider.height = 20;
-        collider.width = 60;
-//        blokje.jump(sf::Vector2f(position.x-30, position.y-50));
-//        blokje.setSize(sf::Vector2f(60, 20));
-    }
-    else if(savedRotation == 270){
-        collider.left = position.x + 30;
-        collider.top = position.y - 30;
-        collider.height = 60;
-        collider.width = 20;
-//        blokje.jump(sf::Vector2f(position.x+30, position.y-30));
-//        blokje.setSize(sf::Vector2f(20, 60));
-    }
-    else if(savedRotation == 90){
-        collider.left = position.x - 50;
-        collider.top = position.y - 30;
-        collider.height = 60;
-        collider.width = 20;
-//        blokje.jump(sf::Vector2f(position.x-50, position.y-30));
-//        blokje.setSize(sf::Vector2f(20, 60));
-    }
-}
-
 int tractor::getRotation() {
     return savedRotation;
 }
@@ -95,7 +50,6 @@ int tractor::getRotation() {
 sf::Vector2f tractor::getPosition() {
     return position;
 }
-
 
 void tractor::changeToTractor(){
     filename = "trekkerjurgen.png";
@@ -141,5 +95,4 @@ void tractor::updateCollider(){
 //        blokje.setSize(sf::Vector2f(20, 60));
     }
 }
-
 

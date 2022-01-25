@@ -12,7 +12,6 @@
 #include <memory>
 #include <iostream>
 
-
 class tractor : public vehicle{
 private:
     std::string filename = "trekkerjurgen.png";
@@ -34,19 +33,15 @@ public:
 
     void setRotation( int rotation );
 
-    void changeToNormal();
-
-    void changeToAction();
-
-    void updateCollider();
-
     int getRotation();
 
+    sf::Vector2f getPosition();
+
+    void changeToTractor();
+
+    void changeToSeeder();
 
     void updateCollider();
-
-
-    sf::Vector2f getPosition();
 
 };
 
