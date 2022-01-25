@@ -41,14 +41,11 @@ private:
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(728, 584)}),
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 584)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), "notHarvesting"}),
         std::shared_ptr<drawable>(new picture{"farmhouse.png", sf::Vector2f(100, 450)})};
 
     tractor *trekker = dynamic_cast<tractor *>(objects[13].get());
     harvester *combine = dynamic_cast<harvester *>(objects[14].get());
-
-    farmhouse *barn = dynamic_cast<farmhouse *>(objects[14].get());
 
     std::array<dirt *, 12> farmland = {dynamic_cast<dirt *>(objects[1].get()),
                                        dynamic_cast<dirt *>(objects[2].get()),
@@ -68,7 +65,6 @@ private:
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
         //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
         //            action( sf::Keyboard::S, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, +1.0 )); objectlist["Trekker"].setRotation(225); }),
-
 
         action(sf::Keyboard::W, [&](){ movement(sf::Vector2f(0.0, -4.0), 0);}),
         action(sf::Keyboard::S, [&](){ movement(sf::Vector2f(0.0, +4.0), 180);}),
