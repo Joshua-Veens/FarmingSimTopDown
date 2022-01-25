@@ -1,6 +1,3 @@
-//
-// Created by joshu on 01/12/2021.
-
 #ifndef V2CPSE2_EXAMPLES_PICTURE_HPP
 #define V2CPSE2_EXAMPLES_PICTURE_HPP
 
@@ -17,10 +14,7 @@ private:
 public:
     picture( std::string filename, sf::Vector2f position, std::string type = "" );
 
-    picture();
-
-    void draw( sf::RenderWindow & window ) override;
-
+    virtual void draw( sf::RenderWindow & window ) override;
 };
 
 

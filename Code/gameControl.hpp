@@ -15,6 +15,7 @@
 #include "harvester.hpp"
 #include "menu.hpp"
 #include "pauseMenu.hpp"
+#include "farmhouse.hpp"
 
 class gameControl
 {
@@ -43,10 +44,13 @@ private:
         std::shared_ptr<drawable>(new dirt{sf::Vector2f(856, 584)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), "notHarvesting"}),
-        std::shared_ptr<drawable>(new picture{"farmhouse.png", sf::Vector2f(100, 450)})};
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
 
     tractor *trekker = dynamic_cast<tractor *>(objects[13].get());
+
     harvester *combine = dynamic_cast<harvester *>(objects[14].get());
+
+    farmhouse *barn = dynamic_cast<farmhouse *>(objects[15].get());
 
     std::array<dirt *, 12> farmland = {dynamic_cast<dirt *>(objects[1].get()),
                                        dynamic_cast<dirt *>(objects[2].get()),
@@ -146,7 +150,7 @@ public:
 
     void movement(sf::Vector2f speed, int rotation){
         if(tractorOrHarvester){
-            trekker->move( speed); trekker->setRotation(rotation);
+            trekker->move(speed, barn); trekker->setRotation(rotation);
         }else{
             combine->move(speed); combine->setRotation(rotation);
         }
