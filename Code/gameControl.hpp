@@ -14,6 +14,7 @@
 #include "tractor.hpp"
 #include "harvester.hpp"
 #include "menu.hpp"
+#include "pauseMenu.hpp"
 
 class gameControl
 {
