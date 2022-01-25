@@ -9,7 +9,7 @@ menu::menu(sf::RenderWindow &window) : window(window)
 void menu::create()
 {
     options.push_back(option(
-        "start", (sf::Vector2f)window_middle - sf::Vector2f(0, 80), [this]
+        "start", (sf::Vector2f)window_middle - sf::Vector2f(15, 80), [this]
         { active = false; },
         font_file));
     options.push_back(option(
@@ -17,8 +17,8 @@ void menu::create()
         { showHelp(); },
         font_file));
     options.push_back(option(
-        "exit", (sf::Vector2f)window_middle + sf::Vector2f(0, 80), []
-        { exit(0); },
+        "exit", (sf::Vector2f)window_middle + sf::Vector2f(0, 80), [this]
+        { window.close(); exit(0); },
         font_file));
 }
 
