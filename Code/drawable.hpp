@@ -5,7 +5,7 @@
 #ifndef V2CPSE2_EXAMPLES_DRAWABLE_HPP
 #define V2CPSE2_EXAMPLES_DRAWABLE_HPP
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics.hpp>
 
 class drawable {
 public:
