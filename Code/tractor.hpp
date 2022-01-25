@@ -21,6 +21,7 @@ private:
     int savedRotation = 0;
     sf::FloatRect collider;
 //    rectangle blokje;
+
 public:
     tractor( sf::Vector2f position, std::string type = "" );
 
@@ -28,7 +29,7 @@ public:
 
     void move( sf::Vector2f delta );
 
-    void update(std::array<dirt *, 12> farmland);
+    void update(std::vector<dirt *> farmland);
 
     void setRotation( int rotation );
 

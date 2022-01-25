@@ -22,16 +22,16 @@ void tractor::draw(sf::RenderWindow &window) {
 
 void tractor::move(sf::Vector2f delta) {
     if(type == "seeder"){
-        position += sf::Vector2f(delta.x/2, delta.y/2);
+        position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
     }else if(type == "trekker"){
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
     this->updateCollider();
 }
 
-void tractor::update(std::array<dirt *, 12> farmland){
+void tractor::update(std::vector<dirt *> farmland){
     for(auto & p : farmland){
-        if(p->getBounds().intersects(collider)){
+        if(p->getBounds().intersects(collider) && type == "seeder"){
             p->seed();
         }
         p->update();
