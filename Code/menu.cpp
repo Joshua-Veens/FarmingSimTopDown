@@ -9,15 +9,15 @@ menu::menu(sf::RenderWindow &window) : window(window)
 void menu::create()
 {
     options.push_back(option(
-        "start", (sf::Vector2f)window_middle - sf::Vector2f(15, 80), [this]
+        "start", (sf::Vector2f)window_middle - sf::Vector2f(665, 150), [this]
         { active = false; },
         font_file));
     options.push_back(option(
-        "help", (sf::Vector2f)window_middle - sf::Vector2f(0, 0), [this]
+        "help", (sf::Vector2f)window_middle - sf::Vector2f(650, 70), [this]
         { showHelp(); },
         font_file));
     options.push_back(option(
-        "exit", (sf::Vector2f)window_middle + sf::Vector2f(0, 80), [this]
+        "exit", (sf::Vector2f)window_middle + sf::Vector2f(-650, 10), [this]
         { window.close(); exit(0); },
         font_file));
 }
@@ -33,7 +33,7 @@ void menu::draw()
     text.setCharacterSize(60);
     text.setStyle(sf::Text::Bold);
     text.setFillColor(sf::Color(91,127,0));
-    text.setPosition((sf::Vector2f)window_middle - sf::Vector2f(300,320));
+    text.setPosition((sf::Vector2f)window_middle - sf::Vector2f(900,420));
     window.draw(text);
     for (auto item : options)
     {
