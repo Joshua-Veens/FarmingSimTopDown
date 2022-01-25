@@ -5,12 +5,12 @@
 #ifndef V2CPSE2_EXAMPLES_TRACTOR_HPP
 #define V2CPSE2_EXAMPLES_TRACTOR_HPP
 
+#include "SFML/Graphics.hpp"
 #include "vehicle.hpp"
 #include "rectangle.hpp"
 #include "farmhouse.hpp"
 #include "dirt.hpp"
 #include <memory>
-#include <iostream>
 
 class tractor : public vehicle{
 private:
@@ -40,14 +40,15 @@ public:
 
     void setPosition(sf::Vector2f location);
 
-    void changeToTractor();
+    void changeToNormal();
 
-    void changeToSeeder();
+    void changeToAction();
 
     void updateCollider();
 
-    sf::FloatRect getBounds();
+    int getRotation();
 
+    sf::Vector2f getPosition();
 };
 
 

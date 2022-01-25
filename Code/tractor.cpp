@@ -53,6 +53,7 @@ void tractor::setRotation( int rotation ) {
     savedRotation = rotation;
 }
 
+
 int tractor::getRotation() {
     return savedRotation;
 }
@@ -65,12 +66,12 @@ void tractor::setPosition(sf::Vector2f location){
     position = location;
 }
 
-void tractor::changeToTractor(){
+void tractor::changeToNormal(){
     filename = "trekkerjurgen.png";
     type = "trekker";
 }
 
-void tractor::changeToSeeder(){
+void tractor::changeToAction(){
     filename = "trekkerseeder.png";
     type = "seeder";
 }
@@ -130,8 +131,12 @@ void tractor::updateCollider(){
     }
 }
 
-sf::FloatRect tractor::getBounds(){
-    return tractor_collider;
+
+int tractor::getRotation() {
+    return savedRotation;
 }
 
+sf::Vector2f tractor::getPosition() {
+    return position;
+}
 

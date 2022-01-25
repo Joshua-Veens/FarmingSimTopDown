@@ -17,7 +17,9 @@ private:
 public:
     picture( std::string filename, sf::Vector2f position, std::string type = "" );
 
-    virtual void draw( sf::RenderWindow & window ) override;
+    picture();
+
+    void draw( sf::RenderWindow & window ) override;
 
 };
 
