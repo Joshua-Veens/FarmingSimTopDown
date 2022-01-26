@@ -23,7 +23,7 @@ public:
 
     void draw( sf::RenderWindow & window ) override;
 
-    void move( sf::Vector2f delta );
+    void move( sf::Vector2f delta, drawable * barn ) override;
 
     void update(std::vector<dirt *> farmland);
 
