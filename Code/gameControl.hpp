@@ -20,7 +20,7 @@
 class gameControl
 {
 private:
-    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
+    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window",sf::Style::Fullscreen};
     bool busy = false;
     //    sf::Time elapsedTime, updateTime = sf::milliseconds(20);
     sf::Clock clock;
@@ -95,12 +95,14 @@ public:
             //            clock.restart();
 
             sf::Event event;
+            sf::View view = window.getDefaultView();
             while (window.pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
                 {
                     window.close();
                 }
+
             }
         }
     }
