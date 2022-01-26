@@ -125,7 +125,7 @@ public:
         if(tractorOrHarvester){
             trekker->move(speed, barn); trekker->setRotation(rotation);
         }else{
-            combine->move(speed); combine->setRotation(rotation);
+            combine->move(speed, barn); combine->setRotation(rotation);
         }
     }
 

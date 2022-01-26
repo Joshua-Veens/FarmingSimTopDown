@@ -29,14 +29,13 @@ void tractor::move(sf::Vector2f delta, drawable *object) {
         }
     }
     if(object->getChangeCollider().intersects(tractor_collider)){
-
+//       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
     }
     if(type == "seeder"){
         position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
     }else if(type == "trekker"){
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
-    this->updateCollider();
 }
 
 void tractor::update(std::vector<dirt *> farmland){

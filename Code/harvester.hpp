@@ -9,6 +9,7 @@
 #include "SFML/Graphics.hpp"
 #include <memory>
 #include "dirt.hpp"
+#include "farmhouse.hpp"
 
 class harvester : public vehicle{
 private:
@@ -19,14 +20,14 @@ private:
     sf::Sprite sprite;
     int savedRotation = 0;
     sf::FloatRect collider;
-//    rectangle blokje;
+    rectangle blokje;
 
 public:
     harvester(sf::Vector2f position, std::string type);
 
     void draw( sf::RenderWindow & window ) override;
 
-    void move( sf::Vector2f delta );
+    void move( sf::Vector2f delta, drawable *object);
 
     void update(std::vector<dirt *> farmland);
 
