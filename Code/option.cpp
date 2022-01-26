@@ -17,7 +17,7 @@ void option::draw(sf::RenderWindow &window)
 }
 void option::update(sf::RenderWindow &window)
 {
-    sf::Vector2f mouse_pos = (sf::Vector2f(sf::Mouse::getPosition(window)));
+    sf::Vector2f mouse_pos = (sf::Vector2f(sf::Mouse::getPosition()));
     sf::Font font;
     font.loadFromFile(font_file);
     sf::Text text(text_string, font);
