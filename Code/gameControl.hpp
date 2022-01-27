@@ -59,7 +59,7 @@ private:
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
         action(sf::Keyboard::R, [&]()
-               { Player.swapVehicle(); }),
+               { Player.swapVehicle(clock); }),
 
         action(sf::Keyboard::Escape, [this]
                {if(Menu.getActive() || pMenu.getActive()){
