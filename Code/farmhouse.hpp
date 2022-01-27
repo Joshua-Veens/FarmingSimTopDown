@@ -1,7 +1,6 @@
 #ifndef FARMHOUSE_HPP
 #define FARMHOUSE_HPP
 
-#include "tractor.hpp"
 #include "rectangle.hpp"
 
 class farmhouse : public drawable{
