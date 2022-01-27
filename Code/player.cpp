@@ -7,11 +7,19 @@ vehicle *player::getVehicle()
     return vehicles[active];
 }
 
-void player::swapVehicle() // tractorOrHarvester
+void player::swapVehicle(sf::Clock &clock) // tractorOrHarvester
 {
-    if(active == trekker){
-        active = combine;
-    }else{
-        active = trekker;
+    sf::Time time = clock.getElapsedTime();
+    clock.restart();
+    if (time.asMilliseconds() > 500)
+    {
+        if (active == trekker)
+        {
+            active = combine;
+        }
+        else
+        {
+            active = trekker;
+        }
     }
 }

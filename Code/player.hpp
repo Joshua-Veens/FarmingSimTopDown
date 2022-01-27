@@ -11,7 +11,7 @@ enum active_t {trekker=0,combine=1};
 active_t active = trekker; 
 public:
     player(std::array<vehicle *,2> & vehicles);
-    void swapVehicle(); //tractorOrHarvester
+    void swapVehicle(sf::Clock & clock); //tractorOrHarvester
     vehicle * getVehicle();
 };
 
