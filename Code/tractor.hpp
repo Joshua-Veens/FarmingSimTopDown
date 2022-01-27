@@ -7,11 +7,13 @@
 #include "dirt.hpp"
 #include <memory>
 
+
 class tractor : public vehicle{
 private:
     std::string filename = "images\\trekkerjurgen.png";
     sf::Vector2f position;
-    std::string type;
+    enum tractorTypes{trekker=0, seeder=1};
+    tractorTypes active_type = trekker;
     sf::Texture image;
     sf::Sprite sprite;
     int savedRotation = 0;
@@ -20,7 +22,7 @@ private:
     rectangle blokje;
 
 public:
-    tractor( sf::Vector2f position, std::string type = "" );
+    tractor( sf::Vector2f position);
 
     void draw( sf::RenderWindow & window ) override;
 

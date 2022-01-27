@@ -1,8 +1,7 @@
 #include "tractor.hpp"
 
-tractor::tractor( sf::Vector2f position, std::string type):
+tractor::tractor( sf::Vector2f position):
         position(position),
-        type(type),
         seeder_collider(position.x-30, position.y+30, 60, 20),
         tractor_collider(position.x-10, position.y-36, 20, 5),
         blokje(sf::Vector2f(position.x-10,position.y-36), sf::Vector2f(20, 5))
@@ -27,16 +26,16 @@ void tractor::move(sf::Vector2f delta, drawable *object) {
     if(object->getCollider().intersects(tractor_collider)){
 //       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
     }
-    if(type == "seeder"){
+    if(active_type == 1){
         position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
-    }else if(type == "trekker"){
+    }else if(active_type == 0){
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
 }
 
 void tractor::update(std::vector<dirt *> farmland){
     for(auto & p : farmland){
-        if(p->getBounds().intersects(seeder_collider) && type == "seeder"){
+        if(p->getBounds().intersects(seeder_collider) && active_type == 1){
             p->seed();
         }
         p->update();
@@ -50,12 +49,12 @@ void tractor::setRotation( int rotation ) {
 
 void tractor::changeToNormal(){
     filename = "images\\trekkerjurgen.png";
-    type = "trekker";
+    active_type = trekker;
 }
 
 void tractor::changeToAction(){
     filename = "images\\trekkerseeder.png";
-    type = "seeder";
+    active_type = seeder;
 }
 
 void tractor::updateCollider(){
