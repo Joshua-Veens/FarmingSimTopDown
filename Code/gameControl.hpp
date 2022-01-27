@@ -21,7 +21,7 @@
 class gameControl
 {
 private:
-    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window", sf::Style::Fullscreen};
+    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     //    sf::Time elapsedTime, updateTime = sf::milliseconds(20);
     sf::Clock clock;

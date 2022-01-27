@@ -20,7 +20,7 @@ public:
 
     std::vector<sf::FloatRect> getColliders() override;
 
-    sf::FloatRect getChangeCollider() override;
+    sf::FloatRect getCollider() override;
 
 };
 

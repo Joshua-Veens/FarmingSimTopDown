@@ -35,6 +35,6 @@ std::vector<sf::FloatRect> farmhouse::getColliders() {
     return colliders;
 }
 
-sf::FloatRect farmhouse::getChangeCollider() {
+sf::FloatRect farmhouse::getCollider() {
     return collider_change;
 }
