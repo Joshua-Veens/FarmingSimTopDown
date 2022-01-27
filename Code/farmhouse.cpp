@@ -21,6 +21,7 @@ void farmhouse::draw(sf::RenderWindow &window){
     sprite.setTexture(image);
     sprite.setPosition(position);
     window.draw(sprite);
+
     upper_rectangle.draw(window);
 
     left_rectangle.draw(window);
@@ -35,6 +36,6 @@ std::vector<sf::FloatRect> farmhouse::getColliders() {
     return colliders;
 }
 
-sf::FloatRect farmhouse::getChangeCollider() {
+sf::FloatRect farmhouse::getCollider() {
     return collider_change;
 }

@@ -11,7 +11,7 @@ public:
         return std::vector<sf::FloatRect> {};
     };
 
-    virtual sf::FloatRect getChangeCollider(){
+    virtual sf::FloatRect getCollider(){
         return sf::FloatRect(0,0,0,0);
     }
 };

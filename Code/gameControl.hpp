@@ -21,16 +21,16 @@
 class gameControl
 {
 private:
-    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window", sf::Style::Fullscreen};
+    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     //    sf::Time elapsedTime, updateTime = sf::milliseconds(20);
     sf::Clock clock;
     menu Menu = menu(window);
     pause_menu pMenu = pause_menu(window);
     std::vector<std::shared_ptr<drawable>> objects = {
-        std::shared_ptr<drawable>(new picture{"level_1.png", sf::Vector2f(0, 0)}),
+        std::shared_ptr<drawable>(new picture{"images\\level_1.png", sf::Vector2f(0, 0)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
-        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), "notHarvesting"}),
+        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), notHarvesting}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
 
     tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
@@ -59,7 +59,7 @@ private:
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
         action(sf::Keyboard::R, [&]()
-               { Player.swapVehicle(); }),
+               { Player.swapVehicle(clock); }),
 
         action(sf::Keyboard::Escape, [this]
                {if(Menu.getActive() || pMenu.getActive()){
@@ -151,7 +151,7 @@ public:
         {
             for (unsigned int j = 0; j < width; j++)
             {
-                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock}));
+                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock, wheat}));
                 farmland.push_back(dynamic_cast<dirt *>(objects[1].get()));
                 x += 32;
             }

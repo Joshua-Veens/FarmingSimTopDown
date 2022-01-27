@@ -1,12 +1,11 @@
 #ifndef FARMHOUSE_HPP
 #define FARMHOUSE_HPP
 
-#include "tractor.hpp"
 #include "rectangle.hpp"
 
 class farmhouse : public drawable{
 private:
-    std::string filename = "farmhouse.png";
+    std::string filename = "images\\farmhouse.png";
     sf::Vector2f position;
     sf::Texture image;
     sf::Sprite sprite;
@@ -20,7 +19,7 @@ public:
 
     std::vector<sf::FloatRect> getColliders() override;
 
-    sf::FloatRect getChangeCollider() override;
+    sf::FloatRect getCollider() override;
 
 };
 

@@ -1,17 +1,12 @@
-//
-// Created by joshu on 20-1-2022.
-//
-
 #include "tractor.hpp"
 
-tractor::tractor( sf::Vector2f nposition, std::string type):
+tractor::tractor( sf::Vector2f position, std::string type):
+        position(position),
         type(type),
         seeder_collider(position.x-30, position.y+30, 60, 20),
         tractor_collider(position.x-10, position.y-36, 20, 5),
         blokje(sf::Vector2f(position.x-10,position.y-36), sf::Vector2f(20, 5))
-{
-    position = nposition;
-}
+{}
 
 void tractor::draw(sf::RenderWindow &window) {
     this->updateCollider();
@@ -29,15 +24,14 @@ void tractor::move(sf::Vector2f delta, drawable *object) {
             return;
         }
     }
-    if(object->getChangeCollider().intersects(tractor_collider)){
-
+    if(object->getCollider().intersects(tractor_collider)){
+//       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
     }
     if(type == "seeder"){
         position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
     }else if(type == "trekker"){
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
-    this->updateCollider();
 }
 
 void tractor::update(std::vector<dirt *> farmland){
@@ -49,14 +43,18 @@ void tractor::update(std::vector<dirt *> farmland){
     }
 }
 
+void tractor::setRotation( int rotation ) {
+    sprite.setRotation(rotation);
+    savedRotation = rotation;
+}
 
 void tractor::changeToNormal(){
-    filename = "trekkerjurgen.png";
+    filename = "images\\trekkerjurgen.png";
     type = "trekker";
 }
 
 void tractor::changeToAction(){
-    filename = "trekkerseeder.png";
+    filename = "images\\trekkerseeder.png";
     type = "seeder";
 }
 
@@ -115,3 +113,14 @@ void tractor::updateCollider(){
     }
 }
 
+int tractor::getRotation() {
+    return savedRotation;
+}
+
+sf::Vector2f tractor::getPosition() {
+    return position;
+}
+
+void tractor::setPosition(sf::Vector2f location){
+    position = location;
+}
