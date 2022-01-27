@@ -21,7 +21,6 @@ void farmhouse::draw(sf::RenderWindow &window){
     sprite.setTexture(image);
     sprite.setPosition(position);
     window.draw(sprite);
-
     upper_rectangle.draw(window);
 
     left_rectangle.draw(window);

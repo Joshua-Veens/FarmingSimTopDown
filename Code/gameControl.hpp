@@ -29,8 +29,8 @@ private:
     pause_menu pMenu = pause_menu(window);
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\level_1.png", sf::Vector2f(0, 0)}),
-        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
-        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), notHarvesting}),
+        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
+        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
 
     tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
@@ -59,7 +59,7 @@ private:
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
         action(sf::Keyboard::R, [&]()
-               { Player.swapVehicle(clock); }),
+               { Player.swapVehicle(); }),
 
         action(sf::Keyboard::Escape, [this]
                {if(Menu.getActive() || pMenu.getActive()){
@@ -151,7 +151,7 @@ public:
         {
             for (unsigned int j = 0; j < width; j++)
             {
-                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock, wheat}));
+                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock, corn}));
                 farmland.push_back(dynamic_cast<dirt *>(objects[1].get()));
                 x += 32;
             }
