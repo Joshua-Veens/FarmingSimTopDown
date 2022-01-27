@@ -94,7 +94,6 @@ void dirt::draw(sf::RenderWindow &window)
 {
     sprite.setTexture(texture, true);
     sprite.setPosition(position);
-    sprite.setScale(0.25,0.25);
     window.draw(sprite);
     particles.updatePool(window);
 }

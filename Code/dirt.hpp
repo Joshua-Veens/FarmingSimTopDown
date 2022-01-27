@@ -26,10 +26,14 @@ private:
     state_t state = unseeded;
     sf::Vector2f position;
     std::vector<std::vector<std::string>> crops = {
-            {"farmlands\\farmland.png", "farmlands\\farmland_seeds.png",
-             "farmlands\\farmland_growing_1.png", "farmlands\\farmland_growing_2.png",
-             "farmlands\\farmland_growing_3.png", "farmlands\\farmland_growing_4.png",
-             "farmlands\\farmland_grown.png"}
+            {"farmlands\\farmland.png", "wheat\\farmland_seeds.png",
+             "wheat\\wheat_growing_1.png", "wheat\\wheat_growing_2.png",
+             "wheat\\wheat_growing_3.png", "wheat\\wheat_growing_4.png",
+             "wheat\\wheat_grown.png"},
+            {"farmlands\\farmland.png", "corn\\farmland_seeds.png",
+             "corn\\corn_growing_1.png", "corn\\corn_growing_2.png",
+             "corn\\corn_growing_3.png", "corn\\corn_growing_4.png",
+             "corn\\corn_grown.png"}
     };
     type active_type = wheat;
     int cropcounter = 0;
