@@ -21,6 +21,9 @@ public:
     int getRotation();
     sf::Vector2f getPosition();
     void setPosition(sf::Vector2f location);
+    virtual void move(sf::Vector2f delta, drawable *object) = 0;
+    virtual void changeToNormal() = 0;
+    virtual void changeToAction() = 0;
 };
 
 

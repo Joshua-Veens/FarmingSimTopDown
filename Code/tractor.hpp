@@ -23,10 +23,10 @@ private:
 public:
     tractor( sf::Vector2f position, std::string type = "" );
     void draw( sf::RenderWindow & window ) override;
-    void move( sf::Vector2f delta, drawable *object);
+    void move( sf::Vector2f delta, drawable *object) override ;
     void update(std::vector<dirt *> farmland);
-    void changeToNormal();
-    void changeToAction();
+    void changeToNormal() override;
+    void changeToAction() override ;
     void updateCollider();
 };
 

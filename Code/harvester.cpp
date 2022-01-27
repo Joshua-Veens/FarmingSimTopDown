@@ -21,7 +21,7 @@ void harvester::draw(sf::RenderWindow &window) {
 //    blokje.draw(window);
 }
 
-void harvester::move(sf::Vector2f delta) {
+void harvester::move(sf::Vector2f delta, drawable * barn) {
     if(type == "harvesting"){
         position += sf::Vector2f(delta.x/2, delta.y/2);
     }else if(type == "notHarvesting"){
