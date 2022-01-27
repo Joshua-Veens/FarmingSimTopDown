@@ -30,7 +30,7 @@ private:
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\level_1.png", sf::Vector2f(0, 0)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
-        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), "notHarvesting"}),
+        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), notHarvesting}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
 
     tractor *trekker = dynamic_cast<tractor *>(objects[1].get());

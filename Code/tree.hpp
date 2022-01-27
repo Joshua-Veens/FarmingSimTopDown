@@ -5,7 +5,7 @@
 
 class tree : public drawable{
 private:
-    std::string filename = "tree.png";
+    std::string filename = "images\\tree.png";
     sf::Vector2f position;
     sf::Texture image;
     sf::Sprite sprite;

@@ -24,7 +24,7 @@ void menu::create()
 
 void menu::draw()
 {
-    picture bkg("mainBack.png",sf::Vector2f(0,0));
+    picture bkg("images\\mainBack.png",sf::Vector2f(0,0));
     bkg.draw(window);
     sf::Font font;
     font.loadFromFile(font_file);
