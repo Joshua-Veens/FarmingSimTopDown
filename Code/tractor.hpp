@@ -9,7 +9,7 @@
 
 class tractor : public vehicle{
 private:
-    std::string filename = "trekkerjurgen.png";
+    std::string filename = "images\\trekkerjurgen.png";
     sf::Vector2f position;
     std::string type;
     sf::Texture image;

@@ -6,7 +6,7 @@
 
 class farmhouse : public drawable{
 private:
-    std::string filename = "farmhouse.png";
+    std::string filename = "images\\farmhouse.png";
     sf::Vector2f position;
     sf::Texture image;
     sf::Sprite sprite;

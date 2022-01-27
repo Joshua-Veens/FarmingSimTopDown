@@ -7,11 +7,13 @@
 #include "dirt.hpp"
 #include "farmhouse.hpp"
 
+enum harversterTypes{harvesting=0, notHarvesting=1};
+
 class harvester : public vehicle{
 private:
-    std::string filename = "harvester_closed.png";
+    std::string filename = "images\\harvester_closed.png";
     sf::Vector2f position;
-    std::string type;
+    harversterTypes active_type = notHarvesting;
     sf::Texture image;
     sf::Sprite sprite;
     int savedRotation = 0;
@@ -19,19 +21,19 @@ private:
     rectangle blokje;
 
 public:
-    harvester(sf::Vector2f position, std::string type);
+    harvester(sf::Vector2f position, harversterTypes active_type);
 
     void draw( sf::RenderWindow & window ) override;
 
-    void move( sf::Vector2f delta, drawable *object);
+    void move( sf::Vector2f delta, drawable *object) override;
 
     void update(std::vector<dirt *> farmland);
 
     void setRotation( int rotation ) override;
 
-    void changeToNormal();
+    void changeToNormal() override;
 
-    void changeToAction();
+    void changeToAction() override;
 
     void updateCollider();
 

@@ -1,8 +1,8 @@
 #include "harvester.hpp"
 
-harvester::harvester(sf::Vector2f position, std::string type) :
+harvester::harvester(sf::Vector2f position, harversterTypes active_type) :
         position(position),
-        type(type),
+        active_type(active_type),
         collider(position.x - 40, position.y - 42, 80, 20),
         blokje(sf::Vector2f(position.x-40,position.y-42), sf::Vector2f(80, 20))
 {}
@@ -26,16 +26,16 @@ void harvester::move(sf::Vector2f delta, drawable *object) {
     if(object->getCollider().intersects(collider)){
 //       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
     }
-    if(type == "harvesting"){
+    if(active_type == 0){
         position += sf::Vector2f(delta.x/2, delta.y/2);
-    }else if(type == "notHarvesting"){
+    }else if(active_type == 1){
         position += sf::Vector2f(delta.x, delta.y);
     }
 }
 
 void harvester::update(std::vector<dirt *> farmland){
     for(auto & p : farmland){
-        if(p->getBounds().intersects(collider) && type == "harvesting"){
+        if(p->getBounds().intersects(collider) && active_type == 1){
             p->harvest();
         }
     }
@@ -47,13 +47,13 @@ void harvester::setRotation( int rotation ) {
 }
 
 void harvester::changeToNormal(){
-    filename = "harvester_closed.png";
-    type = "notHarvesting";
+    filename = "images\\harvester_closed.png";
+    active_type = notHarvesting;
 }
 
 void harvester::changeToAction(){
-    filename = "harvester.png";
-    type = "harvesting";
+    filename = "images\\harvester.png";
+    active_type = harvesting;
 }
 
 void harvester::updateCollider(){

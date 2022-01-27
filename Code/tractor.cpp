@@ -49,12 +49,12 @@ void tractor::setRotation( int rotation ) {
 }
 
 void tractor::changeToNormal(){
-    filename = "trekkerjurgen.png";
+    filename = "images\\trekkerjurgen.png";
     type = "trekker";
 }
 
 void tractor::changeToAction(){
-    filename = "trekkerseeder.png";
+    filename = "images\\trekkerseeder.png";
     type = "seeder";
 }
 
