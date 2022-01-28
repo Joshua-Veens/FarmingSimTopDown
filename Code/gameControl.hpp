@@ -4,7 +4,7 @@
 
 #ifndef V2CPSE2_EXAMPLES_GAMECONTROL_HPP
 #define V2CPSE2_EXAMPLES_GAMECONTROL_HPP
-
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
@@ -17,6 +17,7 @@
 #include "pauseMenu.hpp"
 #include "farmhouse.hpp"
 #include "player.hpp"
+#include "saver.hpp"
 
 class gameControl
 {
@@ -29,8 +30,8 @@ private:
     pause_menu pMenu = pause_menu(window);
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\level_1.png", sf::Vector2f(0, 0)}),
-        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200), "trekker"}),
-        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200), notHarvesting}),
+        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
+        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
 
     tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
@@ -69,13 +70,16 @@ private:
 public:
     void runGame()
     {
+
         makeFarmLand(36, 16);
+        saver Save(Player, farmland);
         if (window.isOpen())
         {
             Menu.show();
         }
+
         while (window.isOpen())
-        { 
+        {
             for (auto &action : actions)
             {
                 action.setBusy(busy);
@@ -84,6 +88,22 @@ public:
             {
                 action();
             }
+
+            sf::View view = window.getView();
+            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
+            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+            std::cout << windowsize.x << "\n";
+            float tile_x, tile_y;
+            if (playerpos.x > 0)
+                tile_x = (floor((playerpos.x + (windowsize.x / 2)) / windowsize.x)) * windowsize.x;
+            else
+                tile_x = (ceil((playerpos.x - (windowsize.x / 2)) / windowsize.x)) * windowsize.x;
+            if (playerpos.y > 0)
+                tile_y = (floor((playerpos.y + (windowsize.y / 2)) / windowsize.y)) * windowsize.y;
+            else
+                tile_y = (ceil((playerpos.y - (windowsize.y / 2)) / windowsize.y)) * windowsize.y;
+            view.setCenter(tile_x, tile_y);
+            window.setView(view);
 
             //            sf::Vector2f positionTractor = trekker->getPosition();
             //            particle.setEmitter(positionTractor);
@@ -106,12 +126,17 @@ public:
             //             clock.restart();
 
             sf::Event event;
-            sf::View view = window.getDefaultView();
             while (window.pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
                 {
                     window.close();
+                    Save.save("save.txt");
+                }
+                if (event.type == sf::Event::Resized)
+                {
+                    view.setSize(event.size.width, event.size.height);
+                    window.setView(view);
                 }
             }
         }
@@ -151,7 +176,7 @@ public:
         {
             for (unsigned int j = 0; j < width; j++)
             {
-                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock, wheat}));
+                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock, corn}));
                 farmland.push_back(dynamic_cast<dirt *>(objects[1].get()));
                 x += 32;
             }

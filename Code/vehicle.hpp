@@ -7,17 +7,17 @@
 
 #include "drawable.hpp"
 
-class vehicle : public drawable{
-private:
-    virtual void draw( sf::RenderWindow & window ){};
-
-public:
+class vehicle : public drawable
+{
+protected:
+    virtual void draw(sf::RenderWindow &window){};
     int savedRotation = 0;
     sf::Sprite sprite;
-    sf::Vector2f position = {0,0};
+    sf::Vector2f position = {0, 0};
 
-
-    virtual void setRotation( int rotation );
+public:
+    vehicle(sf::Vector2f position);
+    virtual void setRotation(int rotation);
     int getRotation();
     sf::Vector2f getPosition();
     void setPosition(sf::Vector2f location);
@@ -26,5 +26,4 @@ public:
     virtual void changeToAction() = 0;
 };
 
-
-#endif //V2CPSE2_EXAMPLES_VEHICLE_HPP
+#endif // V2CPSE2_EXAMPLES_VEHICLE_HPP

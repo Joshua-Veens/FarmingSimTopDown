@@ -1,8 +1,7 @@
 #include "harvester.hpp"
 
-harvester::harvester(sf::Vector2f position, harversterTypes active_type) :
-        position(position),
-        active_type(active_type),
+harvester::harvester(sf::Vector2f position) :
+        vehicle(position),
         collider(position.x - 40, position.y - 42, 80, 20),
         blokje(sf::Vector2f(position.x-40,position.y-42), sf::Vector2f(80, 20))
 {}
