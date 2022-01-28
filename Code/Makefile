@@ -24,10 +24,7 @@ SOURCES += drawable.cpp
         SOURCES += pauseMenu.cpp
         SOURCES += option.cpp
         SOURCES += player.cpp
-        SOURCES += saver.cpp
-        SOURCES += loader.cpp
         SOURCES += inventory.cpp
-
 
 # header files in this project
 HEADERS += drawable.hpp
@@ -45,12 +42,7 @@ HEADERS += drawable.hpp
         HEADERS += pauseMenu.hpp
         HEADERS += option.hpp
         HEADERS += player.hpp
-        HEADERS += saver.hpp
-        HEADERS += base64.hpp
-        HEADERS += loader.hpp
-
         HEADERS += inventory.hpp
-
 
 # other places to look for files for this project
 SEARCH  :=

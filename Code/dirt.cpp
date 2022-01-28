@@ -1,9 +1,7 @@
 #include "dirt.hpp"
 #include "iostream"
 
-
 dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type, class inventory * inventory):
-
     position(position),
     active_type(active_type),
     clock(clock),
@@ -20,7 +18,6 @@ void dirt::seed()
     {
         state = seeded;
         cropcounter++;
-
         inventory->setHarvest(active_type);
         image.loadFromFile(crops[active_type][cropcounter]);
         texture.loadFromImage(image);

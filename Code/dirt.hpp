@@ -8,10 +8,6 @@
 #include "inventory.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <sstream>
-#include "base64.hpp"
-
-enum type {wheat=0,corn=1};
 
 
 class dirt : public drawable
@@ -50,6 +46,7 @@ private:
     particlePool particles = particlePool(40);
     inventory * inventory;
     sf::FloatRect collider;
+
 public:
     dirt(sf::Vector2f position, sf::Clock & clock, type active_type, class inventory * inventory);
     void draw(sf::RenderWindow &window);
@@ -57,9 +54,7 @@ public:
     bool harvest(); // changes img_file back to unseeded if it's possible to harvest and returns true, retruns false if it not possible to harvest
     void update();
     sf::FloatRect getBounds();
-    friend std::ostream & operator<<(std::ostream & lhs, dirt Dirt){
-        return lhs << "Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type;;
-    }
+
 };
 
 #endif
