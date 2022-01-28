@@ -26,6 +26,8 @@ SOURCES += drawable.cpp
         SOURCES += player.cpp
         SOURCES += saver.cpp
         SOURCES += loader.cpp
+        SOURCES += inventory.cpp
+
 
 # header files in this project
 HEADERS += drawable.hpp
@@ -46,6 +48,9 @@ HEADERS += drawable.hpp
         HEADERS += saver.hpp
         HEADERS += base64.hpp
         HEADERS += loader.hpp
+
+        HEADERS += inventory.hpp
+
 
 # other places to look for files for this project
 SEARCH  :=
