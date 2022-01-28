@@ -1,11 +1,12 @@
 #include "picture.hpp"
 #include <iostream>
 
-picture::picture( std::string filename, sf::Vector2f position, std::string type):
+picture::picture( std::string filename, sf::Vector2f position):
     filename(filename),
-    position(position),
-    type(type)
-{image.loadFromFile(filename);}
+    position(position)
+{
+    image.loadFromFile(filename);
+}
 
 void picture::draw(sf::RenderWindow &window) {
     sprite.setTexture(image);
