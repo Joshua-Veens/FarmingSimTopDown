@@ -33,7 +33,7 @@ void harvester::move(sf::Vector2f delta, drawable *object) {
 
 void harvester::update(std::vector<dirt *> farmland){
     for(auto & p : farmland){
-        if(p->getBounds().intersects(collider) && active_type == 1){
+        if(p->getBounds().intersects(collider) && active_type == 0){
             p->harvest();
         }
     }
