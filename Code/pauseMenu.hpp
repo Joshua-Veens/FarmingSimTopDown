@@ -8,7 +8,7 @@ private:
     void create() override;
 
 public:
-    pause_menu(sf::RenderWindow &window);
+    pause_menu(sf::RenderWindow &window, saver & Save);
 };
 
 #endif

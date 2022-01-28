@@ -5,10 +5,11 @@ tractor::tractor( sf::Vector2f position):
         seeder_collider(position.x-30, position.y+30, 60, 20),
         tractor_collider(position.x-10, position.y-36, 20, 5),
         blokje(sf::Vector2f(position.x-10,position.y-36), sf::Vector2f(20, 5))
-{image.loadFromFile("images\\trekkerjurgen.png");}
+{}
 
 void tractor::draw(sf::RenderWindow &window) {
     this->updateCollider();
+    image.loadFromFile(filename);
     sprite.setTexture(image);
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
@@ -47,12 +48,12 @@ void tractor::setRotation( int rotation ) {
 }
 
 void tractor::changeToNormal(){
-    image.loadFromFile("images\\trekkerjurgen.png");
+    filename = "images\\trekkerjurgen.png";
     active_type = trekker;
 }
 
 void tractor::changeToAction(){
-    image.loadFromFile("images\\trekkerseeder.png");
+    filename = "images\\trekkerseeder.png";
     active_type = seeder;
 }
 

@@ -2,7 +2,7 @@
 
 #include "pauseMenu.hpp"
 
-pause_menu::pause_menu(sf::RenderWindow &window) : menu(window)
+pause_menu::pause_menu(sf::RenderWindow &window,saver & Save) : menu(window,Save)
 {
 }
 
@@ -17,7 +17,7 @@ void pause_menu::create()
         { showHelp(); },
         font_file));
     options.push_back(option(
-        "exit", (sf::Vector2f)window_middle + sf::Vector2f(-650, 10), []
-        { exit(0); },
+        "exit", (sf::Vector2f)window_middle + sf::Vector2f(-650, 10), [this]
+        { exit(0);Save.save("save.txt"); window.close(); },
         font_file));
 }

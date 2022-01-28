@@ -22,13 +22,17 @@ public:
     player(std::array<vehicle *, 2> &vehicles);
     void swapVehicle(sf::Clock &clock); // tractorOrHarvester
     vehicle *getVehicle();
+    vehicle *getInactive();
     active_t getVehicle_type();
     void setMoney(uint64_t newMoney);
     uint64_t getMoney();
     void addMoney(uint64_t delta);
     friend std::ostream &operator<<(std::ostream &lhs, player &Player)
     {
-        return lhs << "Money: " << Player.getMoney() << " ActiveVehicle: " << ((Player.getVehicle_type() == trekker) ? "trekker" : "combine") << " position: " << Player.getVehicle()->getPosition().x << "," << Player.getVehicle()->getPosition().y;
+        return lhs << "Money: " << Player.getMoney() << " ActiveVehicle: " << ((Player.getVehicle_type() == trekker) ? "trekker" : "combine") << " position: " << Player.getVehicle()->getPosition().x << "," << Player.getVehicle()->getPosition().y << " otherVehicle: " 
+        << (Player.getVehicle_type() == trekker ? "combine" : "trekker") << "@" 
+        << Player.getInactive()->getPosition().x << ',' 
+        << Player.getInactive()->getPosition().y;
     }
 };
 

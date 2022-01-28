@@ -40,3 +40,6 @@ void player::addMoney(uint64_t delta){
     money += delta;
 }
 
+vehicle *player::getInactive(){
+    return vehicles[(active == trekker) ? combine : trekker ];
+}

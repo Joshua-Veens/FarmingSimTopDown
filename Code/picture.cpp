@@ -1,14 +1,14 @@
 #include "picture.hpp"
 #include <iostream>
 
-picture::picture( std::string filename, sf::Vector2f position):
+picture::picture( std::string filename, sf::Vector2f position, std::string type):
     filename(filename),
-    position(position)
-{
-    image.loadFromFile(filename);
-}
+    position(position),
+    type(type)
+{}
 
 void picture::draw(sf::RenderWindow &window) {
+    image.loadFromFile(filename);
     sprite.setTexture(image);
     sprite.setPosition(position);
     window.draw(sprite);
