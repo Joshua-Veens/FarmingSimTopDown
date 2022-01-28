@@ -5,10 +5,10 @@
 #include "drawable.hpp"
 #include "rectangle.hpp"
 #include "particleSystem.hpp"
-#include "inventory.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
 
+enum type {wheat=0,corn=1};
 
 class dirt : public drawable
 {
@@ -43,18 +43,16 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Clock & clock;
-    particlePool particles = particlePool(40);
-    inventory * inventory;
     sf::FloatRect collider;
+    particlePool particles = particlePool(40);
 
 public:
-    dirt(sf::Vector2f position, sf::Clock & clock, type active_type, class inventory * inventory);
+    dirt(sf::Vector2f position, sf::Clock & clock, type active_type);
     void draw(sf::RenderWindow &window);
     void seed();
     bool harvest(); // changes img_file back to unseeded if it's possible to harvest and returns true, retruns false if it not possible to harvest
     void update();
     sf::FloatRect getBounds();
-
 };
 
 #endif

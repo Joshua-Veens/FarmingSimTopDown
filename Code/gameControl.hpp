@@ -17,6 +17,7 @@
 #include "pauseMenu.hpp"
 #include "farmhouse.hpp"
 #include "player.hpp"
+#include "saveHouse.hpp"
 
 class gameControl
 {
@@ -31,11 +32,14 @@ private:
         std::shared_ptr<drawable>(new picture{"images\\level_1.png", sf::Vector2f(0, 0)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)}),
+        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
+        };
 
     tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
     harvester *combine = dynamic_cast<harvester *>(objects[2].get());
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[3].get());
+    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[4].get());
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     std::vector<dirt *> farmland{};
@@ -87,17 +91,17 @@ public:
                 action();
             }
 
-            sf::View view = window.getView();
-            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
-            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
-            std::cout << windowsize.x<< "\n";
-            float tile_x, tile_y;
-            if (playerpos.x > 0) tile_x = (floor((playerpos.x + (windowsize.x/2)) / windowsize.x)) * windowsize.x;
-            else tile_x = (ceil((playerpos.x - (windowsize.x/2)) / windowsize.x)) * windowsize.x;
-            if (playerpos.y > 0) tile_y = (floor((playerpos.y + (windowsize.y/2)) / windowsize.y)) * windowsize.y;
-            else tile_y = (ceil((playerpos.y - (windowsize.y/2)) / windowsize.y)) * windowsize.y;
-            view.setCenter(tile_x, tile_y);
-            window.setView(view);
+//            sf::View view = window.getView();
+//            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
+//            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+//            std::cout << windowsize.x<< "\n";
+//            float tile_x, tile_y;
+//            if (playerpos.x > 0) tile_x = (floor((playerpos.x + (windowsize.x/2)) / windowsize.x)) * windowsize.x;
+//            else tile_x = (ceil((playerpos.x - (windowsize.x/2)) / windowsize.x)) * windowsize.x;
+//            if (playerpos.y > 0) tile_y = (floor((playerpos.y + (windowsize.y/2)) / windowsize.y)) * windowsize.y;
+//            else tile_y = (ceil((playerpos.y - (windowsize.y/2)) / windowsize.y)) * windowsize.y;
+//            view.setCenter(tile_x, tile_y);
+//            window.setView(view);
 
             //            sf::Vector2f positionTractor = trekker->getPosition();
             //            particle.setEmitter(positionTractor);
@@ -126,10 +130,10 @@ public:
                 {
                     window.close();
                 }
-                if (event.type == sf::Event::Resized){
-                    view.setSize(event.size.width, event.size.height);
-                    window.setView(view);
-                }
+//                if (event.type == sf::Event::Resized){
+//                    view.setSize(event.size.width, event.size.height);
+//                    window.setView(view);
+//                }
             }
         }
     }
@@ -146,7 +150,7 @@ public:
 
     void movement(sf::Vector2f speed, int rotation)
     {
-        Player.getVehicle()->move(speed, barn);
+        Player.getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome});
         Player.getVehicle()->setRotation(rotation);
     }
 
