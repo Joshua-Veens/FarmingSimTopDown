@@ -1,7 +1,7 @@
 #include "tractor.hpp"
 
 tractor::tractor( sf::Vector2f position):
-        position(position),
+        vehicle(position),
         seeder_collider(position.x-30, position.y+30, 60, 20),
         tractor_collider(position.x-10, position.y-36, 20, 5),
         blokje(sf::Vector2f(position.x-10,position.y-36), sf::Vector2f(20, 5))

@@ -4,7 +4,7 @@
 
 #include "vehicle.hpp"
 
-
+vehicle::vehicle(sf::Vector2f position):position(position){}
 void vehicle::setRotation( int rotation ) {
     sprite.setRotation(rotation);
     savedRotation = rotation;
