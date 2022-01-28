@@ -48,7 +48,9 @@ private:
     sf::Sprite sprite;
     sf::Clock & clock;
     particlePool particles = particlePool(40);
-
+    inventory * inventory;
+    sf::FloatRect collider;
+public:
     dirt(sf::Vector2f position, sf::Clock & clock, type active_type, class inventory * inventory);
     void draw(sf::RenderWindow &window);
     void seed();
