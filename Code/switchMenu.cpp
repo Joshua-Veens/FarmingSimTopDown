@@ -16,5 +16,4 @@ void switchMenu::create() {
             "Harvester", (sf::Vector2f)window_middle + sf::Vector2f(0, 80), [&]
             { this->active = false;},
             font_file));
-
 }
