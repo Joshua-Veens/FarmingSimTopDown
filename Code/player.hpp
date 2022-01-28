@@ -28,7 +28,7 @@ public:
     void addMoney(uint64_t delta);
     friend std::ostream &operator<<(std::ostream &lhs, player &Player)
     {
-        return lhs << "Money: " << Player.getMoney() << " ActiveVehicle: " << ((Player.getVehicle_type() == trekker) ? "trekker" : "combine") << " position: " << Player.getVehicle()->getPosition().x << "," << Player.getVehicle()->getPosition().y<< std::endl;
+        return lhs << "Money: " << Player.getMoney() << " ActiveVehicle: " << ((Player.getVehicle_type() == trekker) ? "trekker" : "combine") << " position: " << Player.getVehicle()->getPosition().x << "," << Player.getVehicle()->getPosition().y;
     }
 };
 

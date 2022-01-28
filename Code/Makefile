@@ -25,6 +25,7 @@ SOURCES += drawable.cpp
         SOURCES += option.cpp
         SOURCES += player.cpp
         SOURCES += saver.cpp
+        SOURCES += loader.cpp
 
 # header files in this project
 HEADERS += drawable.hpp
@@ -43,6 +44,8 @@ HEADERS += drawable.hpp
         HEADERS += option.hpp
         HEADERS += player.hpp
         HEADERS += saver.hpp
+        HEADERS += base64.hpp
+        HEADERS += loader.hpp
 
 # other places to look for files for this project
 SEARCH  :=

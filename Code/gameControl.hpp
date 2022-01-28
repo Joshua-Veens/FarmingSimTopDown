@@ -18,6 +18,7 @@
 #include "farmhouse.hpp"
 #include "player.hpp"
 #include "saver.hpp"
+#include "loader.hpp"
 
 class gameControl
 {
@@ -70,6 +71,8 @@ private:
 public:
     void runGame()
     {
+        loader Loader("save.txt");
+        std::cout << Loader.load();
 
         makeFarmLand(36, 16);
         saver Save(Player, farmland);

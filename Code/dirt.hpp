@@ -7,6 +7,8 @@
 #include "particleSystem.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <sstream>
+#include "base64.hpp"
 
 enum type {wheat=0,corn=1};
 
@@ -54,7 +56,7 @@ public:
     void update();
     sf::FloatRect getBounds();
     friend std::ostream & operator<<(std::ostream & lhs, dirt Dirt){
-        return lhs << "Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type << std::endl;
+        return lhs << "Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type;;
     }
 };
 
