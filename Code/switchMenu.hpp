@@ -1,12 +1,12 @@
 #ifndef SWITCHMENU_HPP
 #define SWITCHMENU_HPP
 #include "menu.hpp"
-#include "tractor.hpp"
+#include "player.hpp"
 
 class switchMenu : public menu{
 public:
-    tractor* trekker;
-    switchMenu(sf::RenderWindow & window, tractor* trekker);
+    player Player;
+    switchMenu(sf::RenderWindow & window, player Player);
     void create() override;
 };
 

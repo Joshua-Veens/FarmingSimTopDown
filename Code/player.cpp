@@ -40,3 +40,7 @@ void player::addMoney(uint64_t delta){
     money += delta;
 }
 
+void player::setVehicle(active_t nActive) {
+    active = nActive;
+}
+

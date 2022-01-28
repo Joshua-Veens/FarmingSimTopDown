@@ -30,6 +30,9 @@ public:
     {
         return lhs << "Money: " << Player.getMoney() << " Active vehicle: " << ((Player.getVehicle_type() == trekker) ? "trekker" : "combine") << " position: " << Player.getVehicle()->getPosition().x << "," << Player.getVehicle()->getPosition().y<< std::endl;
     }
+
+    void setVehicle(active_t nActive);
+
 };
 
 #endif
