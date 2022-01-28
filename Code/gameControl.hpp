@@ -18,20 +18,24 @@
 #include "farmhouse.hpp"
 #include "player.hpp"
 #include "inventory.hpp"
+#include "marketplace.hpp"
 
 class gameControl
 {
 private:
+    bool speedhacks = false;
+
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
+    sf::Time updateTime = sf::milliseconds(15);
     menu Menu = menu(window);
     pause_menu pMenu = pause_menu(window);
     std::vector<std::shared_ptr<drawable>> objects = {
-        std::shared_ptr<drawable>(new picture{"images\\level_1.png", sf::Vector2f(0, 0)}),
+        std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)}),
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 320)}),
         std::shared_ptr<drawable>(new inventory)
     };
 
@@ -39,10 +43,11 @@ private:
     harvester *combine = dynamic_cast<harvester *>(objects[2].get());
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[3].get());
     inventory *inv = dynamic_cast<inventory *>(objects[4].get());
+    marketplace market = marketplace(window, inv);
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     std::vector<dirt *> farmland{};
-    action actions[8] = {
+    action actions[10] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
         //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
@@ -64,6 +69,13 @@ private:
         action(sf::Keyboard::R, [&]()
                { Player.swapVehicle(clock); }),
 
+
+        action(sf::Keyboard::P, [&]()
+        { SPEEEDDD(); }),
+
+        action(sf::Keyboard::M, [&]()
+                { market.show(); }),
+
         action(sf::Keyboard::Escape, [this]
                {if(Menu.getActive() || pMenu.getActive()){
                 return;
@@ -72,7 +84,7 @@ private:
 public:
     void runGame()
     {
-        makeFarmLand(sf::Vector2f(600, 200), 36, 16);
+        makeFarmLand(sf::Vector2f(532, 40), 40, 16);
         if (window.isOpen())
         {
             Menu.show();
@@ -89,17 +101,21 @@ public:
 //            else tile_x = (ceil((playerpos.x - (windowsize.x/2)) / windowsize.x)) * windowsize.x;
 //            if (playerpos.y > 0) tile_y = (floor((playerpos.y + (windowsize.y/2)) / windowsize.y)) * windowsize.y;
 //            else tile_y = (ceil((playerpos.y - (windowsize.y/2)) / windowsize.y)) * windowsize.y;
-//            view.setCenter(tile_x+960, tile_y+540);
+//            view.setCenter(tile_x, tile_y);
 //            window.setView(view);
 
-            //            sf::Vector2f positionTractor = trekker->getPosition();
-            //            particle.setEmitter(positionTractor);
+            sf::Clock updateclock;
+            updateclock.restart();
+            while(updateclock.getElapsedTime() < updateTime){
+                sf::sleep( sf::milliseconds(1) );
+            }
+
+            input();
+            render();
 
             trekker->update(farmland);
             combine->update(farmland);
 
-            input();
-            render();
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -112,6 +128,21 @@ public:
 //                    view.setSize(event.size.width, event.size.height);
 //                    window.setView(view);
 //                }
+            }
+        }
+    }
+
+    void SPEEEDDD(){
+        sf::Time time = clock.getElapsedTime();
+        clock.restart();
+        if (time.asMilliseconds() > 500)
+        {
+            if(speedhacks){
+                updateTime = sf::milliseconds(15);
+                speedhacks = false;
+            }else{
+                updateTime = sf::milliseconds(1);
+                speedhacks = true;
             }
         }
     }
@@ -168,6 +199,7 @@ public:
             position.y += 32;
         }
     }
+
 };
 
 #endif // V2CPSE2_EXAMPLES_GAMECONTROL_HPP

@@ -11,8 +11,8 @@ enum type {wheat=0,corn=1};
 
 class inventory : public drawable{
 private:
-    int wheatCount = 0;
-    int cornCount = 0;
+    unsigned int wheatCount = 0;
+    unsigned int cornCount = 0;
     type active_crop_type;
     std::string text_string;
     sf::Color color = sf::Color::White;
@@ -31,6 +31,13 @@ public:
     void drawCorn(sf::RenderWindow &window);
 
     void setHarvest(type croptype);
+
+    unsigned int getWheat();
+
+    unsigned int getCorn();
+
+    void removeCrops();
+
 };
 
 

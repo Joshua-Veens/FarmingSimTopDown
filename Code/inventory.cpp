@@ -55,3 +55,16 @@ void inventory::setHarvest(type croptype) {
         cornCount += rand() % ((60 - 40) + 1) + 40;
     }
 }
+
+unsigned int inventory::getWheat() {
+    return wheatCount;
+}
+
+unsigned int inventory::getCorn() {
+    return cornCount;
+}
+
+void inventory::removeCrops() {
+    wheatCount = 0;
+    cornCount = 0;
+}
