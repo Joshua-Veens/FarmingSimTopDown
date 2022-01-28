@@ -38,6 +38,8 @@ public:
     int getRotation();
 
     sf::Vector2f getPosition();
+
+    sf::FloatRect getCollider() override;
 };
 
 

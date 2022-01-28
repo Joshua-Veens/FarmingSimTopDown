@@ -1,4 +1,5 @@
 #include "tractor.hpp"
+#include <iostream>
 
 tractor::tractor( sf::Vector2f position):
         vehicle(position),
@@ -22,15 +23,36 @@ void tractor::move(sf::Vector2f delta, drawable *object) {
             return;
         }
     }
-    if(object->getCollider().intersects(tractor_collider)){
-//       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
-    }
+//    if(object->getCollider().intersects(tractor_collider)){
+////       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
+//
+//
+//    }
     if(active_type == 1){
         position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
     }else if(active_type == 0){
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
 }
+//
+//void tractor::move1(sf::Vector2f delta, drawable *object, T sMenu) {
+//    for(unsigned int i = 0; i < object->getColliders().size(); i++){
+//        if(object->getColliders()[i].intersects(tractor_collider)){
+//            return;
+//        }
+//    }
+//    if(object->getCollider().intersects(tractor_collider)){
+////       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
+//
+//
+//    }
+//    if(active_type == 1){
+//        position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
+//    }else if(active_type == 0){
+//        position += sf::Vector2f(delta.x*2, delta.y*2);
+//    }
+//}
+
 
 void tractor::update(std::vector<dirt *> farmland){
     for(auto & p : farmland){
@@ -122,3 +144,8 @@ sf::Vector2f tractor::getPosition() {
 void tractor::setPosition(sf::Vector2f location){
     position = location;
 }
+
+sf::FloatRect tractor::getCollider() {
+    return tractor_collider;
+}
+

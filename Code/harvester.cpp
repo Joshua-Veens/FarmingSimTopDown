@@ -21,9 +21,9 @@ void harvester::move(sf::Vector2f delta, drawable *object) {
             return;
         }
     }
-    if(object->getCollider().intersects(collider)){
-//       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
-    }
+//    if(object->getCollider().intersects(collider)){
+////       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
+//    }
     if(active_type == 0){
         position += sf::Vector2f(delta.x/2, delta.y/2);
     }else if(active_type == 1){
@@ -95,4 +95,8 @@ int harvester::getRotation() {
 
 sf::Vector2f harvester::getPosition() {
     return position;
+}
+
+sf::FloatRect harvester::getCollider() {
+    return collider;
 }

@@ -18,6 +18,7 @@
 #include "farmhouse.hpp"
 #include "player.hpp"
 #include "inventory.hpp"
+#include "switchMenu.hpp"
 
 class gameControl
 {
@@ -41,6 +42,8 @@ private:
     inventory *inv = dynamic_cast<inventory *>(objects[4].get());
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
+    switchMenu sMenu = switchMenu(window, Player);
+
     std::vector<dirt *> farmland{};
     action actions[8] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
@@ -62,7 +65,7 @@ private:
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
         action(sf::Keyboard::R, [&]()
-               { Player.swapVehicle(clock); }),
+               { sMenu.show(); }),
 
         action(sf::Keyboard::Escape, [this]
                {if(Menu.getActive() || pMenu.getActive()){
@@ -83,13 +86,12 @@ public:
 //            sf::View view = window.getView();
 //            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
 //            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
-//            std::cout << windowsize.x<< "\n";
 //            float tile_x, tile_y;
 //            if (playerpos.x > 0) tile_x = (floor((playerpos.x + (windowsize.x/2)) / windowsize.x)) * windowsize.x;
 //            else tile_x = (ceil((playerpos.x - (windowsize.x/2)) / windowsize.x)) * windowsize.x;
 //            if (playerpos.y > 0) tile_y = (floor((playerpos.y + (windowsize.y/2)) / windowsize.y)) * windowsize.y;
 //            else tile_y = (ceil((playerpos.y - (windowsize.y/2)) / windowsize.y)) * windowsize.y;
-//            view.setCenter(tile_x+960, tile_y+540);
+//            view.setCenter(tile_x, tile_y);
 //            window.setView(view);
 
             //            sf::Vector2f positionTractor = trekker->getPosition();
@@ -141,6 +143,9 @@ public:
     {
         Player.getVehicle()->move(speed, barn);
         Player.getVehicle()->setRotation(rotation);
+        if(Player.getVehicle()->getCollider().intersects(barn->getCollider())){
+            sMenu.show();
+        }
     }
 
     void changeToNormal()
