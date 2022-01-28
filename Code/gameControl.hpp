@@ -17,6 +17,7 @@
 #include "pauseMenu.hpp"
 #include "farmhouse.hpp"
 #include "player.hpp"
+#include "inventory.hpp"
 
 class gameControl
 {
@@ -31,11 +32,14 @@ private:
         std::shared_ptr<drawable>(new picture{"images\\level_1.png", sf::Vector2f(0, 0)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)})};
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 450)}),
+        std::shared_ptr<drawable>(new inventory)
+    };
 
     tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
     harvester *combine = dynamic_cast<harvester *>(objects[2].get());
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[3].get());
+    inventory *inv = dynamic_cast<inventory *>(objects[4].get());
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     std::vector<dirt *> farmland{};
@@ -69,7 +73,6 @@ private:
 public:
     void runGame()
     {
-
         makeFarmLand(36, 16);
         if (window.isOpen())
         {
@@ -168,7 +171,7 @@ public:
         {
             for (unsigned int j = 0; j < width; j++)
             {
-                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock, corn}));
+                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{sf::Vector2f(x, y), clock, corn, inv}));
                 farmland.push_back(dynamic_cast<dirt *>(objects[1].get()));
                 x += 32;
             }
