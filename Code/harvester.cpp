@@ -4,11 +4,10 @@ harvester::harvester(sf::Vector2f position) :
         vehicle(position),
         collider(position.x - 40, position.y - 42, 80, 20),
         blokje(sf::Vector2f(position.x-40,position.y-42), sf::Vector2f(80, 20))
-{}
+{image.loadFromFile("images\\harvester_closed.png");}
 
 void harvester::draw(sf::RenderWindow &window) {
     this->updateCollider();
-    image.loadFromFile(filename);
     sprite.setTexture(image);
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
@@ -46,12 +45,12 @@ void harvester::setRotation( int rotation ) {
 }
 
 void harvester::changeToNormal(){
-    filename = "images\\harvester_closed.png";
+    image.loadFromFile("images\\harvester_closed.png");
     active_type = notHarvesting;
 }
 
 void harvester::changeToAction(){
-    filename = "images\\harvester.png";
+    image.loadFromFile("images\\harvester.png");
     active_type = harvesting;
 }
 

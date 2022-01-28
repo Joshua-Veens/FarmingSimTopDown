@@ -10,7 +10,6 @@
 
 class harvester : public vehicle{
 private:
-    std::string filename = "images\\harvester_closed.png";
     enum harversterTypes{harvesting=0, notHarvesting=1};
     harversterTypes active_type = notHarvesting;
     sf::Texture image;
