@@ -1,11 +1,11 @@
 #include "dirt.hpp"
 #include "iostream"
 
-dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type, class inventory * inventory):
+dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv):
     position(position),
     active_type(active_type),
     clock(clock),
-    inventory(inventory),
+    inv(inv),
     collider(position.x+14, position.y + 14, 4,4)
 {
     image.loadFromFile(crops[active_type][cropcounter]);
@@ -18,7 +18,6 @@ void dirt::seed()
     {
         state = seeded;
         cropcounter++;
-        inventory->setHarvest(active_type);
         image.loadFromFile(crops[active_type][cropcounter]);
         texture.loadFromImage(image);
         sf::Time time = clock.getElapsedTime();
@@ -81,6 +80,7 @@ bool dirt::harvest()
     {
         state = unseeded;
         cropcounter = 0;
+        inv->setHarvest(active_type);
         image.loadFromFile(crops[active_type][cropcounter]);
         texture.loadFromImage(image);
         sf::Time time = clock.getElapsedTime();
@@ -90,6 +90,16 @@ bool dirt::harvest()
         return true;
     }
     return false;
+}
+
+unsigned int dirt::getWheat()
+{
+    return inv->getWheat();
+}
+
+unsigned int dirt::getCorn()
+{
+    return inv->getCorn();
 }
 
 void dirt::draw(sf::RenderWindow &window)

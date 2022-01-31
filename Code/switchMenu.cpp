@@ -1,8 +1,8 @@
 #include "switchMenu.hpp"
 
-
-switchMenu::switchMenu(sf::RenderWindow &window, player &Player) : menu(window), Player(Player){
-}
+switchMenu::switchMenu(sf::RenderWindow &window, player &Player): 
+  menu(window),
+  Player(Player){}
 
 void switchMenu::create() {
     options.push_back(option(

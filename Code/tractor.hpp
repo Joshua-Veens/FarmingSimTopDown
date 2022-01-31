@@ -4,6 +4,7 @@
 #include "vehicle.hpp"
 #include "rectangle.hpp"
 #include "farmhouse.hpp"
+#include "saveHouse.hpp"
 #include "dirt.hpp"
 #include <memory>
 
@@ -25,8 +26,7 @@ public:
 
     void draw( sf::RenderWindow & window ) override;
 
-    void move( sf::Vector2f delta, drawable *object) override;
-    //void move1( sf::Vector2f delta, drawable *object, T SMenu);
+    void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
     void update(std::vector<dirt *> farmland);
 

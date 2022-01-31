@@ -44,16 +44,18 @@ private:
     sf::Sprite sprite;
     sf::Clock & clock;
     particlePool particles = particlePool(40);
-    inventory * inventory;
+    inventory * inv;
     sf::FloatRect collider;
 
 public:
-    dirt(sf::Vector2f position, sf::Clock & clock, type active_type, class inventory * inventory);
+    dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv);
     void draw(sf::RenderWindow &window);
     void seed();
     bool harvest(); // changes img_file back to unseeded if it's possible to harvest and returns true, retruns false if it not possible to harvest
     void update();
     sf::FloatRect getBounds();
+    unsigned int getWheat();
+    unsigned int getCorn();
 
 };
 

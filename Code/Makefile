@@ -24,7 +24,9 @@ SOURCES += drawable.cpp
         SOURCES += pauseMenu.cpp
         SOURCES += option.cpp
         SOURCES += player.cpp
+        SOURCES += saveHouse.cpp
         SOURCES += inventory.cpp
+        SOURCES += marketplace.cpp
 
 # header files in this project
 HEADERS += drawable.hpp
@@ -42,7 +44,9 @@ HEADERS += drawable.hpp
         HEADERS += pauseMenu.hpp
         HEADERS += option.hpp
         HEADERS += player.hpp
+        HEADERS += saveHouse.hpp
         HEADERS += inventory.hpp
+        HEADERS += marketplace.hpp
 
 # other places to look for files for this project
 SEARCH  :=
