@@ -52,7 +52,6 @@ private:
     inventory * inv;
     sf::FloatRect collider;
     particlePool particles = particlePool(40);
-    inventory *inventory;
 
 public:
 
