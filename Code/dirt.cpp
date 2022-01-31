@@ -1,7 +1,6 @@
 #include "dirt.hpp"
 #include "iostream"
 
-
 dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv):
     position(position),
     active_type(active_type),
@@ -88,6 +87,7 @@ bool dirt::harvest()
         int64_t elpasedTime = time.asMicroseconds();
         particles.generate(sf::Vector2i (position.x+5,position.y-5), elpasedTime, {237, 193, 33, 150}, sf::Vector2f(4,4));
         ticks = 0;
+        active_type = wheat;
         return true;
     }
     return false;
@@ -113,4 +113,12 @@ void dirt::draw(sf::RenderWindow &window)
 
 sf::FloatRect dirt::getBounds(){
     return collider;
+}
+
+void dirt::changeCrop(type newType){
+    this->active_type = newType;
+}
+
+dirt::state_t dirt::getState() {
+    return this->state;
 }
