@@ -14,10 +14,6 @@ farmhouse::farmhouse(sf::Vector2f position):
         lower_left_rectangle(sf::Vector2f(position.x+36, position.y+249), sf::Vector2f(36, 7), sf::Color::Blue),
         lower_right_rectangle(sf::Vector2f(position.x+192, position.y+249), sf::Vector2f(36, 7), sf::Color::Blue),
         rectangle_change(sf::Vector2f(position.x+105, position.y+100), sf::Vector2f(50, 20), sf::Color::Magenta)
-{}
-
-void farmhouse::draw(sf::RenderWindow &window){
-    image.loadFromFile(filename);
 {
     image.loadFromFile("images\\farmhouse.png");
     sprite.setTexture(image);
