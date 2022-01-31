@@ -30,8 +30,9 @@ private:
     bool busy = false;
     sf::Clock clock;
     sf::Time updateTime = sf::milliseconds(15);
-    menu Menu = menu(window);
-    pause_menu pMenu = pause_menu(window);
+    saver save = saver(Player, farmland);
+    menu Menu = menu(window, save);
+    pause_menu pMenu = pause_menu(window, save);
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
@@ -47,9 +48,8 @@ private:
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[3].get());
     saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[4].get());
     inventory *inv = dynamic_cast<inventory *>(objects[5].get());
-    marketplace market = marketplace(window, inv);
-    switchMenu sMenu = switchMenu(window, Player);
-    saver Save = saver(Player, farmland);
+    marketplace market = marketplace(window, save, inv);
+    switchMenu sMenu = switchMenu(window, save, Player);
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);

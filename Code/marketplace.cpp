@@ -5,8 +5,8 @@
 #include "marketplace.hpp"
 #include "iostream"
 
-marketplace::marketplace(sf::RenderWindow & window, class inventory * inv):
-    menu(window),
+marketplace::marketplace(sf::RenderWindow & window, saver save, class inventory * inv):
+    menu(window, save),
     inv(inv)
 {}
 

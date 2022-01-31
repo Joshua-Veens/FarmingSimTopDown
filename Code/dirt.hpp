@@ -11,12 +11,6 @@
 #include <sstream>
 #include "base64.hpp"
 
-enum type
-{
-    wheat = 0,
-    corn = 1
-};
-
 class dirt : public drawable
 {
 private:
