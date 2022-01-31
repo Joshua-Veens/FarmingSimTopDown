@@ -1,10 +1,12 @@
 #include "dirt.hpp"
 #include "iostream"
 
-dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type):
+
+dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv):
     position(position),
     active_type(active_type),
     clock(clock),
+    inv(inv),
     collider(position.x+14, position.y + 14, 4,4)
 {
     image.loadFromFile(crops[active_type][cropcounter]);
@@ -79,6 +81,7 @@ bool dirt::harvest()
     {
         state = unseeded;
         cropcounter = 0;
+        inv->setHarvest(active_type);
         image.loadFromFile(crops[active_type][cropcounter]);
         texture.loadFromImage(image);
         sf::Time time = clock.getElapsedTime();

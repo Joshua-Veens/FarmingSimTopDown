@@ -43,11 +43,14 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Clock & clock;
+    particlePool particles = particlePool(40);
+    inventory * inv;
     sf::FloatRect collider;
     particlePool particles = particlePool(40);
 
 public:
-    dirt(sf::Vector2f position, sf::Clock & clock, type active_type);
+
+    dirt(sf::Vector2f position, sf::Clock & clock, type active_type, class inventory * inv);
     void draw(sf::RenderWindow &window);
     void seed();
     bool harvest(); // changes img_file back to unseeded if it's possible to harvest and returns true, retruns false if it not possible to harvest
