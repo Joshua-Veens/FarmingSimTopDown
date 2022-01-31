@@ -1,6 +1,9 @@
 #ifndef V2CPSE2_EXAMPLES_INVENTORY_HPP
 #define V2CPSE2_EXAMPLES_INVENTORY_HPP
 
+#include "drawable.hpp"
+
+enum type {wheat=0,corn=1};
 
 class inventory : public drawable{
 private:
