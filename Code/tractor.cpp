@@ -1,5 +1,4 @@
 #include "tractor.hpp"
-#include <iostream>
 
 tractor::tractor( sf::Vector2f position):
         vehicle(position),
