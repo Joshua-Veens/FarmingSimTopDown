@@ -24,6 +24,7 @@ SOURCES += drawable.cpp
         SOURCES += pauseMenu.cpp
         SOURCES += option.cpp
         SOURCES += player.cpp
+        SOURCES += saveHouse.cpp
         SOURCES += inventory.cpp
         SOURCES += marketplace.cpp
 
@@ -43,6 +44,7 @@ HEADERS += drawable.hpp
         HEADERS += pauseMenu.hpp
         HEADERS += option.hpp
         HEADERS += player.hpp
+        HEADERS += saveHouse.hpp
         HEADERS += inventory.hpp
         HEADERS += marketplace.hpp
 

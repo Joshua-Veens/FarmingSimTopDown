@@ -11,10 +11,11 @@ class picture : public drawable {
 private:
     std::string filename;
     sf::Vector2f position;
+    std::string type;
     sf::Texture image;
     sf::Sprite sprite;
 public:
-    picture( std::string filename, sf::Vector2f position );
+    picture( std::string filename, sf::Vector2f position, std::string type = "" );
 
     void draw( sf::RenderWindow & window ) override;
 

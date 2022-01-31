@@ -15,13 +15,16 @@ void harvester::draw(sf::RenderWindow &window) {
     blokje.draw(window);
 }
 
-void harvester::move(sf::Vector2f delta, drawable *object) {
-    for(unsigned int i = 0; i < object->getColliders().size(); i++){
-        if(object->getColliders()[i].intersects(collider)){
+void harvester::move(sf::Vector2f delta, std::vector<drawable *> objects) {
+    for(unsigned int i = 0; i < objects[0]->getColliders().size(); i++){
+        if(objects[0]->getColliders()[i].intersects(collider)){
             return;
         }
     }
-    if(object->getCollider().intersects(collider)){
+    if(objects[1]->getCollider().intersects(collider)){
+        return;
+    }
+    if(objects[0]->getCollider().intersects(collider)){
 //       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
     }
     if(active_type == 0){

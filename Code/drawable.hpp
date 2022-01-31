@@ -14,6 +14,10 @@ public:
     virtual sf::FloatRect getCollider(){
         return sf::FloatRect(0,0,0,0);
     }
+
+    virtual sf::FloatRect getSavePoint(){
+        return sf::FloatRect(0,0,0,0);
+    }
 };
 
 

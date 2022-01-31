@@ -6,6 +6,7 @@
 #include <memory>
 #include "dirt.hpp"
 #include "farmhouse.hpp"
+#include "saveHouse.hpp"
 
 
 class harvester : public vehicle{
@@ -23,7 +24,7 @@ public:
 
     void draw( sf::RenderWindow & window ) override;
 
-    void move( sf::Vector2f delta, drawable *object) override;
+    void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
     void update(std::vector<dirt *> farmland);
 

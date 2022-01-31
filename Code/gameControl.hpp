@@ -17,6 +17,7 @@
 #include "pauseMenu.hpp"
 #include "farmhouse.hpp"
 #include "player.hpp"
+#include "saveHouse.hpp"
 #include "inventory.hpp"
 #include "marketplace.hpp"
 
@@ -36,14 +37,18 @@ private:
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 320)}),
+        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)}),
         std::shared_ptr<drawable>(new inventory)
     };
+
 
     tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
     harvester *combine = dynamic_cast<harvester *>(objects[2].get());
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[3].get());
-    inventory *inv = dynamic_cast<inventory *>(objects[4].get());
+    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[4].get());
+    inventory *inv = dynamic_cast<inventory *>(objects[5].get());
     marketplace market = marketplace(window, inv);
+
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     std::vector<dirt *> farmland{};
@@ -110,8 +115,10 @@ public:
                 sf::sleep( sf::milliseconds(1) );
             }
 
+
             input();
             render();
+
 
             trekker->update(farmland);
             combine->update(farmland);
@@ -170,7 +177,7 @@ public:
 
     void movement(sf::Vector2f speed, int rotation)
     {
-        Player.getVehicle()->move(speed, barn);
+        Player.getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome});
         Player.getVehicle()->setRotation(rotation);
     }
 
