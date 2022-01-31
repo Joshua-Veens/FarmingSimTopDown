@@ -29,6 +29,7 @@ private:
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
+    sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
     saver save = saver(Player, farmland);
     menu Menu = menu(window, save);
@@ -123,6 +124,9 @@ public:
             input();
             render();
 
+            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+            changeLocation(windowsize);
+            window.setView(view);
 
             trekker->update(farmland);
             combine->update(farmland);
@@ -211,6 +215,28 @@ public:
             }
             position.x = x;
             position.y += 32;
+        }
+    }
+    void changeLocation(sf::Vector2f windowsize){
+        if (!Menu.getActive()){
+
+            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
+            int x, y;
+            if (playerpos.x<0){
+                x = -windowsize.x*0.5;
+            } else if (playerpos.x > windowsize.x){
+                x = windowsize.x*1.5;
+            } else {
+                x = windowsize.x*0.5;
+            }
+            if(playerpos.y<0){
+                y = -windowsize.y*0.5;
+            } else if (playerpos.y>windowsize.y){
+                y = windowsize.y*1.5;
+            } else {
+                y = windowsize.y*0.5;
+            }
+            view.setCenter(x, y);
         }
     }
 
