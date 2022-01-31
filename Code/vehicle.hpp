@@ -24,6 +24,7 @@ public:
     virtual void move(sf::Vector2f delta, std::vector<drawable *> objects) = 0;
     virtual void changeToNormal() = 0;
     virtual void changeToAction() = 0;
+    virtual void changeToTrailer() = 0;
 };
 
 #endif // V2CPSE2_EXAMPLES_VEHICLE_HPP

@@ -74,6 +74,8 @@ private:
                { Player.getVehicle()->changeToNormal(); }),
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
+        action(sf::Keyboard::Num3, [&]()
+               { Player.getVehicle()->changeToTrailer(); }),
         action(sf::Keyboard::R, [&]()
                { sMenu.show(); }),
 

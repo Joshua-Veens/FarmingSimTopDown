@@ -24,6 +24,7 @@ private:
     sf::Texture cornImage;
     int savedRotation = 0;
     sf::FloatRect collider;
+    sf::FloatRect auger_collider;
     rectangle blokje;
     unsigned int wheatCount = 0;
     unsigned int cornCount = 0;
@@ -51,6 +52,8 @@ public:
     void changeToNormal() override;
 
     void changeToAction() override;
+
+    void changeToTrailer() override;
 
     void changeToFull();
 
