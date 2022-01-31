@@ -10,6 +10,7 @@
 
 
 class tractor : public vehicle{
+
 private:
     enum tractorTypes{trekker=0, seeder=1};
     tractorTypes active_type = trekker;
@@ -42,6 +43,8 @@ public:
     sf::Vector2f getPosition();
 
     void setPosition(sf::Vector2f location);
+
+    sf::FloatRect getCollider() override;
 };
 
 

@@ -25,9 +25,6 @@ void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
     if(objects[1]->getCollider().intersects(tractor_collider)){
         return;
     }
-    if(objects[0]->getCollider().intersects(tractor_collider)){
-//       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
-    }
     if(objects[1]->getSavePoint().intersects(tractor_collider)){
 //        SPECIAAL PLEKJE VOOR JUSTIN ZIJN CODE
     }
@@ -37,6 +34,7 @@ void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
 }
+
 
 void tractor::update(std::vector<dirt *> farmland){
     for(auto & p : farmland){
@@ -128,3 +126,8 @@ sf::Vector2f tractor::getPosition() {
 void tractor::setPosition(sf::Vector2f location){
     position = location;
 }
+
+sf::FloatRect tractor::getCollider() {
+    return tractor_collider;
+}
+

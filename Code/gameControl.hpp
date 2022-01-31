@@ -1,9 +1,6 @@
-//
-// Created by joshu on 19-1-2022.
-//
-
 #ifndef V2CPSE2_EXAMPLES_GAMECONTROL_HPP
 #define V2CPSE2_EXAMPLES_GAMECONTROL_HPP
+
 #include <cmath>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -20,6 +17,7 @@
 #include "saveHouse.hpp"
 #include "inventory.hpp"
 #include "marketplace.hpp"
+#include "switchMenu.hpp"
 
 class gameControl
 {
@@ -48,6 +46,7 @@ private:
     saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[4].get());
     inventory *inv = dynamic_cast<inventory *>(objects[5].get());
     marketplace market = marketplace(window, inv);
+    switchMenu sMenu = switchMenu(window, Player);
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
@@ -72,7 +71,7 @@ private:
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
         action(sf::Keyboard::R, [&]()
-               { Player.swapVehicle(clock); }),
+               { sMenu.show(); }),
 
 
         action(sf::Keyboard::P, [&]()
@@ -179,6 +178,9 @@ public:
     {
         Player.getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome});
         Player.getVehicle()->setRotation(rotation);
+        if(Player.getVehicle()->getCollider().intersects(barn->getCollider())){
+            sMenu.show();
+        }
     }
 
     void changeToNormal()

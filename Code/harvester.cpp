@@ -24,10 +24,6 @@ void harvester::move(sf::Vector2f delta, std::vector<drawable *> objects) {
     if(objects[1]->getCollider().intersects(collider)){
         return;
     }
-    if(objects[0]->getCollider().intersects(collider)){
-        // SPECIAL PLEKJE VOOR ERIKS ZIJN CODE
-    }
-
     if(active_type == 0){
         position += sf::Vector2f(delta.x/2, delta.y/2);
     }else if(active_type == 1){
@@ -116,4 +112,8 @@ int harvester::getRotation() {
 
 sf::Vector2f harvester::getPosition() {
     return position;
+}
+
+sf::FloatRect harvester::getCollider() {
+    return collider;
 }
