@@ -44,13 +44,10 @@ void menu::draw()
 
 void menu::show()
 {
-    if (options.size() == 0)
-    {
-        create();
-    }
     active = true;
     while (active)
     {
+        create();
         window.clear();
         draw();
         window.display();

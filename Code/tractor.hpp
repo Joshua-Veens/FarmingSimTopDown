@@ -4,11 +4,13 @@
 #include "vehicle.hpp"
 #include "rectangle.hpp"
 #include "farmhouse.hpp"
+#include "saveHouse.hpp"
 #include "dirt.hpp"
 #include <memory>
 
 
 class tractor : public vehicle{
+
 private:
     std::string filename = "images\\trekkerjurgen.png";
     enum tractorTypes{trekker=0, seeder=1};
@@ -25,7 +27,7 @@ public:
 
     void draw( sf::RenderWindow & window ) override;
 
-    void move( sf::Vector2f delta, drawable *object) override;
+    void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
     void update(std::vector<dirt *> farmland);
 
@@ -42,6 +44,8 @@ public:
     sf::Vector2f getPosition();
 
     void setPosition(sf::Vector2f location);
+
+    sf::FloatRect getCollider() override;
 };
 
 

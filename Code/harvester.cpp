@@ -16,23 +16,34 @@ void harvester::draw(sf::RenderWindow &window) {
     blokje.draw(window);
 }
 
-void harvester::move(sf::Vector2f delta, drawable *object) {
-    for(unsigned int i = 0; i < object->getColliders().size(); i++){
-        if(object->getColliders()[i].intersects(collider)){
+void harvester::move(sf::Vector2f delta, std::vector<drawable *> objects) {
+    for(unsigned int i = 0; i < objects[0]->getColliders().size(); i++){
+        if(objects[0]->getColliders()[i].intersects(collider)){
             return;
         }
     }
-    if(object->getCollider().intersects(collider)){
-//       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
+    if(objects[1]->getCollider().intersects(collider)){
+        return;
     }
     if(active_type == 0){
         position += sf::Vector2f(delta.x/2, delta.y/2);
     }else if(active_type == 1){
         position += sf::Vector2f(delta.x, delta.y);
+    }else if(active_type == 2){
+        position += sf::Vector2f(delta.x/2, delta.y/2);
+    }
+}
+
+void harvester::checkIfFull(std::vector<dirt *> farmland) {
+    inventory = farmland[0]->getWheat();
+    inventory = farmland[0]->getCorn();
+    if (inventory >= 10000){
+        changeToFull();
     }
 }
 
 void harvester::update(std::vector<dirt *> farmland){
+    checkIfFull(farmland);
     for(auto & p : farmland){
         if(p->getBounds().intersects(collider) && active_type == 1){
             p->harvest();
@@ -45,6 +56,7 @@ void harvester::setRotation( int rotation ) {
     savedRotation = rotation;
 }
 
+
 void harvester::changeToNormal(){
     filename = "images\\harvester_closed.png";
     active_type = notHarvesting;
@@ -53,6 +65,11 @@ void harvester::changeToNormal(){
 void harvester::changeToAction(){
     filename = "images\\harvester.png";
     active_type = harvesting;
+}
+
+void harvester::changeToFull() {
+    image.loadFromFile("images\\harvester_empty.png");
+    active_type = full;
 }
 
 void harvester::updateCollider(){
@@ -96,4 +113,8 @@ int harvester::getRotation() {
 
 sf::Vector2f harvester::getPosition() {
     return position;
+}
+
+sf::FloatRect harvester::getCollider() {
+    return collider;
 }

@@ -2,10 +2,10 @@
 #define FARMHOUSE_HPP
 
 #include "rectangle.hpp"
+#include "drawable.hpp"
 
 class farmhouse : public drawable{
 private:
-    std::string filename = "images\\farmhouse.png";
     sf::Vector2f position;
     sf::Texture image;
     sf::Sprite sprite;

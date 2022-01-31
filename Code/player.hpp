@@ -34,6 +34,8 @@ public:
         << Player.getInactive()->getPosition().x << ',' 
         << Player.getInactive()->getPosition().y;
     }
+
+    void setVehicle(active_t nActive);
 };
 
 #endif

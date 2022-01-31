@@ -48,13 +48,15 @@ private:
     sf::Image image;
     sf::Texture texture;
     sf::Sprite sprite;
-    sf::Clock &clock;
+    sf::Clock & clock;
+    inventory * inv;
     sf::FloatRect collider;
     particlePool particles = particlePool(40);
     inventory *inventory;
 
 public:
-    dirt(sf::Vector2f position, sf::Clock &clock, type active_type);
+
+    dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv);
     void draw(sf::RenderWindow &window);
     void seed();
     bool harvest(); // changes img_file back to unseeded if it's possible to harvest and returns true, retruns false if it not possible to harvest
@@ -65,6 +67,9 @@ public:
         return lhs << " Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type;
         ;
     }
+    unsigned int getWheat();
+    unsigned int getCorn();
+
 };
 
 #endif

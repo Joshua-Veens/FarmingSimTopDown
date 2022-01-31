@@ -18,8 +18,13 @@ farmhouse::farmhouse(sf::Vector2f position):
 
 void farmhouse::draw(sf::RenderWindow &window){
     image.loadFromFile(filename);
+{
+    image.loadFromFile("images\\farmhouse.png");
     sprite.setTexture(image);
     sprite.setPosition(position);
+}
+
+void farmhouse::draw(sf::RenderWindow &window){
     window.draw(sprite);
     upper_rectangle.draw(window);
 

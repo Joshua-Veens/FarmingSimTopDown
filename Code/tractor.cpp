@@ -17,14 +17,17 @@ void tractor::draw(sf::RenderWindow &window) {
     blokje.draw(window);
 }
 
-void tractor::move(sf::Vector2f delta, drawable *object) {
-    for(unsigned int i = 0; i < object->getColliders().size(); i++){
-        if(object->getColliders()[i].intersects(tractor_collider)){
+void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
+    for(unsigned int i = 0; i < objects[0]->getColliders().size(); i++){
+        if(objects[0]->getColliders()[i].intersects(tractor_collider)){
             return;
         }
     }
-    if(object->getCollider().intersects(tractor_collider)){
-//       SPECIAAL PLEKJE VOOR ERIK ZIJN CODE & DINGEN
+    if(objects[1]->getCollider().intersects(tractor_collider)){
+        return;
+    }
+    if(objects[1]->getSavePoint().intersects(tractor_collider)){
+//        SPECIAAL PLEKJE VOOR JUSTIN ZIJN CODE
     }
     if(active_type == 1){
         position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
@@ -32,6 +35,7 @@ void tractor::move(sf::Vector2f delta, drawable *object) {
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
 }
+
 
 void tractor::update(std::vector<dirt *> farmland){
     for(auto & p : farmland){
@@ -123,3 +127,8 @@ sf::Vector2f tractor::getPosition() {
 void tractor::setPosition(sf::Vector2f location){
     position = location;
 }
+
+sf::FloatRect tractor::getCollider() {
+    return tractor_collider;
+}
+

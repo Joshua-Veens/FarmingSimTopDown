@@ -6,39 +6,47 @@
 #include <memory>
 #include "dirt.hpp"
 #include "farmhouse.hpp"
+#include "saveHouse.hpp"
+#include "inventory.hpp"
 
 
 class harvester : public vehicle{
 private:
-    std::string filename = "images\\harvester_closed.png";
-    enum harversterTypes{harvesting=0, notHarvesting=1};
+    enum harversterTypes{harvesting=0, notHarvesting=1, full=2};
     harversterTypes active_type = notHarvesting;
     sf::Texture image;
     sf::Sprite sprite;
     int savedRotation = 0;
     sf::FloatRect collider;
     rectangle blokje;
+    unsigned int inventory = 0;
 
 public:
     harvester(sf::Vector2f position);
 
     void draw( sf::RenderWindow & window ) override;
 
-    void move( sf::Vector2f delta, drawable *object) override;
+    void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
     void update(std::vector<dirt *> farmland);
 
     void setRotation( int rotation ) override;
 
+    void checkIfFull(std::vector<dirt *> farmland);
+
     void changeToNormal() override;
 
     void changeToAction() override;
+
+    void changeToFull();
 
     void updateCollider();
 
     int getRotation();
 
     sf::Vector2f getPosition();
+
+    sf::FloatRect getCollider() override;
 };
 
 
