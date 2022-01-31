@@ -1,5 +1,4 @@
 #include "dirt.hpp"
-#include "iostream"
 
 dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv):
     position(position),
