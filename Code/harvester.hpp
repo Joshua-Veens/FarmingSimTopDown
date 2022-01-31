@@ -18,8 +18,8 @@ private:
     sf::Sprite sprite;
     int savedRotation = 0;
     sf::FloatRect collider;
+    sf::FloatRect auger_collider;
     rectangle blokje;
-    unsigned int inventory = 0;
 
 public:
     harvester(sf::Vector2f position);
@@ -37,6 +37,8 @@ public:
     void changeToNormal() override;
 
     void changeToAction() override;
+
+    void changeToTrailer() override;
 
     void changeToFull();
 

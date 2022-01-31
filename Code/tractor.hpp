@@ -12,13 +12,14 @@
 class tractor : public vehicle{
 
 private:
-    enum tractorTypes{trekker=0, seeder=1};
+    enum tractorTypes{trekker=0, seeder=1, trailer=2};
     tractorTypes active_type = trekker;
     sf::Texture image;
     sf::Sprite sprite;
     int savedRotation = 0;
     sf::FloatRect seeder_collider;
     sf::FloatRect tractor_collider;
+    sf::FloatRect trailer_collider;
     rectangle blokje;
 
 public:
@@ -36,6 +37,8 @@ public:
 
     void changeToAction() override;
 
+    void changeToTrailer() override;
+
     void updateCollider();
 
     int getRotation();
@@ -45,6 +48,7 @@ public:
     void setPosition(sf::Vector2f location);
 
     sf::FloatRect getCollider() override;
+    
 };
 
 

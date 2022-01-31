@@ -35,9 +35,9 @@ private:
     pause_menu pMenu = pause_menu(window, save);
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
-        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 320)}),
+        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 700)}),
+        std::shared_ptr<drawable>(new harvester{sf::Vector2f(400, 200)}),
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(-10, 320)}),
         std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)}),
         std::shared_ptr<drawable>(new inventory)
     };
@@ -54,7 +54,7 @@ private:
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     std::vector<dirt *> farmland{};
-    action actions[10] = {
+    action actions[11] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
         //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
@@ -73,6 +73,8 @@ private:
                { Player.getVehicle()->changeToNormal(); }),
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
+        action(sf::Keyboard::Num3, [&]()
+               { Player.getVehicle()->changeToTrailer(); }),
         action(sf::Keyboard::R, [&]()
                { sMenu.show(); }),
 

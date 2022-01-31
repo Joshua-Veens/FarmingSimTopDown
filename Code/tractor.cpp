@@ -4,12 +4,13 @@ tractor::tractor( sf::Vector2f position):
         vehicle(position),
         seeder_collider(position.x-30, position.y+30, 60, 20),
         tractor_collider(position.x-10, position.y-36, 20, 5),
-        blokje(sf::Vector2f(position.x-10,position.y-36), sf::Vector2f(20, 5))
+        trailer_collider(position.x-20, position.y+55, 40, 70),
+        blokje(sf::Vector2f(position.x-20, position.y+55), sf::Vector2f(40, 70))
 {image.loadFromFile("images\\trekkerjurgen.png");}
 
 void tractor::draw(sf::RenderWindow &window) {
     this->updateCollider();
-    sprite.setTexture(image);
+    sprite.setTexture(image, true);
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);
@@ -30,7 +31,7 @@ void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
     }
     if(active_type == 1){
         position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
-    }else if(active_type == 0){
+    }else if(active_type == trekker or active_type == trailer){
         position += sf::Vector2f(delta.x*2, delta.y*2);
     }
 }
@@ -60,6 +61,11 @@ void tractor::changeToAction(){
     active_type = seeder;
 }
 
+void tractor::changeToTrailer() {
+    image.loadFromFile("images\\aanhanger.png");
+    active_type = trailer;
+}
+
 void tractor::updateCollider(){
     if(savedRotation == 0){
         seeder_collider.left = position.x - 30;
@@ -71,8 +77,14 @@ void tractor::updateCollider(){
         tractor_collider.top = position.y - 36;
         tractor_collider.height = 5;
         tractor_collider.width = 20;
-        blokje.jump(sf::Vector2f(position.x-10, position.y - 36));
-        blokje.setSize(sf::Vector2f(20, 5));
+
+        trailer_collider.left = position.x - 20;
+        trailer_collider.top = position.y + 55;
+        trailer_collider.height = 70;
+        trailer_collider.width = 40;
+
+        blokje.jump(sf::Vector2f(position.x - 20, position.y + 55));
+        blokje.setSize(sf::Vector2f(40, 70));
     }
     else if(savedRotation == 180){
         seeder_collider.left = position.x - 30;
@@ -84,8 +96,14 @@ void tractor::updateCollider(){
         tractor_collider.top = position.y + 36;
         tractor_collider.height = 5;
         tractor_collider.width = 20;
-        blokje.jump(sf::Vector2f(position.x-10, position.y+32));
-        blokje.setSize(sf::Vector2f(20, 5));
+
+        trailer_collider.left = position.x - 20;
+        trailer_collider.top = position.y - 125;
+        trailer_collider.height = 70;
+        trailer_collider.width = 40;
+
+        blokje.jump(sf::Vector2f(position.x - 20, position.y - 125));
+        blokje.setSize(sf::Vector2f(40, 70));
     }
     else if(savedRotation == 270){
         seeder_collider.left = position.x + 30;
@@ -97,8 +115,14 @@ void tractor::updateCollider(){
         tractor_collider.top = position.y - 10;
         tractor_collider.height = 20;
         tractor_collider.width = 5;
-        blokje.jump(sf::Vector2f(position.x - 35, position.y - 10));
-        blokje.setSize(sf::Vector2f(5, 20));
+
+        trailer_collider.left = position.x + 55;
+        trailer_collider.top = position.y - 20;
+        trailer_collider.height = 40;
+        trailer_collider.width = 70;
+
+        blokje.jump(sf::Vector2f(position.x + 55, position.y - 20));
+        blokje.setSize(sf::Vector2f(70, 40));
     }
     else if(savedRotation == 90){
         seeder_collider.left = position.x - 50;
@@ -110,8 +134,14 @@ void tractor::updateCollider(){
         tractor_collider.top = position.y - 10;
         tractor_collider.height = 20;
         tractor_collider.width = 5;
-        blokje.jump(sf::Vector2f(position.x + 32, position.y - 10));
-        blokje.setSize(sf::Vector2f(5, 20));
+
+        trailer_collider.left = position.x - 125;
+        trailer_collider.top = position.y - 20;
+        trailer_collider.height = 40;
+        trailer_collider.width = 70;
+
+        blokje.jump(sf::Vector2f(position.x - 125, position.y - 20));
+        blokje.setSize(sf::Vector2f(70, 40));
     }
 }
 
