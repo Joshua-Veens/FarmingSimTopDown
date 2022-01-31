@@ -1,7 +1,6 @@
 #include "dirt.hpp"
 #include "iostream"
 
-
 dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv):
     position(position),
     active_type(active_type),
@@ -91,6 +90,16 @@ bool dirt::harvest()
         return true;
     }
     return false;
+}
+
+unsigned int dirt::getWheat()
+{
+    return inv->getWheat();
+}
+
+unsigned int dirt::getCorn()
+{
+    return inv->getCorn();
 }
 
 void dirt::draw(sf::RenderWindow &window)
