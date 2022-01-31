@@ -27,6 +27,7 @@ SOURCES += drawable.cpp
         SOURCES += saveHouse.cpp
         SOURCES += inventory.cpp
         SOURCES += marketplace.cpp
+        SOURCES += switchMenu.cpp
 
 # header files in this project
 HEADERS += drawable.hpp
@@ -47,6 +48,7 @@ HEADERS += drawable.hpp
         HEADERS += saveHouse.hpp
         HEADERS += inventory.hpp
         HEADERS += marketplace.hpp
+        HEADERS += switchMenu.hpp
 
 # other places to look for files for this project
 SEARCH  :=
