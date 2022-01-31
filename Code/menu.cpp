@@ -34,7 +34,10 @@ void menu::draw()
     text.setStyle(sf::Text::Bold);
     text.setFillColor(sf::Color(91,127,0));
     text.setPosition((sf::Vector2f)window_middle - sf::Vector2f(900,420));
+    sf::View view = window.getView();
+    view.setCenter(window_middle.x, window_middle.y);
     window.draw(text);
+    window.setView(view);
     for (auto item : options)
     {
         item.draw(window);
