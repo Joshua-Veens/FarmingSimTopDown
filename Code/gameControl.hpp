@@ -18,6 +18,8 @@
 #include "inventory.hpp"
 #include "marketplace.hpp"
 #include "switchMenu.hpp"
+#include "saver.hpp"
+#include "loader.hpp"
 
 class gameControl
 {
@@ -47,6 +49,7 @@ private:
     inventory *inv = dynamic_cast<inventory *>(objects[5].get());
     marketplace market = marketplace(window, inv);
     switchMenu sMenu = switchMenu(window, Player);
+    saver Save = saver(Player, farmland);
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
@@ -88,6 +91,8 @@ private:
 public:
     void runGame()
     {
+        loader Loader("save.txt");
+      
         makeFarmLand(sf::Vector2f(532, 40), 40, 16);
         if (window.isOpen())
         {

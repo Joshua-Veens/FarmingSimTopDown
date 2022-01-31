@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include "option.hpp"
+#include "saver.hpp"
 class menu
 {
 protected:
@@ -15,9 +16,10 @@ protected:
     bool active = false;
     void draw();
     virtual void create();
+    saver & Save;
 
 public:
-    menu(sf::RenderWindow &window);
+    menu(sf::RenderWindow &window, saver & Save);
     // menu(std::vector<option> &options, sf::RenderWindow &window);
 
     void show();

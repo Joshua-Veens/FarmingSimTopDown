@@ -2,7 +2,7 @@
 #include <iostream>
 #include "picture.hpp"
 
-menu::menu(sf::RenderWindow &window) : window(window)
+menu::menu(sf::RenderWindow &window, saver & Save) : window(window), Save(Save)
 {
 }
 

@@ -1,5 +1,5 @@
 #include "player.hpp"
-#include <iostream>
+
 player::player(std::array<vehicle *, 2> &vehicles) : vehicles(vehicles) {}
 
 vehicle *player::getVehicle()
@@ -42,4 +42,8 @@ void player::addMoney(uint64_t delta){
 
 void player::setVehicle(active_t nActive) {
     this->active = nActive;
+}
+
+vehicle *player::getInactive(){
+    return vehicles[(active == trekker) ? combine : trekker ];
 }
