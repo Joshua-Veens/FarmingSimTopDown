@@ -5,6 +5,7 @@
 #include "drawable.hpp"
 #include "rectangle.hpp"
 #include "particleSystem.hpp"
+#include "inventory.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
 
