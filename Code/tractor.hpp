@@ -12,7 +12,6 @@
 class tractor : public vehicle{
 
 private:
-    std::string filename = "images\\trekkerjurgen.png";
     enum tractorTypes{trekker=0, seeder=1};
     tractorTypes active_type = trekker;
     sf::Texture image;
