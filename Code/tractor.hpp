@@ -21,6 +21,7 @@ private:
     sf::FloatRect tractor_collider;
     sf::FloatRect trailer_collider;
     rectangle blokje;
+    type currentCrop = wheat;
 
 public:
     tractor( sf::Vector2f position);
@@ -48,7 +49,8 @@ public:
     void setPosition(sf::Vector2f location);
 
     sf::FloatRect getCollider() override;
-    
+
+    void setCrop(std::vector<dirt *> farmland);
 };
 
 

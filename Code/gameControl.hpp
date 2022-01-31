@@ -29,26 +29,27 @@ private:
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
+    sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
     saver save = saver(Player, farmland);
     menu Menu = menu(window, save);
     pause_menu pMenu = pause_menu(window, save);
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
-        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 700)}),
-        std::shared_ptr<drawable>(new harvester{sf::Vector2f(400, 200)}),
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(-10, 320)}),
-        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)}),
-        std::shared_ptr<drawable>(new inventory)
+        std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
+        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
+        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
+        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
     };
 
 
-    tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
-    harvester *combine = dynamic_cast<harvester *>(objects[2].get());
-    farmhouse *barn = dynamic_cast<farmhouse *>(objects[3].get());
-    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[4].get());
-    inventory *inv = dynamic_cast<inventory *>(objects[5].get());
-    marketplace market = marketplace(window, save, inv);
+    tractor *trekker = dynamic_cast<tractor *>(objects[2].get());
+    harvester *combine = dynamic_cast<harvester *>(objects[3].get());
+    farmhouse *barn = dynamic_cast<farmhouse *>(objects[4].get());
+    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[5].get());
+    inventory *silo = dynamic_cast<inventory *>(objects[1].get());
+    marketplace market = marketplace(window, save, silo);
     switchMenu sMenu = switchMenu(window, save, Player);
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
@@ -78,6 +79,9 @@ private:
         action(sf::Keyboard::R, [&]()
                { sMenu.show(); }),
 
+        action(sf::Keyboard::V, [&]()
+                { trekker->setCrop(farmland); }),
+
 
         action(sf::Keyboard::P, [&]()
         { SPEEEDDD(); }),
@@ -103,32 +107,21 @@ public:
 
         while (window.isOpen())
         {
-//            sf::View view = window.getView();
-//            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
-//            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
-//            std::cout << windowsize.x<< "\n";
-//            float tile_x, tile_y;
-//            if (playerpos.x > 0) tile_x = (floor((playerpos.x + (windowsize.x/2)) / windowsize.x)) * windowsize.x;
-//            else tile_x = (ceil((playerpos.x - (windowsize.x/2)) / windowsize.x)) * windowsize.x;
-//            if (playerpos.y > 0) tile_y = (floor((playerpos.y + (windowsize.y/2)) / windowsize.y)) * windowsize.y;
-//            else tile_y = (ceil((playerpos.y - (windowsize.y/2)) / windowsize.y)) * windowsize.y;
-//            view.setCenter(tile_x, tile_y);
-//            window.setView(view);
-
             sf::Clock updateclock;
             updateclock.restart();
             while(updateclock.getElapsedTime() < updateTime){
                 sf::sleep( sf::milliseconds(1) );
             }
 
-
             input();
             render();
 
+            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+            changeLocation(windowsize);
+            window.setView(view);
 
             trekker->update(farmland);
             combine->update(farmland);
-
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -178,6 +171,9 @@ public:
         {
             object->draw(window);
         }
+        if(Player.getVehicle() == combine){
+            combine->showCropAmount(window);
+        }
         window.display();
     }
 
@@ -190,16 +186,6 @@ public:
         }
     }
 
-    void changeToNormal()
-    {
-        Player.getVehicle()->changeToNormal();
-    }
-
-    void changeToAction()
-    {
-        Player.getVehicle()->changeToAction();
-    }
-
     void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height)
     {
         int x = position.x;
@@ -207,12 +193,35 @@ public:
         {
             for (unsigned int j = 0; j < width; j++)
             {
-                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{position, clock, corn, inv}));
+                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{position, clock}));
                 farmland.push_back(dynamic_cast<dirt *>(objects[1].get()));
                 position.x += 32;
             }
             position.x = x;
             position.y += 32;
+        }
+    }
+
+    void changeLocation(sf::Vector2f windowsize){
+        if (!Menu.getActive()){
+
+            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
+            int x, y;
+            if (playerpos.x<0){
+                x = -windowsize.x*0.5;
+            } else if (playerpos.x > windowsize.x){
+                x = windowsize.x*1.5;
+            } else {
+                x = windowsize.x*0.5;
+            }
+            if(playerpos.y<0){
+                y = -windowsize.y*0.5;
+            } else if (playerpos.y>windowsize.y){
+                y = windowsize.y*1.5;
+            } else {
+                y = windowsize.y*0.5;
+            }
+            view.setCenter(x, y);
         }
     }
 
