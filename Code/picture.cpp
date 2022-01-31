@@ -12,6 +12,5 @@ picture::picture( std::string filename, sf::Vector2f position, std::string type)
 }
 
 void picture::draw(sf::RenderWindow &window) {
-
     window.draw(sprite);
 }

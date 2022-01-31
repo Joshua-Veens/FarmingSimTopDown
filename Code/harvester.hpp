@@ -7,19 +7,26 @@
 #include "dirt.hpp"
 #include "farmhouse.hpp"
 #include "saveHouse.hpp"
-#include "inventory.hpp"
 
 
 class harvester : public vehicle{
 private:
     enum harversterTypes{harvesting=0, notHarvesting=1, full=2};
-    harversterTypes active_type = notHarvesting;
+    harversterTypes active_vehicle = notHarvesting;
     sf::Texture image;
     sf::Sprite sprite;
+    std::string text_string;
+    sf::Color color = sf::Color::White;
+    const std::string font_file = "Xhers_Regular.otf";
+    sf::Sprite wheatSprite;
+    sf::Sprite cornSprite;
+    sf::Texture wheatImage;
+    sf::Texture cornImage;
     int savedRotation = 0;
     sf::FloatRect collider;
     rectangle blokje;
-    unsigned int inventory = 0;
+    unsigned int wheatCount = 0;
+    unsigned int cornCount = 0;
 
 public:
     harvester(sf::Vector2f position);
@@ -32,7 +39,14 @@ public:
 
     void setRotation( int rotation ) override;
 
-    void checkIfFull(std::vector<dirt *> farmland);
+    void checkIfFull();
+
+    void addWheat();
+    void addCorn();
+
+    void showCropAmount(sf::RenderWindow &window);
+    void drawWheat(sf::RenderWindow &window);
+    void drawCorn(sf::RenderWindow &window);
 
     void changeToNormal() override;
 

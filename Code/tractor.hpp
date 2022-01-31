@@ -20,8 +20,7 @@ private:
     sf::FloatRect seeder_collider;
     sf::FloatRect tractor_collider;
     rectangle blokje;
-
-    type currentCrop =wheat;
+    type currentCrop = wheat;
 
 public:
     tractor( sf::Vector2f position);
