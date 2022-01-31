@@ -44,7 +44,6 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Clock & clock;
-    particlePool particles = particlePool(40);
     inventory * inv;
     sf::FloatRect collider;
     particlePool particles = particlePool(40);
