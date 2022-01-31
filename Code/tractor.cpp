@@ -1,4 +1,5 @@
 #include "tractor.hpp"
+#include <iostream>
 
 tractor::tractor( sf::Vector2f position):
         vehicle(position),
@@ -131,3 +132,19 @@ sf::FloatRect tractor::getCollider() {
     return tractor_collider;
 }
 
+void tractor::setCrop(std::vector<dirt *> farmland){
+    for(auto & p : farmland){
+        if(p->getState() == dirt::unseeded){
+            if(this->currentCrop == wheat){
+                p->changeCrop(corn);
+            }else{
+                p->changeCrop(wheat);
+            }
+        }
+    }
+    if(currentCrop == wheat){
+        currentCrop = corn;
+    }else{
+        currentCrop = wheat;
+    }
+}
