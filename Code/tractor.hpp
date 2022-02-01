@@ -40,7 +40,7 @@ public:
 
     void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
-    void update(std::vector<dirt *> farmland);
+    void update(std::vector<std::vector<dirt *>> farmlands);
 
     void overloadCrop(harvester * combine);
 
@@ -62,8 +62,6 @@ public:
 
     sf::FloatRect getCollider() override;
 
-    void setCrop(std::vector<dirt *> farmland);
-
     void drawWheat(sf::RenderWindow &window);
 
     void drawCorn(sf::RenderWindow &window);
@@ -71,6 +69,8 @@ public:
     void showCropAmount(sf::RenderWindow &window);
 
     int getActiveType();
+
+    void setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock clock);
 };
 
 

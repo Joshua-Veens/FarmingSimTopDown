@@ -8,9 +8,9 @@
 class saver {
 private: 
     player & Player;
-    std::vector<dirt *> & farmland;
+    std::vector<std::vector<dirt *>> & farmlands;
 public:
-    saver(player & Player, std::vector<dirt*> & farmland);
+    saver(player & Player, std::vector<std::vector<dirt *>> & farmlands);
     void save(std::string file);
 
 };

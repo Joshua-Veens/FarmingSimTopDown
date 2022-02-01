@@ -71,15 +71,19 @@ void menu::showHelp()
     window.clear();
     sf::Font font;
     font.loadFromFile(font_file);
-    std::string text_string = "TODO: make help";
+    std::string text_string = "Controls:\n"
+                              "WASD     Driving\n"
+                              "1,2,3    Switch to action\n"
+                              "R        Switch vehicle\n"
+                              "V        Change crop";
     sf::Text text(text_string, font);
     text.setCharacterSize(30);
     text.setStyle(sf::Text::Regular);
-    text.setFillColor(sf::Color::Red);
+    text.setFillColor(sf::Color::Green);
     text.setPosition((sf::Vector2f)window_middle);
     window.draw(text);
     window.display();
-    sf::sleep(sf::milliseconds(1000));
+    sf::sleep(sf::milliseconds(3000));
 }
 
 bool menu::getActive()
