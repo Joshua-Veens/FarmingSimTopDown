@@ -7,13 +7,12 @@
 
 class inventory : public drawable{
 private:
-    unsigned int wheatCount = 1694200;
+    unsigned int wheatCount = 69420;
     unsigned int cornCount = 42069;
     sf::Texture image;
     sf::Sprite sprite;
     sf::Vector2f position;
-    sf::FloatRect collider;
-    rectangle blokje;
+    sf::FloatRect collider;    
     std::string text_string;
     sf::Font font;
     sf::Text text;
@@ -32,7 +31,7 @@ public:
     unsigned int getCorn();
 
     void removeCrops();
-    
+
     friend std::ostream &operator<<(std::ostream &lhs, inventory & inv)
     {
         return lhs << "Wheat: " << inv.wheatCount << " Corn: "<< inv.cornCount;

@@ -23,7 +23,6 @@ void tractor::draw(sf::RenderWindow &window) {
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);
-//    blokje.draw(window);
 }
 
 void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
@@ -99,6 +98,7 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
         }
     }
 }
+
 
 void tractor::setRotation( int rotation ) {
     sprite.setRotation(rotation);
@@ -243,6 +243,7 @@ void tractor::setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock cloc
         }
     }
 }
+
 
 void tractor::drawWheat(sf::RenderWindow &window) {
     text_string = std::to_string(wheatCount);

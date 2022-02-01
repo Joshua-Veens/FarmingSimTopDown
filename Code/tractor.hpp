@@ -44,7 +44,7 @@ public:
     void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
     void update(std::vector<std::vector<dirt *>> farmlands);
-
+    
     void overloadCrop(harvester * combine);
 
     void depositCrop(sf::RenderWindow & window, inventory * silo);
@@ -66,7 +66,7 @@ public:
     void setPosition(sf::Vector2f location);
 
     sf::FloatRect getCollider() override;
-
+    
     void drawWheat(sf::RenderWindow &window);
 
     void drawCorn(sf::RenderWindow &window);

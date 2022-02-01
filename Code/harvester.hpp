@@ -43,13 +43,13 @@ public:
     void checkIfFull();
 
     void addWheat();
-
+    
     void addCorn();
 
     void showCropAmount(sf::RenderWindow &window);
-
+    
     void drawWheat(sf::RenderWindow &window);
-
+    
     void drawCorn(sf::RenderWindow &window);
 
     void changeToNormal() override;
@@ -67,7 +67,7 @@ public:
     sf::Vector2f getPosition();
 
     sf::FloatRect getCollider() override;
-
+    
     sf::FloatRect getAugerCollider();
 
     int getActiveType();

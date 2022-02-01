@@ -4,8 +4,7 @@
 harvester::harvester(sf::Vector2f position) :
         vehicle(position),
         collider(position.x - 40, position.y - 42, 80, 20),
-        auger_collider(position.x - 70, position.y+5, 20, 20),
-        blokje(sf::Vector2f(position.x - 70, position.y+5), sf::Vector2f(20, 20))
+        auger_collider(position.x - 70, position.y+5, 20, 20)
 {
     image.loadFromFile("images\\harvester_closed.png");
     wheatImage.loadFromFile("images\\wheatCrop.png");
@@ -18,7 +17,6 @@ void harvester::draw(sf::RenderWindow &window) {
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);
-//    blokje.draw(window);
 }
 
 void harvester::drawWheat(sf::RenderWindow &window) {

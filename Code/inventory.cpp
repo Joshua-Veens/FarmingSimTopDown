@@ -19,7 +19,6 @@ inventory::inventory(sf::Vector2f position):
 
 void inventory::draw(sf::RenderWindow &window) {
     window.draw(sprite);
-//    blokje.draw(window);
 }
 
 unsigned int inventory::getWheat() {
@@ -76,4 +75,4 @@ sf::FloatRect inventory::getCollider() {
 
 sf::Vector2f inventory::getPosition() {
     return position;
-}
+} 
