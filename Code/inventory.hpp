@@ -32,6 +32,11 @@ public:
     unsigned int getCorn();
 
     void removeCrops();
+    
+    friend std::ostream &operator<<(std::ostream &lhs, inventory & inv)
+    {
+        return lhs << "Wheat: " << inv.wheatCount << " Corn: "<< inv.cornCount;
+    }
 
     void addWheat(unsigned int wheat);
 
