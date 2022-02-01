@@ -3,6 +3,7 @@
 
 #include "drawable.hpp"
 #include "dirt.hpp"
+#include "rectangle.hpp"
 
 class inventory : public drawable{
 private:
@@ -11,7 +12,8 @@ private:
     sf::Texture image;
     sf::Sprite sprite;
     sf::Vector2f position;
-
+    sf::FloatRect collider;
+    rectangle blokje;
 public:
     inventory(sf::Vector2f position);
 

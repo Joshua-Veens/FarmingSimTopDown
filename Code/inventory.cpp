@@ -1,15 +1,18 @@
 #include "inventory.hpp"
 
 inventory::inventory(sf::Vector2f position):
-    position(position)
+    position(position),
+    collider(position.x+172, position.y+208, 48, 43),
+    blokje(sf::Vector2f(position.x+172, position.y+208), sf::Vector2f(48, 43))
 {
     image.loadFromFile("images\\silo.png");
+    sprite.setTexture(image);
+    sprite.setPosition(position);
 }
 
 void inventory::draw(sf::RenderWindow &window) {
-    sprite.setTexture(image);
-    sprite.setPosition(position);
     window.draw(sprite);
+    blokje.draw(window);
 }
 
 unsigned int inventory::getWheat() {
