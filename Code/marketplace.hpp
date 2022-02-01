@@ -12,7 +12,7 @@
 class marketplace : public menu{
 private:
 
-    int money = 30000;
+    unsigned int money = 30000;
     inventory * inv;
 
 public:
