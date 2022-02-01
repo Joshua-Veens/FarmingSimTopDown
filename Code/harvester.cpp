@@ -125,11 +125,12 @@ void harvester::changeToAction(){
 
 void harvester::changeToTrailer() {
     image.loadFromFile("images\\harvester_empty.png");
+    active_vehicle = overload;
 }
 
 void harvester::changeToFull() {
     image.loadFromFile("images\\harvester_empty.png");
-    active_vehicle = full;
+    active_vehicle = overload;
 }
 
 void harvester::updateCollider(){
@@ -201,4 +202,28 @@ sf::Vector2f harvester::getPosition() {
 
 sf::FloatRect harvester::getCollider() {
     return collider;
+}
+
+sf::FloatRect harvester::getAugerCollider() {
+    return auger_collider;
+}
+
+int harvester::getActiveType() {
+    return active_vehicle;
+}
+
+int harvester::getWheat() {
+    return wheatCount;
+}
+
+int harvester::getCorn() {
+    return cornCount;
+}
+
+void harvester::setWheatCount(unsigned int wheat) {
+    wheatCount = wheat;
+}
+
+void harvester::setCornCount(unsigned int corn) {
+    cornCount = corn;
 }

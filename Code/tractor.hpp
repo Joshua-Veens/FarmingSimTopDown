@@ -6,6 +6,7 @@
 #include "farmhouse.hpp"
 #include "saveHouse.hpp"
 #include "dirt.hpp"
+#include "harvester.hpp"
 #include <memory>
 
 
@@ -23,6 +24,16 @@ private:
     rectangle blokje;
     type currentCrop = wheat;
 
+    std::string text_string;
+    sf::Color color = sf::Color::White;
+    const std::string font_file = "Xhers_Regular.otf";
+    sf::Sprite wheatSprite;
+    sf::Sprite cornSprite;
+    sf::Texture wheatImage;
+    sf::Texture cornImage;
+    unsigned int wheatCount;
+    unsigned int cornCount;
+
 public:
     tractor( sf::Vector2f position);
 
@@ -31,6 +42,10 @@ public:
     void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
     void update(std::vector<std::vector<dirt *>> farmlands);
+
+
+    void overloadCrop(harvester * combine);
+
 
     void setRotation( int rotation ) override;
 
@@ -49,6 +64,15 @@ public:
     void setPosition(sf::Vector2f location);
 
     sf::FloatRect getCollider() override;
+
+
+    void drawWheat(sf::RenderWindow &window);
+
+    void drawCorn(sf::RenderWindow &window);
+
+    void showCropAmount(sf::RenderWindow &window);
+
+    int getActiveType();
 
     void setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock clock);
 };

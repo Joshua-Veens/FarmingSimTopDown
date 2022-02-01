@@ -1,3 +1,4 @@
+
 // Justin van der Wiel 19-1-22
 
 #ifndef DIRT_HPP
@@ -59,7 +60,7 @@ public:
     type getActiveType();
     void changeCrop(type newType);
     state_t getState();
-    friend std::ostream &operator<<(std::ostream &lhs, dirt & Dirt)
+    friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
     {
         return lhs << " Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type;
         ;

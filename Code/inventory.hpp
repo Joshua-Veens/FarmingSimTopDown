@@ -5,8 +5,9 @@
 #include "dirt.hpp"
 #include "rectangle.hpp"
 
-class inventory : public drawable
-{
+
+class inventory : public drawable{
+
 private:
     unsigned int wheatCount = 69420;
     unsigned int cornCount = 42069;
@@ -19,7 +20,7 @@ private:
 public:
     inventory(sf::Vector2f position);
 
-    void draw(sf::RenderWindow &window) override;
+    void draw( sf::RenderWindow & window ) override;
 
     unsigned int getWheat();
 

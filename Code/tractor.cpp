@@ -6,7 +6,12 @@ tractor::tractor( sf::Vector2f position):
         tractor_collider(position.x-10, position.y-36, 20, 5),
         trailer_collider(position.x-20, position.y+55, 40, 70),
         blokje(sf::Vector2f(position.x-20, position.y+55), sf::Vector2f(40, 70))
-{image.loadFromFile("images\\trekkerjurgen.png");}
+
+{
+    image.loadFromFile("images\\trekkerjurgen.png");
+    wheatImage.loadFromFile("images\\wheatCrop.png");
+    cornImage.loadFromFile("images\\cornCrop.png");
+}
 
 void tractor::draw(sf::RenderWindow &window) {
     this->updateCollider();
@@ -44,6 +49,34 @@ void tractor::update(std::vector<std::vector<dirt *>> farmlands){
                 p->seed();
             }
             p->update();
+
+        }
+    }
+}
+
+void tractor::overloadCrop(harvester *combine) {
+    unsigned int total = wheatCount + cornCount;
+    if(total == 40000){
+        return;
+    }
+    if(combine->getAugerCollider().intersects(trailer_collider) && combine->getActiveType() == 2 && active_type == trailer){
+        if(total + combine->getWheat() > 40000){
+            unsigned int wheat = total + combine->getWheat() - 40000;
+            wheatCount += combine->getWheat() - wheat;
+            combine->setWheatCount(wheat);
+            return;
+        }else{
+            wheatCount += combine->getWheat();
+            combine->setWheatCount(0);
+        }
+        if(total + combine->getCorn() > 40000){
+            unsigned int corn = total + combine->getCorn() - 40000;
+            cornCount += combine->getCorn() - corn;
+            combine->setCornCount(corn);
+            return;
+        }else{
+            cornCount += combine->getCorn();
+            combine->setCornCount(0);
         }
     }
 }
@@ -184,4 +217,44 @@ void tractor::setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock cloc
             currentCrop = wheat;
         }
     }
+
+}
+
+void tractor::drawWheat(sf::RenderWindow &window) {
+    text_string = std::to_string(wheatCount);
+    sf::Font font;
+    font.loadFromFile(font_file);
+    sf::Text text(text_string, font);
+    text.setCharacterSize(40);
+    text.setStyle(sf::Text::Bold);
+    text.setFillColor(color);
+    text.setPosition(sf::Vector2f(80,20));
+    wheatSprite.setTexture(wheatImage);
+    wheatSprite.setPosition(sf::Vector2f(10, 20));
+    window.draw(wheatSprite);
+    window.draw(text);
+}
+
+void tractor::drawCorn(sf::RenderWindow &window) {
+    text_string = std::to_string(cornCount);
+    sf::Font font;
+    font.loadFromFile(font_file);
+    sf::Text text(text_string, font);
+    text.setCharacterSize(40);
+    text.setStyle(sf::Text::Bold);
+    text.setFillColor(color);
+    text.setPosition(sf::Vector2f(80,80));
+    cornSprite.setTexture(cornImage);
+    cornSprite.setPosition(sf::Vector2f(10, 80));
+    window.draw(cornSprite);
+    window.draw(text);
+}
+
+void tractor::showCropAmount(sf::RenderWindow &window) {
+    drawWheat(window);
+    drawCorn(window);
+}
+
+int tractor::getActiveType(){
+    return active_type;
 }

@@ -1,7 +1,9 @@
 #include "saver.hpp"
 #include <fstream>
 #include <sstream>
+
 saver::saver(player &Player, std::vector<std::vector<dirt*>> & farmlands, inventory * inv):Player(Player), farmlands(farmlands), inv(inv){}
+
 
 void saver::save(std::string file){
     std::ofstream save_file(file);
