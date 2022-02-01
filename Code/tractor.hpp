@@ -30,7 +30,7 @@ public:
 
     void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
-    void update(std::vector<dirt *> farmland);
+    void update(std::vector<std::vector<dirt *>> farmlands);
 
     void setRotation( int rotation ) override;
 
@@ -50,7 +50,7 @@ public:
 
     sf::FloatRect getCollider() override;
 
-    void setCrop(std::vector<dirt *> farmland);
+    void setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock clock);
 };
 
 

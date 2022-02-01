@@ -37,12 +37,14 @@ void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
 }
 
 
-void tractor::update(std::vector<dirt *> farmland){
-    for(auto & p : farmland){
-        if(p->getBounds().intersects(seeder_collider) && active_type == 1){
-            p->seed();
+void tractor::update(std::vector<std::vector<dirt *>> farmlands){
+    for(auto & farmland : farmlands) {
+        for (auto &p: farmland) {
+            if (p->getBounds().intersects(seeder_collider) && active_type == 1) {
+                p->seed();
+            }
+            p->update();
         }
-        p->update();
     }
 }
 
@@ -161,19 +163,25 @@ sf::FloatRect tractor::getCollider() {
     return tractor_collider;
 }
 
-void tractor::setCrop(std::vector<dirt *> farmland){
-    for(auto & p : farmland){
-        if(p->getState() == dirt::unseeded){
-            if(this->currentCrop == wheat){
-                p->changeCrop(corn);
-            }else{
-                p->changeCrop(wheat);
+void tractor::setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock clock){
+    sf::Time time = clock.getElapsedTime();
+    clock.restart();
+    if (time.asMilliseconds() > 500) {
+        for (auto &farmland: farmlands) {
+            for (auto &p: farmland) {
+                if (p->getState() == dirt::unseeded) {
+                    if (this->currentCrop == wheat) {
+                        p->changeCrop(corn);
+                    } else {
+                        p->changeCrop(wheat);
+                    }
+                }
             }
         }
-    }
-    if(currentCrop == wheat){
-        currentCrop = corn;
-    }else{
-        currentCrop = wheat;
+        if (currentCrop == wheat) {
+            currentCrop = corn;
+        } else {
+            currentCrop = wheat;
+        }
     }
 }

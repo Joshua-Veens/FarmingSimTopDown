@@ -36,7 +36,7 @@ public:
 
     void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
-    void update(std::vector<dirt *> farmland);
+    void update(std::vector<std::vector<dirt *>> farmlands);
 
     void setRotation( int rotation ) override;
 

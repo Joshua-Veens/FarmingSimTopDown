@@ -90,15 +90,17 @@ void harvester::checkIfFull() {
     }
 }
 
-void harvester::update(std::vector<dirt *> farmland){
+void harvester::update(std::vector<std::vector<dirt *>> farmlands){
     checkIfFull();
-    for(auto & p : farmland){
-        if(p->getBounds().intersects(collider) && active_vehicle == 0){
-            if(p->harvest()){
-                if(p->getActiveType() == 0){
-                    addWheat();
-                }else if(p->getActiveType() == 1){
-                    addCorn();
+    for(auto & farmland : farmlands) {
+        for (auto &p: farmland) {
+            if (p->getBounds().intersects(collider) && active_vehicle == 0) {
+                if (p->harvest()) {
+                    if (p->getActiveType() == 0) {
+                        addWheat();
+                    } else if (p->getActiveType() == 1) {
+                        addCorn();
+                    }
                 }
             }
         }

@@ -31,7 +31,7 @@ private:
     sf::Clock clock;
     sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
-    saver save = saver(Player, farmland);
+    saver save = saver(Player, farmlands);
     menu Menu = menu(window, save);
     pause_menu pMenu = pause_menu(window, save);
     std::vector<std::shared_ptr<drawable>> objects = {
@@ -54,7 +54,13 @@ private:
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
-    std::vector<dirt *> farmland{};
+    std::vector<dirt *> farmlandMiddle{};
+    std::vector<dirt *> farmlandLeft{};
+    std::vector<dirt *> farmlandRight{};
+    std::vector<dirt *> farmlandTop{};
+    std::vector<dirt *> farmlandBottom{};
+    std::vector<dirt *> farmlandLeftTop{};
+    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
     action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
@@ -75,12 +81,12 @@ private:
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
         action(sf::Keyboard::Num3, [&]()
-               { Player.getVehicle()->changeToTrailer(); }),
+                { Player.getVehicle()->changeToTrailer(); }),
         action(sf::Keyboard::R, [&]()
                { sMenu.show(); }),
 
         action(sf::Keyboard::V, [&]()
-                { trekker->setCrop(farmland); }),
+                { trekker->setCrop(farmlands,clock); }),
 
 
         action(sf::Keyboard::P, [&]()
@@ -99,7 +105,11 @@ public:
     {
         loader Loader("save.txt");
       
-        makeFarmLand(sf::Vector2f(532, 40), 40, 16);
+        makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
+        makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
+        makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
+        makeFarmLand(sf::Vector2f(80, -1000), 28, 16, 3);   //Top
+        makeFarmLand(sf::Vector2f(80, 1600), 26, 18, 4);   //Bottom
         if (window.isOpen())
         {
             Menu.show();
@@ -120,8 +130,8 @@ public:
             changeLocation(windowsize);
             window.setView(view);
 
-            trekker->update(farmland);
-            combine->update(farmland);
+            trekker->update(farmlands);
+            combine->update(farmlands);
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -130,10 +140,10 @@ public:
                 {
                     window.close();
                 }
-//                if (event.type == sf::Event::Resized){
-//                    view.setSize(event.size.width, event.size.height);
-//                    window.setView(view);
-//                }
+                if (event.type == sf::Event::Resized){
+                    view.setSize(event.size.width, event.size.height);
+                    window.setView(view);
+                }
             }
         }
     }
@@ -186,7 +196,7 @@ public:
         }
     }
 
-    void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height)
+    void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height, unsigned int index)
     {
         int x = position.x;
         for (unsigned int i = 0; i < height; i++)
@@ -194,7 +204,7 @@ public:
             for (unsigned int j = 0; j < width; j++)
             {
                 objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{position, clock}));
-                farmland.push_back(dynamic_cast<dirt *>(objects[1].get()));
+                farmlands[index].push_back(dynamic_cast<dirt *>(objects[1].get()));
                 position.x += 32;
             }
             position.x = x;
