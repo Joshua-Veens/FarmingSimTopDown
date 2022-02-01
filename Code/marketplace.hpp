@@ -6,26 +6,39 @@
 #define V2CPSE2_EXAMPLES_MARKETPLACE_HPP
 
 #include "drawable.hpp"
-#include "inventory.hpp"
-#include "menu.hpp"
+#include "rectangle.hpp"
 
-class marketplace : public menu{
+class marketplace : public drawable{
 private:
-
-    unsigned int money = 30000;
-    inventory * inv;
-
+    float money = 30000;
+//    inventory * inv;
+    sf::Texture image;
+    sf::Sprite sprite;
+    sf::Vector2f position;
+    sf::FloatRect sell_collider;
+    sf::FloatRect collider;
+    rectangle blokje;
+    std::string text_string;
+    sf::Font font;
+    sf::Text text;
 public:
-    marketplace(sf::RenderWindow & window, saver save, inventory * inv);
+    marketplace(sf::Vector2f position);
 
-    void sellAll();
+    void draw(sf::RenderWindow & window) override;
 
-    void create() override;
+    sf::FloatRect getCollider() override;
 
-    unsigned int getMoney();
+    sf::FloatRect getSellCollider();
 
-    void addMoney(unsigned int moneyToAdd);
-    void removeMoney(unsigned int moneyToRemove);
+    sf::Vector2f getPosition();
+
+    void sellCrops(float wheat, float corn);
+
+    void drawMoney(sf::RenderWindow & window);
+
+//    void sellAll();
+
+//    void create() override;
 };
 
 

@@ -8,6 +8,7 @@
 #include "dirt.hpp"
 #include "harvester.hpp"
 #include "inventory.hpp"
+#include "marketplace.hpp"
 #include <memory>
 
 
@@ -44,10 +45,12 @@ public:
     void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
     void update(std::vector<std::vector<dirt *>> farmlands);
-    
+
     void overloadCrop(harvester * combine);
 
     void depositCrop(sf::RenderWindow & window, inventory * silo);
+
+    void sellCrops(sf::RenderWindow & window, marketplace * market);
 
     void setRotation( int rotation ) override;
 
@@ -66,12 +69,14 @@ public:
     void setPosition(sf::Vector2f location);
 
     sf::FloatRect getCollider() override;
-    
+
     void drawWheat(sf::RenderWindow &window);
 
     void drawCorn(sf::RenderWindow &window);
 
     void drawUnloadHelp(sf::RenderWindow &window, inventory * silo);
+
+    void drawSellHelp(sf::RenderWindow &window, marketplace * market);
 
     void showCropAmount(sf::RenderWindow &window);
 
