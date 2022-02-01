@@ -18,7 +18,7 @@ void harvester::draw(sf::RenderWindow &window) {
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);
-    blokje.draw(window);
+//    blokje.draw(window);
 }
 
 void harvester::drawWheat(sf::RenderWindow &window) {
@@ -114,6 +114,9 @@ void harvester::setRotation( int rotation ) {
 
 
 void harvester::changeToNormal(){
+    if(wheatCount > 0 || cornCount > 0){
+        return;
+    }
     image.loadFromFile("images\\harvester_closed.png");
     active_vehicle = notHarvesting;
 }

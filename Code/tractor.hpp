@@ -7,6 +7,7 @@
 #include "saveHouse.hpp"
 #include "dirt.hpp"
 #include "harvester.hpp"
+#include "inventory.hpp"
 #include <memory>
 
 
@@ -23,16 +24,17 @@ private:
     sf::FloatRect trailer_collider;
     rectangle blokje;
     type currentCrop = wheat;
-
     std::string text_string;
+    sf::Font font;
+    sf::Text text;
     sf::Color color = sf::Color::White;
-    const std::string font_file = "Xhers_Regular.otf";
     sf::Sprite wheatSprite;
     sf::Sprite cornSprite;
     sf::Texture wheatImage;
     sf::Texture cornImage;
-    unsigned int wheatCount;
-    unsigned int cornCount;
+    unsigned int wheatCount = 0;
+    unsigned int cornCount = 0;
+
 
 public:
     tractor( sf::Vector2f position);
@@ -43,9 +45,9 @@ public:
 
     void update(std::vector<std::vector<dirt *>> farmlands);
 
-
     void overloadCrop(harvester * combine);
 
+    void depositCrop(sf::RenderWindow & window, inventory * silo);
 
     void setRotation( int rotation ) override;
 
@@ -65,10 +67,11 @@ public:
 
     sf::FloatRect getCollider() override;
 
-
     void drawWheat(sf::RenderWindow &window);
 
     void drawCorn(sf::RenderWindow &window);
+
+    void drawUnloadHelp(sf::RenderWindow &window, inventory * silo);
 
     void showCropAmount(sf::RenderWindow &window);
 
