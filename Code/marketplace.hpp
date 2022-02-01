@@ -11,6 +11,7 @@
 
 class marketplace : public menu{
 private:
+
     unsigned int money = 30000;
     inventory * inv;
 
@@ -20,6 +21,11 @@ public:
     void sellAll();
 
     void create() override;
+
+    unsigned int getMoney();
+
+    void addMoney(unsigned int moneyToAdd);
+    void removeMoney(unsigned int moneyToRemove);
 };
 
 

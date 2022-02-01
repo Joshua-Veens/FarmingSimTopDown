@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+save.txt
+
+Makefile.HCT

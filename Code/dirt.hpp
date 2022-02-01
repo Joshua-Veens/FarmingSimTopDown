@@ -1,4 +1,3 @@
-
 // Justin van der Wiel 19-1-22
 
 #ifndef DIRT_HPP
@@ -16,6 +15,7 @@ enum type {wheat=0,corn=1};
 class dirt : public drawable
 {
 public:
+    enum property {notOwned=0, owned=1};
     enum state_t
     {
         unseeded,
@@ -27,6 +27,7 @@ public:
         grown
     };
 private:
+    property active_own = notOwned;
     state_t state = unseeded;
     sf::Vector2f position;
     std::vector<std::vector<std::string>> crops = {
@@ -60,6 +61,8 @@ public:
     type getActiveType();
     void changeCrop(type newType);
     state_t getState();
+    void setToOwned();
+    bool getOwned();
     friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
     {
         return lhs << " Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type;
