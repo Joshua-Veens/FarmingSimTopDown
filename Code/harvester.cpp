@@ -18,7 +18,7 @@ void harvester::draw(sf::RenderWindow &window) {
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);
-//    blokje.draw(window);
+    blokje.draw(window);
 }
 
 void harvester::drawWheat(sf::RenderWindow &window) {
@@ -114,9 +114,6 @@ void harvester::setRotation( int rotation ) {
 
 
 void harvester::changeToNormal(){
-    if(wheatCount > 0 || cornCount > 0){
-        return;
-    }
     image.loadFromFile("images\\harvester_closed.png");
     active_vehicle = notHarvesting;
 }
@@ -128,12 +125,11 @@ void harvester::changeToAction(){
 
 void harvester::changeToTrailer() {
     image.loadFromFile("images\\harvester_empty.png");
-    active_vehicle = overload;
 }
 
 void harvester::changeToFull() {
     image.loadFromFile("images\\harvester_empty.png");
-    active_vehicle = overload;
+    active_vehicle = full;
 }
 
 void harvester::updateCollider(){
@@ -205,28 +201,4 @@ sf::Vector2f harvester::getPosition() {
 
 sf::FloatRect harvester::getCollider() {
     return collider;
-}
-
-sf::FloatRect harvester::getAugerCollider() {
-    return auger_collider;
-}
-
-int harvester::getActiveType() {
-    return active_vehicle;
-}
-
-int harvester::getWheat() {
-    return wheatCount;
-}
-
-int harvester::getCorn() {
-    return cornCount;
-}
-
-void harvester::setWheatCount(unsigned int wheat) {
-    wheatCount = wheat;
-}
-
-void harvester::setCornCount(unsigned int corn) {
-    cornCount = corn;
 }

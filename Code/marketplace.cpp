@@ -40,3 +40,15 @@ void marketplace::create() {
             { this->active = false;},
             font_file));
 }
+
+unsigned int marketplace::getMoney() {
+    return money;
+}
+
+void marketplace::addMoney(int moneyToAdd) {
+    money += moneyToAdd;
+}
+
+void marketplace::removeMoney(int moneyToRemove) {
+    money -= moneyToRemove;
+}
