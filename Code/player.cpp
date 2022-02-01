@@ -47,3 +47,8 @@ void player::setVehicle(active_t nActive) {
 vehicle *player::getInactive(){
     return vehicles[(active == trekker) ? combine : trekker ];
 }
+
+
+std::array<vehicle *, 2> & player::getVehicles(){
+    return vehicles;
+}
