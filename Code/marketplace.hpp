@@ -24,8 +24,8 @@ public:
 
     unsigned int getMoney();
 
-    void addMoney(int moneyToAdd);
-    void removeMoney(int moneyToRemove);
+    void addMoney(unsigned int moneyToAdd);
+    void removeMoney(unsigned int moneyToRemove);
 };
 
 

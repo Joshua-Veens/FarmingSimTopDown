@@ -146,8 +146,6 @@ void harvester::updateCollider(){
         auger_collider.height = 20;
         auger_collider.width = 20;
 
-        blokje.jump(sf::Vector2f(position.x - 70, position.y+5));
-        blokje.setSize(sf::Vector2f(20, 20));
     }
     else if(savedRotation == 180){
         collider.left = position.x - 40;
@@ -160,8 +158,6 @@ void harvester::updateCollider(){
         auger_collider.height = 20;
         auger_collider.width = 20;
 
-        blokje.jump(sf::Vector2f(position.x + 52, position.y-25));
-        blokje.setSize(sf::Vector2f(20, 20));
     }
     else if(savedRotation == 270){
         collider.left = position.x - 42;
@@ -174,8 +170,6 @@ void harvester::updateCollider(){
         auger_collider.height = 20;
         auger_collider.width = 20;
 
-        blokje.jump(sf::Vector2f(position.x+5, position.y+50));
-        blokje.setSize(sf::Vector2f(20, 20));
     }
     else if(savedRotation == 90){
         collider.left = position.x + 22;
@@ -188,8 +182,6 @@ void harvester::updateCollider(){
         auger_collider.height = 20;
         auger_collider.width = 20;
 
-        blokje.jump(sf::Vector2f(position.x - 25, position.y - 70));
-        blokje.setSize(sf::Vector2f(20, 20));
     }
 }
 

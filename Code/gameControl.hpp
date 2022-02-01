@@ -32,7 +32,7 @@ private:
     sf::Clock clock;
     sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
-    saver save = saver(Player, farmlands);
+    saver save = saver(Player, farmlands, silo);
     menu Menu = menu(window, save);
     pause_menu pMenu = pause_menu(window, save);
 
