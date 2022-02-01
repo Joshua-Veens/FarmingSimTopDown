@@ -139,6 +139,7 @@ public:
 
             trekker->update(farmlands);
             combine->update(farmlands);
+            trekker->overloadCrop(combine);
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -146,6 +147,7 @@ public:
                 if (event.type == sf::Event::Closed)
                 {
                     window.close();
+                    save.save("save.txt");
                 }
                 if (event.type == sf::Event::Resized){
                     view.setSize(event.size.width, event.size.height);
@@ -191,6 +193,11 @@ public:
         if(Player.getVehicle() == combine){
             combine->showCropAmount(window);
         }
+        if(Player.getVehicle() == trekker && trekker->getActiveType() == 2){
+            trekker->showCropAmount(window);
+        }
+        trekker->depositCrop(window, silo);
+        silo->drawInventory(window);
         window.display();
     }
 
