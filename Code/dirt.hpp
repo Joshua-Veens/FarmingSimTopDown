@@ -1,4 +1,3 @@
-
 // Justin van der Wiel 19-1-22
 
 #ifndef DIRT_HPP
