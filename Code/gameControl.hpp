@@ -13,7 +13,7 @@
 #include "menu.hpp"
 #include "pauseMenu.hpp"
 #include "farmhouse.hpp"
-#include "player.hpp"
+#include "Player.hpp"
 #include "saveHouse.hpp"
 #include "inventory.hpp"
 #include "marketplace.hpp"
@@ -63,9 +63,6 @@ private:
     marketplace market = marketplace(window, save, silo);
     shop *winkel = dynamic_cast<shop *>(objects[6].get());
     switchMenu sMenu = switchMenu(window, save, Player);
-
-    std::array<vehicle *, 2> vehicles = {trekker, combine};
-    player Player = player(vehicles);
     action actions[13] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
@@ -82,11 +79,11 @@ private:
                { movement(sf::Vector2f(+4.0, 0.0), 90); }),
 
         action(sf::Keyboard::Num1, [&]()
-               { Player.getVehicle()->changeToNormal(); }),
+               { pPlayer->getVehicle()->changeToNormal(); }),
         action(sf::Keyboard::Num2, [&]()
-               { Player.getVehicle()->changeToAction(); }),
+               { pPlayer->getVehicle()->changeToAction(); }),
         action(sf::Keyboard::Num3, [&]()
-                { Player.getVehicle()->changeToTrailer(); }),
+               { pPlayer->getVehicle()->changeToTrailer(); }),
         action(sf::Keyboard::R, [&]()
                { sMenu.show(); }),
 
@@ -97,10 +94,10 @@ private:
                 { winkel->buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)))); }),
 
         action(sf::Keyboard::P, [&]()
-        { SPEEEDDD(); }),
+               { SPEEEDDD(); }),
 
         action(sf::Keyboard::M, [&]()
-                { market.show(); }),
+               { market.show(); }),
 
         action(sf::Keyboard::Escape, [this]
                {if(Menu.getActive() || pMenu.getActive()){
@@ -110,13 +107,14 @@ private:
 public:
     void runGame()
     {
+        pPlayer = Loader.loadPlayer(pPlayer);
         loader Loader("save.txt");
       
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
         makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
         makeFarmLand(sf::Vector2f(80, -1000), 28, 16, 3);   //Top
-        makeFarmLand(sf::Vector2f(80, 1600), 26, 18, 4);   //Bottom
+
         if (window.isOpen())
         {
             Menu.show();
@@ -126,8 +124,9 @@ public:
         {
             sf::Clock updateclock;
             updateclock.restart();
-            while(updateclock.getElapsedTime() < updateTime){
-                sf::sleep( sf::milliseconds(1) );
+            while (updateclock.getElapsedTime() < updateTime)
+            {
+                sf::sleep(sf::milliseconds(1));
             }
 
             input();
@@ -149,7 +148,13 @@ public:
                     window.close();
                     save.save("save.txt");
                 }
-                if (event.type == sf::Event::Resized){
+                if (event.type == sf::Event::Resized)
+                {
+                    view.setSize(event.size.width, event.size.height);
+                    window.setView(view);
+                }
+                if (event.type == sf::Event::Resized)
+                {
                     view.setSize(event.size.width, event.size.height);
                     window.setView(view);
                 }
@@ -157,22 +162,27 @@ public:
         }
     }
 
-    void SPEEEDDD(){
+    void SPEEEDDD()
+    {
         sf::Time time = clock.getElapsedTime();
         clock.restart();
         if (time.asMilliseconds() > 500)
         {
-            if(speedhacks){
+            if (speedhacks)
+            {
                 updateTime = sf::milliseconds(15);
                 speedhacks = false;
-            }else{
+            }
+            else
+            {
                 updateTime = sf::milliseconds(1);
                 speedhacks = true;
             }
         }
     }
 
-    void input(){
+    void input()
+    {
         for (auto &action : actions)
         {
             action.setBusy(busy);
@@ -190,10 +200,15 @@ public:
         {
             object->draw(window);
         }
-        if(Player.getVehicle() == combine){
+        if (pPlayer->getVehicle() == combine)
+        {
             combine->showCropAmount(window);
         }
-        if(Player.getVehicle() == trekker && trekker->getActiveType() == 2){
+
+
+        if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 2)
+        {
+
             trekker->showCropAmount(window);
         }
         trekker->depositCrop(window, silo);
@@ -203,9 +218,10 @@ public:
 
     void movement(sf::Vector2f speed, int rotation)
     {
-        Player.getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome});
-        Player.getVehicle()->setRotation(rotation);
-        if(Player.getVehicle()->getCollider().intersects(barn->getCollider())){
+        pPlayer->getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome});
+        pPlayer->getVehicle()->setRotation(rotation);
+        if (pPlayer->getVehicle()->getCollider().intersects(barn->getCollider()))
+        {
             sMenu.show();
         }
     }
@@ -227,29 +243,40 @@ public:
         }
     }
 
-    void changeLocation(sf::Vector2f windowsize){
-        if (!Menu.getActive()){
+    void changeLocation(sf::Vector2f windowsize)
+    {
+        if (!Menu.getActive())
+        {
 
-            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
+            sf::Vector2f playerpos = pPlayer->getVehicle()->getPosition();
             int x, y;
-            if (playerpos.x<0){
-                x = -windowsize.x*0.5;
-            } else if (playerpos.x > windowsize.x){
-                x = windowsize.x*1.5;
-            } else {
-                x = windowsize.x*0.5;
+            if (playerpos.x < 0)
+            {
+                x = -windowsize.x * 0.5;
             }
-            if(playerpos.y<0){
-                y = -windowsize.y*0.5;
-            } else if (playerpos.y>windowsize.y){
-                y = windowsize.y*1.5;
-            } else {
-                y = windowsize.y*0.5;
+            else if (playerpos.x > windowsize.x)
+            {
+                x = windowsize.x * 1.5;
+            }
+            else
+            {
+                x = windowsize.x * 0.5;
+            }
+            if (playerpos.y < 0)
+            {
+                y = -windowsize.y * 0.5;
+            }
+            else if (playerpos.y > windowsize.y)
+            {
+                y = windowsize.y * 1.5;
+            }
+            else
+            {
+                y = windowsize.y * 0.5;
             }
             view.setCenter(x, y);
         }
     }
-
 };
 
 #endif // V2CPSE2_EXAMPLES_GAMECONTROL_HPP
