@@ -45,10 +45,10 @@ unsigned int marketplace::getMoney() {
     return money;
 }
 
-void marketplace::addMoney(int moneyToAdd) {
+void marketplace::addMoney(unsigned int moneyToAdd) {
     money += moneyToAdd;
 }
 
-void marketplace::removeMoney(int moneyToRemove) {
+void marketplace::removeMoney(unsigned int moneyToRemove) {
     money -= moneyToRemove;
 }
