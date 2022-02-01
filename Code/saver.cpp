@@ -1,7 +1,9 @@
 #include "saver.hpp"
 #include <fstream>
 #include <sstream>
-saver::saver(player &Player, std::vector<std::vector<dirt*>> & farmlands):Player(Player), farmlands(farmlands){}
+
+saver::saver(player &Player, std::vector<std::vector<dirt*>> & farmlands, inventory * inv):Player(Player), farmlands(farmlands), inv(inv){}
+
 
 void saver::save(std::string file){
     std::ofstream save_file(file);
@@ -10,11 +12,11 @@ void saver::save(std::string file){
     buffer << "!";
     for(auto farmland : farmlands){
         for(auto Dirt : farmland) {
-            auto _dirt = *Dirt;
-            buffer << _dirt;
+            buffer << *Dirt;
             buffer << "!";
         }
     }
+    buffer << * inv;
     std::string temp = buffer.str();
     std::string encoded = base64_encode((unsigned char * const)temp.c_str(),temp.size());
     save_file << encoded;
