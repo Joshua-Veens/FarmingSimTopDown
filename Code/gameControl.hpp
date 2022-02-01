@@ -31,9 +31,8 @@ private:
     sf::Clock clock;
     sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
-    saver save = saver(Player, farmlands);
-    menu Menu = menu(window, save);
-    pause_menu pMenu = pause_menu(window, save);
+
+
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
@@ -61,6 +60,11 @@ private:
     std::vector<dirt *> farmlandBottom{};
     std::vector<dirt *> farmlandLeftTop{};
     std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
+
+    saver save = saver(Player, farmlands,silo);
+    menu Menu = menu(window, save);
+    pause_menu pMenu = pause_menu(window, save);
+
     action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
@@ -104,6 +108,7 @@ public:
     void runGame()
     {
         loader Loader("save.txt");
+        std::cout << Loader.load();
       
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
@@ -132,6 +137,7 @@ public:
 
             trekker->update(farmlands);
             combine->update(farmlands);
+
             trekker->overloadCrop(combine);
 
             sf::Event event;
@@ -140,6 +146,11 @@ public:
                 if (event.type == sf::Event::Closed)
                 {
                     window.close();
+                    save.save("save.txt");
+                }
+                if (event.type == sf::Event::Resized){
+                    view.setSize(event.size.width, event.size.height);
+                    window.setView(view);
                 }
                 if (event.type == sf::Event::Resized){
                     view.setSize(event.size.width, event.size.height);
@@ -185,6 +196,7 @@ public:
         if(Player.getVehicle() == combine){
             combine->showCropAmount(window);
         }
+
         if(Player.getVehicle() == trekker && trekker->getActiveType() == 2){
             trekker->showCropAmount(window);
         }

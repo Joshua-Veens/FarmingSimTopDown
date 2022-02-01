@@ -23,6 +23,7 @@ private:
     sf::FloatRect trailer_collider;
     rectangle blokje;
     type currentCrop = wheat;
+
     std::string text_string;
     sf::Color color = sf::Color::White;
     const std::string font_file = "Xhers_Regular.otf";
@@ -42,7 +43,9 @@ public:
 
     void update(std::vector<std::vector<dirt *>> farmlands);
 
+
     void overloadCrop(harvester * combine);
+
 
     void setRotation( int rotation ) override;
 
@@ -61,6 +64,7 @@ public:
     void setPosition(sf::Vector2f location);
 
     sf::FloatRect getCollider() override;
+
 
     void drawWheat(sf::RenderWindow &window);
 

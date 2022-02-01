@@ -6,6 +6,7 @@ tractor::tractor( sf::Vector2f position):
         tractor_collider(position.x-10, position.y-36, 20, 5),
         trailer_collider(position.x-20, position.y+55, 40, 70),
         blokje(sf::Vector2f(position.x-20, position.y+55), sf::Vector2f(40, 70))
+
 {
     image.loadFromFile("images\\trekkerjurgen.png");
     wheatImage.loadFromFile("images\\wheatCrop.png");
@@ -48,6 +49,7 @@ void tractor::update(std::vector<std::vector<dirt *>> farmlands){
                 p->seed();
             }
             p->update();
+
         }
     }
 }
@@ -215,6 +217,7 @@ void tractor::setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock cloc
             currentCrop = wheat;
         }
     }
+
 }
 
 void tractor::drawWheat(sf::RenderWindow &window) {
