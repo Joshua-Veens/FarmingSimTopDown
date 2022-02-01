@@ -2,39 +2,34 @@
 #define V2CPSE2_EXAMPLES_INVENTORY_HPP
 
 #include "drawable.hpp"
+#include "dirt.hpp"
+#include "rectangle.hpp"
 
-enum type {wheat=0,corn=1};
-
-class inventory : public drawable{
+class inventory : public drawable
+{
 private:
-    unsigned int wheatCount = 0;
-    unsigned int cornCount = 0;
-    type active_crop_type;
-    std::string text_string;
-    sf::Color color = sf::Color::White;
-    const std::string font_file = "Xhers_Regular.otf";
-    sf::Texture wheatImage;
-    sf::Texture cornImage;
+    unsigned int wheatCount = 69420;
+    unsigned int cornCount = 42069;
+    sf::Texture image;
     sf::Sprite sprite;
+    sf::Vector2f position;
+    sf::FloatRect collider;
+    rectangle blokje;
 
 public:
-    inventory();
+    inventory(sf::Vector2f position);
 
-    void draw( sf::RenderWindow & window ) override;
-
-    void drawWheat(sf::RenderWindow &window);
-
-    void drawCorn(sf::RenderWindow &window);
-
-    void setHarvest(type croptype);
+    void draw(sf::RenderWindow &window) override;
 
     unsigned int getWheat();
 
     unsigned int getCorn();
 
     void removeCrops();
-
+    friend std::ostream &operator<<(std::ostream &lhs, inventory & inv)
+    {
+        return lhs << "Wheat: " << inv.wheatCount << " Corn: "<< inv.cornCount;
+    }
 };
 
-
-#endif //V2CPSE2_EXAMPLES_INVENTORY_HPP
+#endif // V2CPSE2_EXAMPLES_INVENTORY_HPP

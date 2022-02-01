@@ -29,32 +29,40 @@ private:
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
+    sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
-    menu Menu = menu(window);
-    pause_menu pMenu = pause_menu(window);
+
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
+        std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(75, 320)}),
-        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)}),
-        std::shared_ptr<drawable>(new inventory)
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
+        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
     };
 
 
-    tractor *trekker = dynamic_cast<tractor *>(objects[1].get());
-    harvester *combine = dynamic_cast<harvester *>(objects[2].get());
-    farmhouse *barn = dynamic_cast<farmhouse *>(objects[3].get());
-    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[4].get());
-    inventory *inv = dynamic_cast<inventory *>(objects[5].get());
-    marketplace market = marketplace(window, inv);
-    switchMenu sMenu = switchMenu(window, Player);
-    saver Save = saver(Player, farmland);
+    tractor *trekker = dynamic_cast<tractor *>(objects[2].get());
+    harvester *combine = dynamic_cast<harvester *>(objects[3].get());
+    farmhouse *barn = dynamic_cast<farmhouse *>(objects[4].get());
+    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[5].get());
+    inventory *silo = dynamic_cast<inventory *>(objects[1].get());
+    marketplace market = marketplace(window, save, silo);
+    switchMenu sMenu = switchMenu(window, save, Player);
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
-    std::vector<dirt *> farmland{};
-    action actions[10] = {
+    std::vector<dirt *> farmlandMiddle{};
+    std::vector<dirt *> farmlandLeft{};
+    std::vector<dirt *> farmlandRight{};
+    std::vector<dirt *> farmlandTop{};
+    std::vector<dirt *> farmlandBottom{};
+    std::vector<dirt *> farmlandLeftTop{};
+    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
+    saver save = saver(Player, farmlands,silo);
+    menu Menu = menu(window, save);
+    pause_menu pMenu = pause_menu(window, save);
+    action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
         //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
@@ -73,8 +81,13 @@ private:
                { Player.getVehicle()->changeToNormal(); }),
         action(sf::Keyboard::Num2, [&]()
                { Player.getVehicle()->changeToAction(); }),
+        action(sf::Keyboard::Num3, [&]()
+                { Player.getVehicle()->changeToTrailer(); }),
         action(sf::Keyboard::R, [&]()
                { sMenu.show(); }),
+
+        action(sf::Keyboard::V, [&]()
+                { trekker->setCrop(farmlands,clock); }),
 
 
         action(sf::Keyboard::P, [&]()
@@ -92,8 +105,13 @@ public:
     void runGame()
     {
         loader Loader("save.txt");
+        std::cout << Loader.load();
       
-        makeFarmLand(sf::Vector2f(532, 40), 40, 16);
+        makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
+        makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
+        makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
+        makeFarmLand(sf::Vector2f(80, -1000), 28, 16, 3);   //Top
+        makeFarmLand(sf::Vector2f(80, 1600), 26, 18, 4);   //Bottom
         if (window.isOpen())
         {
             Menu.show();
@@ -101,32 +119,21 @@ public:
 
         while (window.isOpen())
         {
-//            sf::View view = window.getView();
-//            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
-//            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
-//            std::cout << windowsize.x<< "\n";
-//            float tile_x, tile_y;
-//            if (playerpos.x > 0) tile_x = (floor((playerpos.x + (windowsize.x/2)) / windowsize.x)) * windowsize.x;
-//            else tile_x = (ceil((playerpos.x - (windowsize.x/2)) / windowsize.x)) * windowsize.x;
-//            if (playerpos.y > 0) tile_y = (floor((playerpos.y + (windowsize.y/2)) / windowsize.y)) * windowsize.y;
-//            else tile_y = (ceil((playerpos.y - (windowsize.y/2)) / windowsize.y)) * windowsize.y;
-//            view.setCenter(tile_x, tile_y);
-//            window.setView(view);
-
             sf::Clock updateclock;
             updateclock.restart();
             while(updateclock.getElapsedTime() < updateTime){
                 sf::sleep( sf::milliseconds(1) );
             }
 
-
             input();
             render();
 
+            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+            changeLocation(windowsize);
+            window.setView(view);
 
-            trekker->update(farmland);
-            combine->update(farmland);
-
+            trekker->update(farmlands);
+            combine->update(farmlands);
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -134,11 +141,12 @@ public:
                 if (event.type == sf::Event::Closed)
                 {
                     window.close();
+                    save.save("save.txt");
                 }
-//                if (event.type == sf::Event::Resized){
-//                    view.setSize(event.size.width, event.size.height);
-//                    window.setView(view);
-//                }
+                if (event.type == sf::Event::Resized){
+                    view.setSize(event.size.width, event.size.height);
+                    window.setView(view);
+                }
             }
         }
     }
@@ -176,6 +184,9 @@ public:
         {
             object->draw(window);
         }
+        if(Player.getVehicle() == combine){
+            combine->showCropAmount(window);
+        }
         window.display();
     }
 
@@ -188,29 +199,42 @@ public:
         }
     }
 
-    void changeToNormal()
-    {
-        Player.getVehicle()->changeToNormal();
-    }
-
-    void changeToAction()
-    {
-        Player.getVehicle()->changeToAction();
-    }
-
-    void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height)
+    void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height, unsigned int index)
     {
         int x = position.x;
         for (unsigned int i = 0; i < height; i++)
         {
             for (unsigned int j = 0; j < width; j++)
             {
-                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{position, clock, corn, inv}));
-                farmland.push_back(dynamic_cast<dirt *>(objects[1].get()));
+                objects.insert(objects.begin() + 1, std::shared_ptr<drawable>(new dirt{position, clock}));
+                farmlands[index].push_back(dynamic_cast<dirt *>(objects[1].get()));
                 position.x += 32;
             }
             position.x = x;
             position.y += 32;
+        }
+    }
+
+    void changeLocation(sf::Vector2f windowsize){
+        if (!Menu.getActive()){
+
+            sf::Vector2f playerpos = Player.getVehicle()->getPosition();
+            int x, y;
+            if (playerpos.x<0){
+                x = -windowsize.x*0.5;
+            } else if (playerpos.x > windowsize.x){
+                x = windowsize.x*1.5;
+            } else {
+                x = windowsize.x*0.5;
+            }
+            if(playerpos.y<0){
+                y = -windowsize.y*0.5;
+            } else if (playerpos.y>windowsize.y){
+                y = windowsize.y*1.5;
+            } else {
+                y = windowsize.y*0.5;
+            }
+            view.setCenter(x, y);
         }
     }
 

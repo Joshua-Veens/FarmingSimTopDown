@@ -5,21 +5,16 @@
 #include "drawable.hpp"
 #include "rectangle.hpp"
 #include "particleSystem.hpp"
-#include "inventory.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <sstream>
 #include "base64.hpp"
 
-enum type
-{
-    wheat = 0,
-    corn = 1
-};
+enum type {wheat=0,corn=1};
 
 class dirt : public drawable
 {
-private:
+public:
     enum state_t
     {
         unseeded,
@@ -30,6 +25,7 @@ private:
         growingStage4,
         grown
     };
+private:
     state_t state = unseeded;
     sf::Vector2f position;
     std::vector<std::vector<std::string>> crops = {
@@ -49,25 +45,25 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Clock & clock;
-    inventory * inv;
     sf::FloatRect collider;
     particlePool particles = particlePool(40);
 
 public:
 
-    dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv);
+    dirt(sf::Vector2f position, sf::Clock & clock);
     void draw(sf::RenderWindow &window);
     void seed();
     bool harvest(); // changes img_file back to unseeded if it's possible to harvest and returns true, retruns false if it not possible to harvest
     void update();
     sf::FloatRect getBounds();
-    friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
+    type getActiveType();
+    void changeCrop(type newType);
+    state_t getState();
+    friend std::ostream &operator<<(std::ostream &lhs, dirt & Dirt)
     {
         return lhs << " Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type;
         ;
     }
-    unsigned int getWheat();
-    unsigned int getCorn();
 
 };
 

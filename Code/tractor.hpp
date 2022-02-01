@@ -12,14 +12,16 @@
 class tractor : public vehicle{
 
 private:
-    enum tractorTypes{trekker=0, seeder=1};
+    enum tractorTypes{trekker=0, seeder=1, trailer=2};
     tractorTypes active_type = trekker;
     sf::Texture image;
     sf::Sprite sprite;
     int savedRotation = 0;
     sf::FloatRect seeder_collider;
     sf::FloatRect tractor_collider;
+    sf::FloatRect trailer_collider;
     rectangle blokje;
+    type currentCrop = wheat;
 
 public:
     tractor( sf::Vector2f position);
@@ -28,13 +30,15 @@ public:
 
     void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
 
-    void update(std::vector<dirt *> farmland);
+    void update(std::vector<std::vector<dirt *>> farmlands);
 
     void setRotation( int rotation ) override;
 
     void changeToNormal() override;
 
     void changeToAction() override;
+
+    void changeToTrailer() override;
 
     void updateCollider();
 
@@ -45,6 +49,8 @@ public:
     void setPosition(sf::Vector2f location);
 
     sf::FloatRect getCollider() override;
+
+    void setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock clock);
 };
 
 

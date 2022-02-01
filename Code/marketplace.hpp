@@ -15,7 +15,7 @@ private:
     inventory * inv;
 
 public:
-    marketplace(sf::RenderWindow & window,  inventory * inv);
+    marketplace(sf::RenderWindow & window, saver save, inventory * inv);
 
     void sellAll();
 

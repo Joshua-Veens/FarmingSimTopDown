@@ -5,11 +5,10 @@
 #include "marketplace.hpp"
 #include "iostream"
 
-marketplace::marketplace(sf::RenderWindow & window, class inventory * inv):
-    menu(window),
+marketplace::marketplace(sf::RenderWindow & window, saver save, inventory * inv):
+    menu(window, save),
     inv(inv)
 {}
-
 
 void marketplace::sellAll() {
     money += inv->getWheat() /100 * 27;

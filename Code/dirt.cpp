@@ -1,12 +1,9 @@
 #include "dirt.hpp"
-#include "iostream"
 
 
-dirt::dirt(sf::Vector2f position, sf::Clock & clock, type active_type, inventory * inv):
+dirt::dirt(sf::Vector2f position, sf::Clock & clock):
     position(position),
-    active_type(active_type),
     clock(clock),
-    inv(inv),
     collider(position.x+14, position.y + 14, 4,4)
 {
     image.loadFromFile(crops[active_type][cropcounter]);
@@ -81,26 +78,20 @@ bool dirt::harvest()
     {
         state = unseeded;
         cropcounter = 0;
-        inv->setHarvest(active_type);
         image.loadFromFile(crops[active_type][cropcounter]);
         texture.loadFromImage(image);
         sf::Time time = clock.getElapsedTime();
         int64_t elpasedTime = time.asMicroseconds();
         particles.generate(sf::Vector2i (position.x+5,position.y-5), elpasedTime, {237, 193, 33, 150}, sf::Vector2f(4,4));
         ticks = 0;
+        active_type = wheat;
         return true;
     }
     return false;
 }
 
-unsigned int dirt::getWheat()
-{
-    return inv->getWheat();
-}
-
-unsigned int dirt::getCorn()
-{
-    return inv->getCorn();
+type dirt::getActiveType() {
+    return active_type;
 }
 
 void dirt::draw(sf::RenderWindow &window)
@@ -113,4 +104,12 @@ void dirt::draw(sf::RenderWindow &window)
 
 sf::FloatRect dirt::getBounds(){
     return collider;
+}
+
+void dirt::changeCrop(type newType){
+    this->active_type = newType;
+}
+
+dirt::state_t dirt::getState() {
+    return this->state;
 }

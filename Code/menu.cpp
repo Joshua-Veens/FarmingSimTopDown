@@ -34,7 +34,10 @@ void menu::draw()
     text.setStyle(sf::Text::Bold);
     text.setFillColor(sf::Color(91,127,0));
     text.setPosition((sf::Vector2f)window_middle - sf::Vector2f(900,420));
+    sf::View view = window.getView();
+    view.setCenter(window_middle.x, window_middle.y);
     window.draw(text);
+    window.setView(view);
     for (auto item : options)
     {
         item.draw(window);
@@ -68,15 +71,19 @@ void menu::showHelp()
     window.clear();
     sf::Font font;
     font.loadFromFile(font_file);
-    std::string text_string = "TODO: make help";
+    std::string text_string = "Controls:\n"
+                              "WASD     Driving\n"
+                              "1,2,3    Switch to action\n"
+                              "R        Switch vehicle\n"
+                              "V        Change crop";
     sf::Text text(text_string, font);
     text.setCharacterSize(30);
     text.setStyle(sf::Text::Regular);
-    text.setFillColor(sf::Color::Red);
+    text.setFillColor(sf::Color::Green);
     text.setPosition((sf::Vector2f)window_middle);
     window.draw(text);
     window.display();
-    sf::sleep(sf::milliseconds(1000));
+    sf::sleep(sf::milliseconds(3000));
 }
 
 bool menu::getActive()
