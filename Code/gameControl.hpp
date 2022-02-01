@@ -122,6 +122,7 @@ public:
 
             trekker->update(farmland);
             combine->update(farmland);
+            trekker->overloadCrop(combine);
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -173,6 +174,9 @@ public:
         }
         if(Player.getVehicle() == combine){
             combine->showCropAmount(window);
+        }
+        if(Player.getVehicle() == trekker && trekker->getActiveType() == 2){
+            trekker->showCropAmount(window);
         }
         window.display();
     }

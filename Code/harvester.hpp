@@ -11,7 +11,7 @@
 
 class harvester : public vehicle{
 private:
-    enum harversterTypes{harvesting=0, notHarvesting=1, full=2};
+    enum harversterTypes{harvesting=0, notHarvesting=1, overload=2};
     harversterTypes active_vehicle = notHarvesting;
     sf::Texture image;
     sf::Sprite sprite;
@@ -64,6 +64,18 @@ public:
     sf::Vector2f getPosition();
 
     sf::FloatRect getCollider() override;
+
+    sf::FloatRect getAugerCollider();
+
+    int getActiveType();
+
+    int getWheat();
+
+    int getCorn();
+
+    void setWheatCount(unsigned int wheat);
+
+    void setCornCount(unsigned int corn);
 };
 
 
