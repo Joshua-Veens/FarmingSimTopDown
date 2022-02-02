@@ -5,15 +5,13 @@
 #include <algorithm>
 #include "player.hpp"
 #include "drawable.hpp"
-#include "marketplace.hpp"
 class loader{
 private: 
 public:
     loader();
-    static player * loadPlayerAndMoney(player * P, marketplace * market);
-    static std::vector<std::vector<dirt *>>   loadFarms(std::vector<std::vector<dirt *>> );
-
-
+    static player * loadPlayer(player * P);
+    static std::vector<std::vector<dirt >>   loadFarms(std::vector<std::vector<dirt *>> );
+    
 };
 
 #endif

@@ -39,15 +39,8 @@ public:
     float getMoney();
     
     void addMoney(float moneyToAdd);
-
-    void setMoney(float allMoney);
     
     void removeMoney(float moneyToRemove);
-
-    friend std::ostream & operator<<(std::ostream & lhs, marketplace & Market){
-        return  lhs << "Money:" << Market.getMoney();
-    }
-
 
 //    void sellAll();
 
