@@ -33,7 +33,6 @@ sf::FloatRect marketplace::getSellCollider() {
 }
 
 float marketplace::getMoney() {
-    std::cout << money << " --------- " << std::endl;
     return money;
 }
 
@@ -42,7 +41,6 @@ void marketplace::addMoney(float moneyToAdd) {
 }
     
 void marketplace::removeMoney(float moneyToRemove) {
-//    std::cout << money << " --------- " << moneyToRemove << std::endl;
     money -= moneyToRemove;
 }
 

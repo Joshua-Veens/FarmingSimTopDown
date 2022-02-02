@@ -48,7 +48,7 @@ private:
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
         std::shared_ptr<drawable>(new marketplace{sf::Vector2f(3160, 300)}),
-        std::shared_ptr<drawable>(new tractor{sf::Vector2f(2200, 200)}),
+        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
         std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
@@ -62,14 +62,10 @@ private:
     saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
     shop winkel = shop(farmlands, market, clock);
 
-
-
-
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     player *pPlayer = &Player;
     switchMenu sMenu = switchMenu(window, save, pPlayer);
-
   
     action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
@@ -99,7 +95,7 @@ private:
                 { trekker->setCrop(farmlands,clock); }),
         
         action(sf::Mouse::Button::Left, [&]()
-                { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)))); }),
+                { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))), window); }),
 
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
@@ -116,8 +112,8 @@ private:
 public:
     void runGame()
     {
-//        loader Loader;
-//        pPlayer = Loader.loadPlayer(pPlayer);
+        loader Loader;
+        pPlayer = Loader.loadPlayer(pPlayer);
 
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left

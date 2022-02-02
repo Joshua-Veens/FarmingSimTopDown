@@ -24,14 +24,33 @@ void shop::drawPrice(sf::RenderWindow &window, int price, sf::Vector2f position)
     window.draw(text);
 }
 
+void shop::drawNotEnoughMoney(sf::RenderWindow &window) {
+    text_string = "Not enough money $$$";
+    moneyText = sf::Text(text_string, font);
+    moneyText.setCharacterSize(32);
+    moneyText.setPosition(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))));
+    window.draw(moneyText);
+}
+
 void shop::draw(sf::RenderWindow &window) {
     int counter=0;
+    sf::Time time = clock.getElapsedTime();
+    if(!enoughMoney){
+        if (time.asMilliseconds() <= 1000){
+            drawNotEnoughMoney(window);
+        }else if(time.asMilliseconds() > 1000){
+            clock.restart();
+            enoughMoney = true;
+        }
+    }
     for(auto &sign : saleSigns){
-        sprite.setTexture(image, true);
-        sprite.setPosition(sf::Vector2f(sign.x,sign.y));
-        sprite.setScale(2,2);
-        window.draw(sprite);
-        drawPrice(window,prices[counter],sf::Vector2f(sign.x+70, sign.y+20));
+        if(farmlands[counter][0]->getOwned()){
+            sprite.setTexture(image, true);
+            sprite.setPosition(sf::Vector2f(sign.x,sign.y));
+            sprite.setScale(2,2);
+            window.draw(sprite);
+            drawPrice(window,prices[counter],sf::Vector2f(sign.x+70, sign.y+20));
+        }
         counter++;
     }
 }
@@ -42,7 +61,9 @@ void shop::addForSaleSign(sf::Vector2f position) {
     colliders.push_back(collider);
 }
 
-void shop::buyLand(sf::Vector2f mouse) {
+
+
+void shop::buyLand(sf::Vector2f mouse, sf::RenderWindow &window) {
     sf::Time time = clock.getElapsedTime();
     clock.restart();
     if (time.asMilliseconds() > 500) {
@@ -57,7 +78,7 @@ void shop::buyLand(sf::Vector2f mouse) {
                             }
                         }
                     }else{
-                        std::cout << "Not enough money\n";
+                        enoughMoney = false;
                     }
                 }
                 if (i == 1) {
@@ -69,7 +90,7 @@ void shop::buyLand(sf::Vector2f mouse) {
                             }
                         }
                     }else{
-                        std::cout << "Not enough money\n";
+                        enoughMoney = false;
                     }
                 }
                 if (i == 2) {
@@ -81,7 +102,7 @@ void shop::buyLand(sf::Vector2f mouse) {
                             }
                         }
                     }else{
-                        std::cout << "Not enough money\n";
+                        enoughMoney = false;
                     }
                 }
                 if (i == 3) {
@@ -93,7 +114,7 @@ void shop::buyLand(sf::Vector2f mouse) {
                             }
                         }
                     }else{
-                        std::cout << "Not enough money\n";
+                        enoughMoney = false;
                     }
                 }
                 if (i == 4) {
@@ -105,7 +126,7 @@ void shop::buyLand(sf::Vector2f mouse) {
                             }
                         }
                     }else{
-                        std::cout << "Not enough money\n";
+                        enoughMoney = false;
                     }
                 }
             }
