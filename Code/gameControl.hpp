@@ -51,7 +51,6 @@ private:
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(2200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
-        std::shared_ptr<drawable>(new shop{farmlands, market, clock}),
         std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
     };
 
@@ -60,8 +59,9 @@ private:
     tractor *trekker = dynamic_cast<tractor *>(objects[3].get());
     harvester *combine = dynamic_cast<harvester *>(objects[4].get());
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[5].get());
-    shop *winkel = dynamic_cast<shop *>(objects[6].get());
-    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[7].get());
+    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
+    shop winkel = shop(farmlands, market, clock);
+
 
 
 
@@ -99,7 +99,7 @@ private:
                 { trekker->setCrop(farmlands,clock); }),
         
         action(sf::Mouse::Button::Left, [&]()
-                { winkel->buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)))); }),
+                { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)))); }),
 
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
@@ -116,10 +116,9 @@ private:
 public:
     void runGame()
     {
-        loader Loader;
-        pPlayer = Loader.loadPlayer(pPlayer);
+//        loader Loader;
+//        pPlayer = Loader.loadPlayer(pPlayer);
 
-      
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
         makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
@@ -211,6 +210,7 @@ public:
         {
             object->draw(window);
         }
+        winkel.draw(window);
         if (pPlayer->getVehicle() == combine)
         {
             combine->showCropAmount(window);
@@ -241,7 +241,7 @@ public:
 
     void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height, unsigned int index)
     {
-        winkel->addForSaleSign(sf::Vector2f(position.x-96, position.y-64));
+        winkel.addForSaleSign(sf::Vector2f(position.x-96, position.y-64));
         int x = position.x;
         for (unsigned int i = 0; i < height; i++)
         {
