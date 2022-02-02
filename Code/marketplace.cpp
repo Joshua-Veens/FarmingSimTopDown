@@ -31,6 +31,18 @@ sf::FloatRect marketplace::getSellCollider() {
     return sell_collider;
 }
 
+float marketplace::getMoney() {
+    return money;
+}
+
+void marketplace::addMoney(float moneyToAdd) {
+    money += moneyToAdd;
+}
+    
+void marketplace::removeMoney(float moneyToRemove) {
+    money -= moneyToRemove;
+}
+
 sf::Vector2f marketplace::getPosition() {
     return position;
 }
