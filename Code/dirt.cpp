@@ -129,7 +129,6 @@ bool dirt::getOwned() {
     }
 } 
 
-
 void dirt::setPosition(sf::Vector2f newPos){
     position = newPos;
 }
@@ -137,4 +136,3 @@ void dirt::setPosition(sf::Vector2f newPos){
 void dirt::setState(state_t newState){
     state = newState;
 }
-

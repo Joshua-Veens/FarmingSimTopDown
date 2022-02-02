@@ -57,12 +57,10 @@ void marketplace::setMoney(float allMoney){
     money = allMoney;
 }
 
-
 void marketplace::drawMoney(sf::RenderWindow &window) {
     std::stringstream stream;
     stream << "$ " << std::fixed << std::setprecision(2) << money;
     text_string = stream.str();
-
     text.setFillColor(sf::Color::Blue);
     text.setStyle(sf::Text::Bold);
     text = sf::Text(text_string, font);
