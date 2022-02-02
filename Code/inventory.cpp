@@ -2,7 +2,8 @@
 
 inventory::inventory(sf::Vector2f position):
     position(position),
-    collider(position.x+172, position.y+208, 48, 43)
+    collider(position.x+172, position.y+208, 48, 43),
+    blokje(sf::Vector2f(position.x+172, position.y+208), sf::Vector2f(48, 43))
 {
     image.loadFromFile("images\\silo.png");
     sprite.setTexture(image);
@@ -18,6 +19,7 @@ inventory::inventory(sf::Vector2f position):
 
 void inventory::draw(sf::RenderWindow &window) {
     window.draw(sprite);
+//    blokje.draw(window);
 }
 
 unsigned int inventory::getWheat() {
@@ -74,4 +76,4 @@ sf::FloatRect inventory::getCollider() {
 
 sf::Vector2f inventory::getPosition() {
     return position;
-} 
+}

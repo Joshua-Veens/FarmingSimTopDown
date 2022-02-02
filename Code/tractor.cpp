@@ -23,6 +23,7 @@ void tractor::draw(sf::RenderWindow &window) {
     sprite.setPosition(position);
     sprite.setOrigin(sf::Vector2f(64,64));
     window.draw(sprite);
+//    blokje.draw(window);
 }
 
 void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
@@ -31,8 +32,10 @@ void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
             return;
         }
     }
-    if(objects[1]->getCollider().intersects(tractor_collider)){
-        return;
+    for(unsigned int i = 1; i < objects.size(); i++){
+        if(objects[i]->getCollider().intersects(tractor_collider)){
+            return;
+        }
     }
     if(objects[1]->getSavePoint().intersects(tractor_collider)){
 //        SPECIAAL PLEKJE VOOR JUSTIN ZIJN CODE
@@ -99,6 +102,17 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
     }
 }
 
+void tractor::sellCrops(sf::RenderWindow & window, marketplace * market) {
+    if(market->getSellCollider().intersects(trailer_collider) && active_type == trailer){
+        drawSellHelp(window, market);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
+            market->sellCrops(wheatCount, cornCount);
+            wheatCount = 0;
+            cornCount = 0;
+            image.loadFromFile("images\\aanhanger.png");
+        }
+    }
+}
 
 void tractor::setRotation( int rotation ) {
     sprite.setRotation(rotation);
@@ -244,7 +258,6 @@ void tractor::setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock cloc
     }
 }
 
-
 void tractor::drawWheat(sf::RenderWindow &window) {
     text_string = std::to_string(wheatCount);
     text = sf::Text(text_string, font);
@@ -273,6 +286,14 @@ void tractor::drawUnloadHelp(sf::RenderWindow &window, inventory * silo) {
     window.draw(text);
 }
 
+void tractor::drawSellHelp(sf::RenderWindow &window, marketplace * market) {
+    text_string = "Press \"I\" to sell all crops";
+    text = sf::Text(text_string, font);
+    text.setCharacterSize(32);
+    text.setPosition(sf::Vector2f(market->getPosition().x+160, market->getPosition().y+160));
+    window.draw(text);
+}
+
 void tractor::showCropAmount(sf::RenderWindow &window) {
     drawWheat(window);
     drawCorn(window);
@@ -281,3 +302,5 @@ void tractor::showCropAmount(sf::RenderWindow &window) {
 int tractor::getActiveType(){
     return active_type;
 }
+
+

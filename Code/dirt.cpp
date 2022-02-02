@@ -1,5 +1,4 @@
 #include "dirt.hpp"
-#include "iostream"
 
 
 dirt::dirt(sf::Vector2f position, sf::Clock & clock):
@@ -125,4 +124,4 @@ bool dirt::getOwned() {
     }else{
         return false;
     }
-}
+} 
