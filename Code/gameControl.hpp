@@ -13,7 +13,7 @@
 #include "menu.hpp"
 #include "pauseMenu.hpp"
 #include "farmhouse.hpp"
-#include "Player.hpp"
+#include "player.hpp"
 #include "saveHouse.hpp"
 #include "inventory.hpp"
 #include "marketplace.hpp"
@@ -63,20 +63,13 @@ private:
     shop *winkel = dynamic_cast<shop *>(objects[6].get());
     saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[7].get());
 
-    switchMenu sMenu = switchMenu(window, save, Player);
+
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
-    std::vector<dirt *> farmlandMiddle{};
-    std::vector<dirt *> farmlandLeft{};
-    std::vector<dirt *> farmlandRight{};
-    std::vector<dirt *> farmlandTop{};
-    std::vector<dirt *> farmlandBottom{};
-    std::vector<dirt *> farmlandLeftTop{};
-    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
-    saver save = saver(Player, farmlands, silo);
-    menu Menu = menu(window, save);
-    pause_menu pMenu = pause_menu(window, save);
+    player *pPlayer = &Player;
+    switchMenu sMenu = switchMenu(window, save, pPlayer);
+
   
     action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
@@ -123,8 +116,9 @@ private:
 public:
     void runGame()
     {
+        loader Loader;
         pPlayer = Loader.loadPlayer(pPlayer);
-        loader Loader("save.txt");
+
       
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left

@@ -21,10 +21,10 @@ private:
     std::vector<sf::Vector2f> saleSigns;
     std::vector<int> prices = {10000,60000,30000,45000,32000};
     std::vector<sf::FloatRect> colliders;
-    marketplace & market;
+    marketplace * market;
 
 public:
-    shop(std::vector<std::vector<dirt *>> & farmlands, marketplace & market, sf::Clock & clock);
+    shop(std::vector<std::vector<dirt *>> & farmlands, marketplace * market, sf::Clock & clock);
 
     void draw(sf::RenderWindow &window);
 

@@ -12,9 +12,10 @@ player *loader::loadPlayer(player *P)
     std::ostringstream buffer;
     std::string temp;
     rFile >> temp;
-    // if(temp == "         "){
-    //     return objects;
-    // }
+    if(rFile.tellg()==0){
+        rFile.close();
+        return P;
+    }
     // char ch;
     // while(rFile.get(ch)){
     //     buffer << ch;
@@ -71,5 +72,6 @@ player *loader::loadPlayer(player *P)
     }
     P->setMoney(mon);
     P->setVehicle(active);
+    rFile.close();
     return P;
 }

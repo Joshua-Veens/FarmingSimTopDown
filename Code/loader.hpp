@@ -11,6 +11,7 @@ public:
     loader();
     static player * loadPlayer(player * P);
     static std::vector<std::vector<dirt >>   loadFarms(std::vector<std::vector<dirt *>> );
+    
 };
 
 #endif
