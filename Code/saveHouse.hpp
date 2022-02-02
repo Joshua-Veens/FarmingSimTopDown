@@ -11,6 +11,7 @@ private:
     sf::Sprite sprite;
     sf::FloatRect save_collider, house_collider;
     rectangle blokje;
+    rectangle huis_blok;
 public:
     saveHouse(sf::Vector2f position);
 
