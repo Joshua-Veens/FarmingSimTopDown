@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 #include "base64.hpp"
+#include <iomanip>
 
 enum type {wheat=0,corn=1};
 
@@ -61,13 +62,13 @@ public:
     type getActiveType();
     void changeToWheat();
     void changeToCorn();
+    void setPosition(sf::Vector2f newPos);
     state_t getState();
     void setToOwned();
     bool getOwned();
     friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
     {
-        return lhs << " Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type;
-        ;
+        return lhs << "Dirt@" <<  std::setfill('0') <<std::setw(5) <<  Dirt.position.x << ',' << std::setw(5) << std::setfill('0') << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type << "owned=" << Dirt.getOwned();
     }
 
 };
