@@ -16,7 +16,7 @@ class tractor : public vehicle{
 
 private:
     enum tractorTypes{trekker=0, seeder=1, trailer=2};
-    enum seederTypes{wheatSeeds=0, cornSeeds=1};
+    enum seederTypes{wheatSeeds=0, cornSeeds=1, weedSeeds=2};
     seederTypes active_seeds = wheatSeeds;
     tractorTypes active_type = trekker;
     sf::Texture image;
@@ -33,10 +33,13 @@ private:
     sf::Color color = sf::Color::White;
     sf::Sprite wheatSprite;
     sf::Sprite cornSprite;
+    sf::Sprite weedSprite;
     sf::Texture wheatImage;
     sf::Texture cornImage;
+    sf::Texture weedImage;
     unsigned int wheatCount = 0;
     unsigned int cornCount = 0;
+    unsigned int weedCount = 0;
 
 
 public:
@@ -75,6 +78,8 @@ public:
     void drawWheat(sf::RenderWindow &window);
 
     void drawCorn(sf::RenderWindow &window);
+
+    void drawWeed(sf::RenderWindow &window);
 
     void drawUnloadHelp(sf::RenderWindow &window, inventory * silo);
 

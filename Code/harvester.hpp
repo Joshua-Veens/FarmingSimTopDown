@@ -20,14 +20,17 @@ private:
     const std::string font_file = "Xhers_Regular.otf";
     sf::Sprite wheatSprite;
     sf::Sprite cornSprite;
+    sf::Sprite weedSprite;
     sf::Texture wheatImage;
     sf::Texture cornImage;
+    sf::Texture weedImage;
     int savedRotation = 0;
     sf::FloatRect collider;
     sf::FloatRect auger_collider;
     rectangle blokje;
     unsigned int wheatCount = 0;
     unsigned int cornCount = 0;
+    unsigned int weedCount = 0;
 
 public:
     harvester(sf::Vector2f position);
@@ -46,11 +49,15 @@ public:
 
     void addCorn();
 
+    void addWeed();
+
     void showCropAmount(sf::RenderWindow &window);
 
     void drawWheat(sf::RenderWindow &window);
 
     void drawCorn(sf::RenderWindow &window);
+
+    void drawWeed(sf::RenderWindow &window);
 
     void changeToNormal() override;
 
@@ -76,9 +83,13 @@ public:
 
     int getCorn();
 
+    int getWeed();
+
     void setWheatCount(unsigned int wheat);
 
     void setCornCount(unsigned int corn);
+
+    void setWeedCount(unsigned int weed);
 };
 
 

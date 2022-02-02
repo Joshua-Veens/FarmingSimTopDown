@@ -10,6 +10,10 @@ dirt::dirt(sf::Vector2f position, sf::Clock & clock):
     texture.loadFromImage(image);
 }
 
+type dirt::getActiveType() {
+    return active_type;
+}
+
 void dirt::seed()
 {
     if (state == unseeded && active_own == owned)
@@ -89,9 +93,6 @@ bool dirt::harvest()
     return false;
 }
 
-type dirt::getActiveType() {
-    return active_type;
-}
 
 void dirt::draw(sf::RenderWindow &window)
 {
@@ -111,6 +112,10 @@ void dirt::changeToWheat(){
 
 void dirt::changeToCorn(){
     this->active_type = corn;
+}
+
+void dirt::changeToWeed() {
+    this->active_type = weed;
 }
 
 dirt::state_t dirt::getState() {

@@ -10,8 +10,7 @@
 marketplace::marketplace(sf::Vector2f position):
     position(position),
     sell_collider(position.x+208, position.y+200, 48, 43),
-    collider(position.x + 21, position.y + 126, 123, 85),
-    blokje(sf::Vector2f(position.x + 21, position.y + 126), sf::Vector2f(123, 85))
+    collider(position.x + 21, position.y + 126, 123, 85)
 {
     image.loadFromFile("images\\market.png");
     sprite.setTexture(image);
@@ -21,7 +20,6 @@ marketplace::marketplace(sf::Vector2f position):
 
 void marketplace::draw(sf::RenderWindow &window) {
     window.draw(sprite);
-//    blokje.draw(window);
 }
 
 sf::FloatRect marketplace::getCollider() {
@@ -48,9 +46,10 @@ sf::Vector2f marketplace::getPosition() {
     return position;
 }
 
-void marketplace::sellCrops(float wheat, float corn) {
+void marketplace::sellCrops(float wheat, float corn, float weed) {
     money += wheat * 0.27;
     money += corn * 0.4;
+    money += weed * 5;
 }
 
 void marketplace::setMoney(float allMoney){

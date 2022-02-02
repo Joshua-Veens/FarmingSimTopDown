@@ -106,9 +106,6 @@ private:
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
 
-//        action(sf::Keyboard::M, [&]()
-//                { market.show(); }),
-
         action(sf::Keyboard::Escape, [this]{
             if(Menu.getActive() || pMenu.getActive()){
                 return;

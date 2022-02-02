@@ -11,7 +11,7 @@
 #include "base64.hpp"
 #include <iomanip>
 
-enum type {wheat=0,corn=1};
+enum type {wheat=0,corn=1,weed=2};
 
 class dirt : public drawable
 {
@@ -39,7 +39,12 @@ private:
         {"farmlands\\farmland.png", "corn\\farmland_seeds.png",
          "corn\\corn_growing_1.png", "corn\\corn_growing_2.png",
          "corn\\corn_growing_3.png", "corn\\corn_growing_4.png",
-         "corn\\corn_grown.png"}};
+         "corn\\corn_grown.png"},
+        {"farmlands\\farmland.png", "weed\\growing_1.png",
+        "weed\\growing_2.png", "weed\\growing_3.png",
+        "weed\\growing_4.png", "weed\\growing_5.png",
+        "weed\\grown.png"}
+    };
     type active_type = wheat;
     int cropcounter = 0;
     int ticks = 0;                                    // used to count if growing is done;
@@ -62,6 +67,7 @@ public:
     type getActiveType();
     void changeToWheat();
     void changeToCorn();
+    void changeToWeed();
     void setPosition(sf::Vector2f newPos);
     state_t getState();
     void setState(state_t newState);

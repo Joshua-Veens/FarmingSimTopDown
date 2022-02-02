@@ -17,7 +17,6 @@ private:
     sf::Vector2f position;
     sf::FloatRect sell_collider;
     sf::FloatRect collider;
-    rectangle blokje;
     std::string text_string;
     sf::Font font;
     sf::Text text;
@@ -32,7 +31,7 @@ public:
 
     sf::Vector2f getPosition();
 
-    void sellCrops(float wheat, float corn);
+    void sellCrops(float wheat, float corn, float weed);
 
     void drawMoney(sf::RenderWindow & window);
     

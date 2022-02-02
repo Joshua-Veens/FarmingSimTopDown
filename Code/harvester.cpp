@@ -10,6 +10,7 @@ harvester::harvester(sf::Vector2f position) :
     image.loadFromFile("images\\harvester_closed.png");
     wheatImage.loadFromFile("images\\wheatCrop.png");
     cornImage.loadFromFile("images\\cornCrop.png");
+    weedImage.loadFromFile("images\\weedCrop.png");
 }
 
 void harvester::draw(sf::RenderWindow &window) {
@@ -51,9 +52,25 @@ void harvester::drawCorn(sf::RenderWindow &window) {
     window.draw(text);
 }
 
+void harvester::drawWeed(sf::RenderWindow &window) {
+    text_string = std::to_string(weedCount);
+    sf::Font font;
+    font.loadFromFile(font_file);
+    sf::Text text(text_string, font);
+    text.setCharacterSize(40);
+    text.setStyle(sf::Text::Bold);
+    text.setFillColor(color);
+    text.setPosition(sf::Vector2f(80,140));
+    weedSprite.setTexture(weedImage);
+    weedSprite.setPosition(sf::Vector2f(10, 140));
+    window.draw(weedSprite);
+    window.draw(text);
+}
+
 void harvester::showCropAmount(sf::RenderWindow &window) {
     drawWheat(window);
     drawCorn(window);
+    drawWeed(window);
 }
 
 
@@ -63,6 +80,10 @@ void harvester::addWheat() {
 
 void harvester::addCorn() {
     cornCount += rand() % ((60 - 40) + 1) + 40;
+}
+
+void harvester::addWeed() {
+    weedCount += rand() % ((10 - 7) + 1) + 7;
 }
 
 void harvester::move(sf::Vector2f delta, std::vector<drawable *> objects) {
@@ -102,6 +123,8 @@ void harvester::update(std::vector<std::vector<dirt *>> farmlands){
                         addWheat();
                     } else if (p->getActiveType() == 1) {
                         addCorn();
+                    } else if (p->getActiveType() == 2) {
+                        addWeed();
                     }
                 }
             }
@@ -225,10 +248,18 @@ int harvester::getCorn() {
     return cornCount;
 }
 
+int harvester::getWeed() {
+    return weedCount;
+}
+
 void harvester::setWheatCount(unsigned int wheat) {
     wheatCount = wheat;
 }
 
 void harvester::setCornCount(unsigned int corn) {
     cornCount = corn;
+}
+
+void harvester::setWeedCount(unsigned int weed) {
+    weedCount = weed;
 }
