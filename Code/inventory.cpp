@@ -3,6 +3,7 @@
 inventory::inventory(sf::Vector2f position):
     position(position),
     collider(position.x+172, position.y+208, 48, 43),
+
     silo_collider(position.x+38, position.y+180, 110, 72),
     blokje(sf::Vector2f(position.x+38, position.y+180), sf::Vector2f(110, 72))
 {
@@ -23,6 +24,7 @@ inventory::inventory(sf::Vector2f position):
 
 void inventory::draw(sf::RenderWindow &window) {
     window.draw(sprite);
+//    blokje.draw(window);
 }
 
 void inventory::drawSilo(sf::RenderWindow &window) {

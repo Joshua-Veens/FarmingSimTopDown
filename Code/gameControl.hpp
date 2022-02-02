@@ -33,9 +33,6 @@ private:
     sf::Clock clock;
     sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
-    saver save = saver(Player, farmlands, silo);
-    menu Menu = menu(window, save);
-    pause_menu pMenu = pause_menu(window, save);
 
     std::vector<dirt *> farmlandMiddle{};
     std::vector<dirt *> farmlandLeft{};
@@ -43,8 +40,9 @@ private:
     std::vector<dirt *> farmlandTop{};
     std::vector<dirt *> farmlandBottom{};
     std::vector<dirt *> farmlandLeftTop{};
-    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
-    
+    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle, farmlandLeft, farmlandRight, farmlandTop, farmlandBottom, farmlandLeftTop};
+
+
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
@@ -52,26 +50,29 @@ private:
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
-        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
+
+        std::shared_ptr<drawable>(new shop{farmlands, market, clock}),
+        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})};
     };
+
 
     inventory *silo = dynamic_cast<inventory *>(objects[1].get());
     marketplace *market = dynamic_cast<marketplace *>(objects[2].get());
     tractor *trekker = dynamic_cast<tractor *>(objects[3].get());
     harvester *combine = dynamic_cast<harvester *>(objects[4].get());
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[5].get());
+
+    saver save = saver(Player, farmlands, silo, market);
+    menu Menu = menu(window, save);
+    pause_menu pMenu = pause_menu(window, save);
     saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
     shop winkel = shop(farmlands, market, clock);
-
-
-
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     player *pPlayer = &Player;
     switchMenu sMenu = switchMenu(window, save, pPlayer);
 
-  
     action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
@@ -225,7 +226,6 @@ public:
             combine->showCropAmount(window);
         }
 
-
         if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 2)
         {
 
@@ -240,6 +240,7 @@ public:
 
     void movement(sf::Vector2f speed, int rotation)
     {
+
         pPlayer->getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome, market, silo});
         pPlayer->getVehicle()->setRotation(rotation);
         if (pPlayer->getVehicle()->getCollider().intersects(barn->getCollider()))
@@ -250,6 +251,7 @@ public:
 
     void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height, unsigned int index)
     {
+
         winkel.addForSaleSign(sf::Vector2f(position.x-96, position.y-64));
         int x = position.x;
         for (unsigned int i = 0; i < height; i++)
