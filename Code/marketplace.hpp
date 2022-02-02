@@ -35,6 +35,12 @@ public:
     void sellCrops(float wheat, float corn);
 
     void drawMoney(sf::RenderWindow & window);
+    
+    float getMoney();
+    
+    void addMoney(float moneyToAdd);
+    
+    void removeMoney(float moneyToRemove);
 
 //    void sellAll();
 
