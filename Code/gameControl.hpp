@@ -20,6 +20,7 @@
 #include "switchMenu.hpp"
 #include "saver.hpp"
 #include "loader.hpp"
+#include "shop.hpp"
 
 class gameControl
 {
@@ -31,6 +32,17 @@ private:
     sf::Clock clock;
     sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
+    saver save = saver(Player, farmlands, silo);
+    menu Menu = menu(window, save);
+    pause_menu pMenu = pause_menu(window, save);
+
+    std::vector<dirt *> farmlandMiddle{};
+    std::vector<dirt *> farmlandLeft{};
+    std::vector<dirt *> farmlandRight{};
+    std::vector<dirt *> farmlandTop{};
+    std::vector<dirt *> farmlandBottom{};
+    std::vector<dirt *> farmlandLeftTop{};
+    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
     
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
@@ -39,6 +51,7 @@ private:
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(2200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
+        std::shared_ptr<drawable>(new shop{farmlands, market, clock}),
         std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
     };
 
@@ -47,7 +60,8 @@ private:
     tractor *trekker = dynamic_cast<tractor *>(objects[3].get());
     harvester *combine = dynamic_cast<harvester *>(objects[4].get());
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[5].get());
-    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
+    shop *winkel = dynamic_cast<shop *>(objects[6].get());
+    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[7].get());
 
     switchMenu sMenu = switchMenu(window, save, Player);
 
@@ -64,7 +78,7 @@ private:
     menu Menu = menu(window, save);
     pause_menu pMenu = pause_menu(window, save);
   
-    action actions[11] = {
+    action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
         //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
@@ -90,6 +104,9 @@ private:
 
         action(sf::Keyboard::V, [&]()
                 { trekker->setCrop(farmlands,clock); }),
+        
+        action(sf::Mouse::Button::Left, [&]()
+                { winkel->buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window)))); }),
 
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
@@ -97,10 +114,10 @@ private:
 //        action(sf::Keyboard::M, [&]()
 //                { market.show(); }),
 
-        action(sf::Keyboard::Escape, [this]
-               {if(Menu.getActive() || pMenu.getActive()){
+        action(sf::Keyboard::Escape, [this]{
+            if(Menu.getActive() || pMenu.getActive()){
                 return;
-            } pMenu.show(); })
+            }pMenu.show(); })
       };
 
 public:
@@ -230,6 +247,7 @@ public:
 
     void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height, unsigned int index)
     {
+        winkel->addForSaleSign(sf::Vector2f(position.x-96, position.y-64));
         int x = position.x;
         for (unsigned int i = 0; i < height; i++)
         {
