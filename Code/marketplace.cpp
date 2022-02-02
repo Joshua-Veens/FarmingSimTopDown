@@ -53,6 +53,10 @@ void marketplace::sellCrops(float wheat, float corn) {
     money += corn * 0.4;
 }
 
+void marketplace::setMoney(float allMoney){
+    money = allMoney;
+}
+
 void marketplace::drawMoney(sf::RenderWindow &window) {
     std::stringstream stream;
     stream << "$ " << std::fixed << std::setprecision(2) << money;
