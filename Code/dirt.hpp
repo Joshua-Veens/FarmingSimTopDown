@@ -59,7 +59,8 @@ public:
     void update();
     sf::FloatRect getBounds();
     type getActiveType();
-    void changeCrop(type newType);
+    void changeToWheat();
+    void changeToCorn();
     state_t getState();
     void setToOwned();
     bool getOwned();

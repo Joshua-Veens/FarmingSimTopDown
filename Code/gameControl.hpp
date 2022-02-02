@@ -97,7 +97,7 @@ private:
                { sMenu.show(); }),
 
         action(sf::Keyboard::V, [&]()
-                { trekker->setCrop(farmlands,clock); }),
+                { trekker->setCrop(clock); }),
         
         action(sf::Mouse::Button::Left, [&]()
                 { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))), window); }),
@@ -120,10 +120,17 @@ public:
         loader Loader;
         pPlayer = Loader.loadPlayer(pPlayer);
 
+        sf::Music music;
+        if(!music.openFromFile("audio\\backgroundmusic.ogg")){
+            std::cout << "error\n";
+        }
+        music.play();
+        music.setLoop(true);
+
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
         makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
-        makeFarmLand(sf::Vector2f(80, -1000), 28, 16, 3);   //Top
+        makeFarmLand(sf::Vector2f(-1850, -1000), 80, 20, 3);   //Top
 
         if (window.isOpen())
         {
