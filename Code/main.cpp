@@ -4,3 +4,4 @@ int main() {
     gameControl gameControl;
     gameControl.runGame();
 }
+

@@ -1,7 +1,3 @@
-//
-// Created by joshu on 1-2-2022.
-//
-
 #include "shop.hpp"
 #include "iostream"
 

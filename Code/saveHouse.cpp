@@ -3,8 +3,7 @@
 saveHouse::saveHouse(sf::Vector2f position):
     position(position),
     save_collider(position.x+150, position.y+260, 80, 50),
-    house_collider(position.x+13, position.y+115, 235, 133),
-    blokje(sf::Vector2f(position.x+150, position.y+260), sf::Vector2f(80, 50))
+    house_collider(position.x+13, position.y+115, 235, 133)
 {
     image.loadFromFile("images\\saveHouse.png");
     sprite.setTexture(image);
@@ -13,7 +12,6 @@ saveHouse::saveHouse(sf::Vector2f position):
 
 void saveHouse::draw(sf::RenderWindow &window) {
     window.draw(sprite);
-    blokje.draw(window);
 }
 
 sf::FloatRect saveHouse::getCollider() {

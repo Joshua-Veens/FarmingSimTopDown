@@ -96,7 +96,7 @@ void tractor::overloadCrop(harvester *combine) {
 }
 
 void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
-    if(silo->getCollider().intersects(trailer_collider) && active_type == trailer){
+    if(silo->getDepositCollider().intersects(trailer_collider) && active_type == trailer){
         drawUnloadHelp(window, silo);
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
             silo->addWheat(wheatCount);
@@ -104,6 +104,31 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
             silo->addCorn(cornCount);
             cornCount = 0;
             image.loadFromFile("images\\aanhanger.png");
+        }
+        int free_space = 40000 - wheatCount - cornCount;
+        if(free_space > 0){
+            auto mouse_pos = sf::Mouse::getPosition(window);
+            auto translated_pos = window.mapPixelToCoords(mouse_pos);
+            if(silo->getWheatTextCollider().contains(translated_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                if(silo->getWheat() >= free_space){
+                    silo->removeWheat(free_space);
+                    wheatCount += free_space;
+                }else{
+                    wheatCount += silo->getWheat();
+                    silo->removeWheat(silo->getWheat());
+                }
+                image.loadFromFile("images\\aanhanger_full.png");
+            }
+            if(silo->getCornTextCollider().contains(translated_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                if(silo->getCorn() >= free_space){
+                    silo->removeCorn(free_space);
+                    cornCount += free_space;
+                }else{
+                    cornCount += silo->getCorn();
+                    silo->removeCorn(silo->getCorn());
+                }
+                image.loadFromFile("images\\aanhanger_full.png");
+            }
         }
     }
 }
@@ -142,7 +167,11 @@ void tractor::changeToAction(){
 }
 
 void tractor::changeToTrailer() {
-    image.loadFromFile("images\\aanhanger.png");
+    if(wheatCount > 0 || cornCount > 0){
+        image.loadFromFile("images\\aanhanger_full.png");
+    }else{
+        image.loadFromFile("images\\aanhanger.png");
+    }
     active_type = trailer;
 }
 

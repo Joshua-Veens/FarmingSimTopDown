@@ -27,6 +27,7 @@ class gameControl
 {
 private:
     bool speedhacks = false;
+
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
@@ -62,10 +63,14 @@ private:
     saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
     shop winkel = shop(farmlands, market, clock);
 
+
+
+
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     player *pPlayer = &Player;
     switchMenu sMenu = switchMenu(window, save, pPlayer);
+
   
     action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
@@ -99,6 +104,9 @@ private:
 
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
+
+//        action(sf::Keyboard::M, [&]()
+//                { market.show(); }),
 
         action(sf::Keyboard::Escape, [this]{
             if(Menu.getActive() || pMenu.getActive()){
@@ -211,6 +219,7 @@ public:
             object->draw(window);
         }
         winkel.draw(window);
+        silo->drawSilo(window);
         if (pPlayer->getVehicle() == combine)
         {
             combine->showCropAmount(window);
@@ -231,7 +240,7 @@ public:
 
     void movement(sf::Vector2f speed, int rotation)
     {
-        pPlayer->getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome, market});
+        pPlayer->getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome, market, silo});
         pPlayer->getVehicle()->setRotation(rotation);
         if (pPlayer->getVehicle()->getCollider().intersects(barn->getCollider()))
         {

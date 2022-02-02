@@ -1,7 +1,3 @@
-//
-// Created by joshu on 1-2-2022.
-//
-
 #ifndef V2CPSE2_EXAMPLES_SHOP_HPP
 #define V2CPSE2_EXAMPLES_SHOP_HPP
 
