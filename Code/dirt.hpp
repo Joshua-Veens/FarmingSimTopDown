@@ -64,6 +64,7 @@ public:
     void changeToCorn();
     void setPosition(sf::Vector2f newPos);
     state_t getState();
+    void setState(state_t newState);
     void setToOwned();
     bool getOwned();
     friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
