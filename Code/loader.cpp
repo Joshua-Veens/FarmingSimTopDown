@@ -12,8 +12,7 @@ player *loader::loadPlayerAndMoney(player *P, marketplace *market)
     std::ostringstream buffer;
     std::string temp;
     rFile >> temp;
-    if (rFile.tellg() == 0)
-    {
+    if(rFile.tellg()==0){
         rFile.close();
         return P;
     }
@@ -24,8 +23,7 @@ player *loader::loadPlayerAndMoney(player *P, marketplace *market)
     // }
     // std::string to_decode = buffer.str();
     std::string decoded = base64_decode(temp);
-    if (decoded.size() <= 0)
-    {
+    if(decoded.size() <= 0){
         return P;
     }
     std::string player_str = decoded.substr(0, decoded.find("!"));

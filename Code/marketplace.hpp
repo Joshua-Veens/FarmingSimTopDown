@@ -48,6 +48,7 @@ public:
         return  lhs << "Money:" << Market.getMoney();
     }
 
+
 //    void sellAll();
 
 //    void create() override;

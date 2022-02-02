@@ -1,4 +1,5 @@
 #include "tractor.hpp"
+#include "iostream"
 
 tractor::tractor( sf::Vector2f position):
         vehicle(position),
@@ -53,6 +54,11 @@ void tractor::update(std::vector<std::vector<dirt *>> farmlands){
         for (auto &p: farmland) {
             if (p->getBounds().intersects(seeder_collider) && active_type == 1) {
                 p->seed();
+                if(active_seeds == 0){
+                    p->changeToWheat();
+                }else if(active_seeds == 1){
+                    p->changeToCorn();
+                }
             }
             p->update();
         }
@@ -90,7 +96,7 @@ void tractor::overloadCrop(harvester *combine) {
 }
 
 void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
-    if(silo->getCollider().intersects(trailer_collider) && active_type == trailer){
+    if(silo->getDepositCollider().intersects(trailer_collider) && active_type == trailer){
         drawUnloadHelp(window, silo);
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
             silo->addWheat(wheatCount);
@@ -98,6 +104,31 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
             silo->addCorn(cornCount);
             cornCount = 0;
             image.loadFromFile("images\\aanhanger.png");
+        }
+        int free_space = 40000 - wheatCount - cornCount;
+        if(free_space > 0){
+            auto mouse_pos = sf::Mouse::getPosition(window);
+            auto translated_pos = window.mapPixelToCoords(mouse_pos);
+            if(silo->getWheatTextCollider().contains(translated_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                if(silo->getWheat() >= free_space){
+                    silo->removeWheat(free_space);
+                    wheatCount += free_space;
+                }else{
+                    wheatCount += silo->getWheat();
+                    silo->removeWheat(silo->getWheat());
+                }
+                image.loadFromFile("images\\aanhanger_full.png");
+            }
+            if(silo->getCornTextCollider().contains(translated_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                if(silo->getCorn() >= free_space){
+                    silo->removeCorn(free_space);
+                    cornCount += free_space;
+                }else{
+                    cornCount += silo->getCorn();
+                    silo->removeCorn(silo->getCorn());
+                }
+                image.loadFromFile("images\\aanhanger_full.png");
+            }
         }
     }
 }
@@ -136,7 +167,11 @@ void tractor::changeToAction(){
 }
 
 void tractor::changeToTrailer() {
-    image.loadFromFile("images\\aanhanger.png");
+    if(wheatCount > 0 || cornCount > 0){
+        image.loadFromFile("images\\aanhanger_full.png");
+    }else{
+        image.loadFromFile("images\\aanhanger.png");
+    }
     active_type = trailer;
 }
 
@@ -235,25 +270,15 @@ sf::FloatRect tractor::getCollider() {
     return tractor_collider;
 }
 
-void tractor::setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock clock){
+void tractor::setCrop(sf::Clock & clock){
     sf::Time time = clock.getElapsedTime();
     clock.restart();
-    if (time.asMilliseconds() > 500) {
-        for (auto &farmland: farmlands) {
-            for (auto &p: farmland) {
-                if (p->getState() == dirt::unseeded) {
-                    if (this->currentCrop == wheat) {
-                        p->changeCrop(corn);
-                    } else {
-                        p->changeCrop(wheat);
-                    }
-                }
-            }
-        }
-        if (currentCrop == wheat) {
-            currentCrop = corn;
-        } else {
-            currentCrop = wheat;
+    if (time.asMilliseconds() > 500)
+    {
+        if(active_seeds == 0){
+            this->active_seeds = cornSeeds;
+        }else if(active_seeds == 1){
+            this->active_seeds = wheatSeeds;
         }
     }
 }

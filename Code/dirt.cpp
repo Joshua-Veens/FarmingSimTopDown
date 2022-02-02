@@ -105,8 +105,12 @@ sf::FloatRect dirt::getBounds(){
     return collider;
 }
 
-void dirt::changeCrop(type newType){
-    this->active_type = newType;
+void dirt::changeToWheat(){
+    this->active_type = wheat;
+}
+
+void dirt::changeToCorn(){
+    this->active_type = corn;
 }
 
 dirt::state_t dirt::getState() {
@@ -125,6 +129,7 @@ bool dirt::getOwned() {
     }
 } 
 
+
 void dirt::setPosition(sf::Vector2f newPos){
     position = newPos;
 }
@@ -132,3 +137,4 @@ void dirt::setPosition(sf::Vector2f newPos){
 void dirt::setState(state_t newState){
     state = newState;
 }
+

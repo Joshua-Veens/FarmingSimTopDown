@@ -62,6 +62,7 @@ public:
     type getActiveType();
     void changeCrop(type newType);
     void setPosition(sf::Vector2f newPos);
+
     state_t getState();
     void setState(state_t newState);
     void setToOwned();

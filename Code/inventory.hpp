@@ -11,13 +11,16 @@ private:
     unsigned int cornCount = 42069;
     sf::Texture image;
     sf::Sprite sprite;
+    sf::Texture silo_texture;
+    sf::Sprite silo_sprite;
     sf::Vector2f position;
     sf::FloatRect collider;
+    sf::FloatRect silo_collider;
     rectangle blokje;
     std::string text_string;
     sf::Font font;
-    sf::Text text;
-    sf::Color color = sf::Color::White;
+    sf::Text wheat_text;
+    sf::Text corn_text;
     sf::Sprite wheatSprite;
     sf::Sprite cornSprite;
     sf::Texture wheatImage;
@@ -27,9 +30,11 @@ public:
 
     void draw( sf::RenderWindow & window ) override;
 
-    unsigned int getWheat();
+    void drawSilo(sf::RenderWindow & window);
 
-    unsigned int getCorn();
+    int getWheat();
+
+    int getCorn();
 
     void removeCrops();
     
@@ -42,6 +47,10 @@ public:
 
     void addCorn(unsigned int corn);
 
+    void removeWheat(unsigned int wheat);
+
+    void removeCorn(unsigned int corn);
+
     void drawInventory(sf::RenderWindow & window);
 
     void drawWheat(sf::RenderWindow &window);
@@ -50,7 +59,13 @@ public:
 
     sf::FloatRect getCollider() override;
 
+    sf::FloatRect getDepositCollider();
+
     sf::Vector2f getPosition();
+
+    sf::FloatRect getWheatTextCollider();
+
+    sf::FloatRect getCornTextCollider();
 };
 
 

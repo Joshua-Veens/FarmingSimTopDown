@@ -5,6 +5,7 @@
 #include "marketplace.hpp"
 #include <iomanip>
 #include <sstream>
+#include "iostream"
 
 marketplace::marketplace(sf::Vector2f position):
     position(position),
@@ -51,16 +52,19 @@ void marketplace::sellCrops(float wheat, float corn) {
     money += wheat * 0.27;
     money += corn * 0.4;
 }
+
 void marketplace::setMoney(float allMoney){
     money = allMoney;
 }
+
 
 void marketplace::drawMoney(sf::RenderWindow &window) {
     std::stringstream stream;
     stream << "$ " << std::fixed << std::setprecision(2) << money;
     text_string = stream.str();
-    text.setStyle(sf::Text::Bold);
+
     text.setFillColor(sf::Color::Blue);
+    text.setStyle(sf::Text::Bold);
     text = sf::Text(text_string, font);
     text.setCharacterSize(32);
     text.setPosition(sf::Vector2f (1800, 5));

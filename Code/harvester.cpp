@@ -71,8 +71,10 @@ void harvester::move(sf::Vector2f delta, std::vector<drawable *> objects) {
             return;
         }
     }
-    if(objects[1]->getCollider().intersects(collider)){
-        return;
+    for(unsigned int i = 1; i < objects.size(); i++){
+        if(objects[i]->getCollider().intersects(collider)){
+            return;
+        }
     }
     if(active_vehicle == 0){
         position += sf::Vector2f(delta.x/2, delta.y/2);
