@@ -16,6 +16,8 @@ class tractor : public vehicle{
 
 private:
     enum tractorTypes{trekker=0, seeder=1, trailer=2};
+    enum seederTypes{wheatSeeds=0, cornSeeds=1};
+    seederTypes active_seeds = wheatSeeds;
     tractorTypes active_type = trekker;
     sf::Texture image;
     sf::Sprite sprite;
@@ -82,7 +84,7 @@ public:
 
     int getActiveType();
 
-    void setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock clock);
+    void setCrop(sf::Clock & clock);
 };
 
 

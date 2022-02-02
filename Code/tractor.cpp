@@ -1,4 +1,5 @@
 #include "tractor.hpp"
+#include "iostream"
 
 tractor::tractor( sf::Vector2f position):
         vehicle(position),
@@ -53,6 +54,11 @@ void tractor::update(std::vector<std::vector<dirt *>> farmlands){
         for (auto &p: farmland) {
             if (p->getBounds().intersects(seeder_collider) && active_type == 1) {
                 p->seed();
+                if(active_seeds == 0){
+                    p->changeToWheat();
+                }else if(active_seeds == 1){
+                    p->changeToCorn();
+                }
             }
             p->update();
         }
@@ -235,25 +241,15 @@ sf::FloatRect tractor::getCollider() {
     return tractor_collider;
 }
 
-void tractor::setCrop(std::vector<std::vector<dirt *>> farmlands, sf::Clock clock){
+void tractor::setCrop(sf::Clock & clock){
     sf::Time time = clock.getElapsedTime();
     clock.restart();
-    if (time.asMilliseconds() > 500) {
-        for (auto &farmland: farmlands) {
-            for (auto &p: farmland) {
-                if (p->getState() == dirt::unseeded) {
-                    if (this->currentCrop == wheat) {
-                        p->changeCrop(corn);
-                    } else {
-                        p->changeCrop(wheat);
-                    }
-                }
-            }
-        }
-        if (currentCrop == wheat) {
-            currentCrop = corn;
-        } else {
-            currentCrop = wheat;
+    if (time.asMilliseconds() > 500)
+    {
+        if(active_seeds == 0){
+            this->active_seeds = cornSeeds;
+        }else if(active_seeds == 1){
+            this->active_seeds = wheatSeeds;
         }
     }
 }

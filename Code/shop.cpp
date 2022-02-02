@@ -106,9 +106,9 @@ void shop::buyLand(sf::Vector2f mouse, sf::RenderWindow &window) {
                     }
                 }
                 if (i == 3) {
-                    if (market->getMoney() >= 45000) {
+                    if (market->getMoney() >= 75000) {
                         if (farmlands[3][0]->getOwned()) {
-                            market->removeMoney(45000);
+                            market->removeMoney(75000);
                             for (auto dirt: farmlands[i]) {
                                 dirt->setToOwned();
                             }

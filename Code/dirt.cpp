@@ -84,7 +84,6 @@ bool dirt::harvest()
         int64_t elpasedTime = time.asMicroseconds();
         particles.generate(sf::Vector2i (position.x+5,position.y-5), elpasedTime, {237, 193, 33, 150}, sf::Vector2f(4,4));
         ticks = 0;
-        active_type = wheat;
         return true;
     }
     return false;
@@ -106,8 +105,12 @@ sf::FloatRect dirt::getBounds(){
     return collider;
 }
 
-void dirt::changeCrop(type newType){
-    this->active_type = newType;
+void dirt::changeToWheat(){
+    this->active_type = wheat;
+}
+
+void dirt::changeToCorn(){
+    this->active_type = corn;
 }
 
 dirt::state_t dirt::getState() {
