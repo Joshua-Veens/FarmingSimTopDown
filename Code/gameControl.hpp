@@ -42,7 +42,6 @@ private:
     std::vector<dirt *> farmlandLeftTop{};
     std::vector<std::vector<dirt *>> farmlands{farmlandMiddle, farmlandLeft, farmlandRight, farmlandTop, farmlandBottom, farmlandLeftTop};
 
-
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
@@ -50,11 +49,7 @@ private:
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
-
-        std::shared_ptr<drawable>(new shop{farmlands, market, clock}),
         std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})};
-    };
-
 
     inventory *silo = dynamic_cast<inventory *>(objects[1].get());
     marketplace *market = dynamic_cast<marketplace *>(objects[2].get());
@@ -98,40 +93,40 @@ private:
                { sMenu.show(); }),
 
         action(sf::Keyboard::V, [&]()
-                { trekker->setCrop(clock); }),
-        
+               { trekker->setCrop(clock); }),
+
         action(sf::Mouse::Button::Left, [&]()
-                { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))), window); }),
+               { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))), window); }),
 
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
 
-//        action(sf::Keyboard::M, [&]()
-//                { market.show(); }),
+        //        action(sf::Keyboard::M, [&]()
+        //                { market.show(); }),
 
-        action(sf::Keyboard::Escape, [this]{
+        action(sf::Keyboard::Escape, [this]
+               {
             if(Menu.getActive() || pMenu.getActive()){
                 return;
-            }pMenu.show(); })
-      };
+            }pMenu.show(); })};
 
 public:
     void runGame()
     {
         loader Loader;
-        pPlayer = Loader.loadPlayer(pPlayer);
 
         sf::Music music;
-        if(!music.openFromFile("audio\\backgroundmusic.ogg")){
+        if (!music.openFromFile("audio\\backgroundmusic.ogg"))
+        {
             std::cout << "error\n";
         }
         music.play();
         music.setLoop(true);
 
-        makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
-        makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
-        makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
-        makeFarmLand(sf::Vector2f(-1850, -1000), 80, 20, 3);   //Top
+        makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);      // Middle
+        makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);   // Left
+        makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);    // Right
+        makeFarmLand(sf::Vector2f(-1850, -1000), 80, 20, 3); // Top
 
         if (window.isOpen())
         {
@@ -157,7 +152,6 @@ public:
             trekker->update(farmlands);
             combine->update(farmlands);
             trekker->overloadCrop(combine);
-
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -252,7 +246,7 @@ public:
     void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height, unsigned int index)
     {
 
-        winkel.addForSaleSign(sf::Vector2f(position.x-96, position.y-64));
+        winkel.addForSaleSign(sf::Vector2f(position.x - 96, position.y - 64));
         int x = position.x;
         for (unsigned int i = 0; i < height; i++)
         {
