@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <memory>
 #include "picture.hpp"
@@ -48,7 +49,7 @@ private:
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
         std::shared_ptr<drawable>(new marketplace{sf::Vector2f(3160, 300)}),
-        std::shared_ptr<drawable>(new tractor{sf::Vector2f(2200, 200)}),
+        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
         std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
@@ -99,7 +100,7 @@ private:
                 { trekker->setCrop(farmlands,clock); }),
         
         action(sf::Mouse::Button::Left, [&]()
-                { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))));}),
+                { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))), window); }),
 
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
