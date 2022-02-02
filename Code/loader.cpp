@@ -6,13 +6,14 @@
 #include <iostream>
 loader::loader() {}
 
-player *loader::loadPlayerAndMoney(player *P, marketplace * market)
+player *loader::loadPlayerAndMoney(player *P, marketplace *market)
 {
     std::ifstream rFile("save.txt");
     std::ostringstream buffer;
     std::string temp;
     rFile >> temp;
-    if(rFile.tellg()==0){
+    if (rFile.tellg() == 0)
+    {
         rFile.close();
         return P;
     }
@@ -23,7 +24,8 @@ player *loader::loadPlayerAndMoney(player *P, marketplace * market)
     // }
     // std::string to_decode = buffer.str();
     std::string decoded = base64_decode(temp);
-    if(decoded.size() <= 0){
+    if (decoded.size() <= 0)
+    {
         return P;
     }
     std::string player_str = decoded.substr(0, decoded.find("!"));
@@ -80,21 +82,25 @@ player *loader::loadPlayerAndMoney(player *P, marketplace * market)
     return P;
 }
 
-
-bool str_contains(std::string str, char cmp){
-    for(auto n: str){
-        if(n == cmp){
+bool str_contains(std::string str, char cmp)
+{
+    for (auto n : str)
+    {
+        if (n == cmp)
+        {
             return true;
         }
     }
     return false;
 }
-std::vector<std::vector<dirt *>>   loader::loadFarms(std::vector<std::vector<dirt *>> farms ){
-        std::ifstream rFile("save.txt");
+std::vector<std::vector<dirt *>> loader::loadFarms(std::vector<std::vector<dirt *>> farms)
+{
+    std::ifstream rFile("save.txt");
     std::ostringstream buffer;
     std::string temp;
     rFile >> temp;
-    if(rFile.tellg()==0){
+    if (rFile.tellg() == 0)
+    {
         rFile.close();
         return farms;
     }
@@ -105,17 +111,60 @@ std::vector<std::vector<dirt *>>   loader::loadFarms(std::vector<std::vector<dir
     // }
     // std::string to_decode = buffer.str();
     std::string decoded = base64_decode(temp);
-    if(decoded.size() <= 0){
+    if (decoded.size() <= 0)
+    {
         return farms;
     }
-    std::string farm_strs = decoded.substr(decoded.find('!')-1, decoded.size());
+    std::string farm_strs = decoded.substr(decoded.find('!') - 1, decoded.size());
     // std::cout << farm_strs;
     std::string next_term = "";
-    while(!str_contains(next_term,'#')){
-        std::cout << next_term << std::endl;
-        farm_strs.erase(farm_strs.find('!'),farm_strs.find('!'));
-        next_term = farm_strs.substr(farm_strs.find('!'),farm_strs.find('!')+1);
-        
+    std::vector<std::string> strings;
+    while (!str_contains(next_term, '#'))
+    {
+        // std::cout << next_term << std::endl;
+        strings.push_back(next_term);
+        farm_strs.erase(farm_strs.find('!'), farm_strs.find('!'));
+        next_term = farm_strs.substr(farm_strs.find('!'), farm_strs.find('!') + 1);
+    }
+    int i = 0;
+    // strings.pop_back();
+    std::vector<std::vector<int>> parsed;
+    for (auto str : strings)
+    {
+        parsed.push_back({});
+        str.erase(0, 6);
+        str.erase(0, str.find_first_not_of('0'));
+        std::string x_str = str.substr(0, str.find_first_of(','));
+        int x = std::atoi(x_str.c_str());
+        parsed[i].push_back(x);
+        str.erase(0, str.find_first_of(',') + 1);
+        str.erase(0, str.find_first_not_of('0'));
+        std::string y_str = str.substr(0, str.find_first_of(' '));
+        int y = std::atoi(y_str.c_str());
+        parsed[i].push_back(y);
+        str.erase(0, str.find_first_of('=') + 1);
+        int state = atoi(str.substr(0, str.find_first_of(' ')).c_str());
+        parsed[i].push_back(state);
+        str.erase(0, str.find_first_of('=') + 1);
+        int crop = atoi(str.substr(0, str.find_first_of('c')).c_str());
+        parsed[i].push_back(crop);
+        str.erase(0, str.find_first_of('=') + 1);
+        int owned = atoi(str.substr(0, str.find_first_of('!')).c_str());
+        parsed[i].push_back(owned);
+        str.erase(0, str.find_first_of('!') + 1);
+        i++;
+    }
+    int j = 0;
+    for(auto x : farms){
+        for(auto y : x){
+            y->setPosition(sf::Vector2f(parsed[j][0],parsed[j][1]));
+            y->setState((dirt::state_t)parsed[j][2]);
+            y->changeCrop((type)parsed[j][3]);
+            if(parsed[j][4] == dirt::owned){
+                y->setToOwned();
+            }
+            j++;
+        }
     }
     return farms;
-} 
+}

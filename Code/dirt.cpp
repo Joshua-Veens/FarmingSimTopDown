@@ -84,7 +84,6 @@ bool dirt::harvest()
         int64_t elpasedTime = time.asMicroseconds();
         particles.generate(sf::Vector2i (position.x+5,position.y-5), elpasedTime, {237, 193, 33, 150}, sf::Vector2f(4,4));
         ticks = 0;
-        active_type = wheat;
         return true;
     }
     return false;
@@ -125,3 +124,11 @@ bool dirt::getOwned() {
         return false;
     }
 } 
+
+void dirt::setPosition(sf::Vector2f newPos){
+    position = newPos;
+}
+
+void dirt::setState(state_t newState){
+    state = newState;
+}
