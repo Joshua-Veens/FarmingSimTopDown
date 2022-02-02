@@ -60,7 +60,8 @@ public:
     void update();
     sf::FloatRect getBounds();
     type getActiveType();
-    void changeCrop(type newType);
+    void changeToCorn();
+    void changeToWheat();
     void setPosition(sf::Vector2f newPos);
 
     state_t getState();

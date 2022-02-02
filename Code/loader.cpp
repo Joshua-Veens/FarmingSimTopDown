@@ -157,7 +157,11 @@ std::vector<std::vector<dirt *>> loader::loadFarms(std::vector<std::vector<dirt 
         for(auto y : x){
             y->setPosition(sf::Vector2f(parsed[j][0],parsed[j][1]));
             y->setState((dirt::state_t)parsed[j][2]);
-            y->changeCrop((type)parsed[j][3]);
+            if(parsed[j][3] == corn){
+                y->changeToCorn();
+            }else{
+                y->changeToWheat();
+            }
             if(parsed[j][4] == dirt::owned){
                 y->setToOwned();
             }
