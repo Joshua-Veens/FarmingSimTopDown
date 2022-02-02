@@ -6,15 +6,16 @@
 #include <iostream>
 loader::loader() {}
 
-player *loader::loadPlayer(player *P)
+player *loader::loadPlayerAndMoney(player *P, marketplace * market)
 {
     std::ifstream rFile("save.txt");
     std::ostringstream buffer;
     std::string temp;
     rFile >> temp;
-    // if(temp == "         "){
-    //     return objects;
-    // }
+    if(rFile.tellg()==0){
+        rFile.close();
+        return P;
+    }
     // char ch;
     // while(rFile.get(ch)){
     //     buffer << ch;
@@ -22,6 +23,9 @@ player *loader::loadPlayer(player *P)
     // }
     // std::string to_decode = buffer.str();
     std::string decoded = base64_decode(temp);
+    if(decoded.size() <= 0){
+        return P;
+    }
     std::string player_str = decoded.substr(0, decoded.find("!"));
     // std::cout << player_str;
     std::string activeVehicle = player_str.substr(player_str.find("e: ") + 3, player_str.find(" oth") - 27);
@@ -38,10 +42,11 @@ player *loader::loadPlayer(player *P)
         active = combine;
     }
     // std::cout << active;
-    std::string money = player_str.substr(player_str.find(": ") + 2, player_str.find(" Act") - 7);
+    std::string money = player_str.substr(player_str.find("Money: ") + 7, player_str.find(" Act") - 5);
+    // std::cout << player_str << std::endl;
+    // std::cout << money;
+    //
     int mon = std::stoi(money);
-    int mon1 = mon;
-    mon = mon1;
     std::string active_pos = activeVehicle.substr(activeVehicle.find("@") + 1, activeVehicle.size());
     std::string x_str = active_pos.substr(0, active_pos.find(","));
     std::string y_str = active_pos.substr(active_pos.find(",") + 1, active_pos.size());
@@ -69,7 +74,48 @@ player *loader::loadPlayer(player *P)
     {
         P->getVehicles()[trekker]->setPosition(location_inactive);
     }
-    P->setMoney(mon);
+    market->setMoney(mon);
     P->setVehicle(active);
+    rFile.close();
     return P;
 }
+
+
+bool str_contains(std::string str, char cmp){
+    for(auto n: str){
+        if(n == cmp){
+            return true;
+        }
+    }
+    return false;
+}
+std::vector<std::vector<dirt *>>   loader::loadFarms(std::vector<std::vector<dirt *>> farms ){
+        std::ifstream rFile("save.txt");
+    std::ostringstream buffer;
+    std::string temp;
+    rFile >> temp;
+    if(rFile.tellg()==0){
+        rFile.close();
+        return farms;
+    }
+    // char ch;
+    // while(rFile.get(ch)){
+    //     buffer << ch;
+    //     std::cout << "load";
+    // }
+    // std::string to_decode = buffer.str();
+    std::string decoded = base64_decode(temp);
+    if(decoded.size() <= 0){
+        return farms;
+    }
+    std::string farm_strs = decoded.substr(decoded.find('!')-1, decoded.size());
+    // std::cout << farm_strs;
+    std::string next_term = "";
+    while(!str_contains(next_term,'#')){
+        std::cout << next_term << std::endl;
+        farm_strs.erase(farm_strs.find('!'),farm_strs.find('!'));
+        next_term = farm_strs.substr(farm_strs.find('!'),farm_strs.find('!')+1);
+        
+    }
+    return farms;
+} 

@@ -25,6 +25,7 @@ private:
     int savedRotation = 0;
     sf::FloatRect collider;
     sf::FloatRect auger_collider;
+    rectangle blokje;
     unsigned int wheatCount = 0;
     unsigned int cornCount = 0;
 
@@ -42,13 +43,13 @@ public:
     void checkIfFull();
 
     void addWheat();
-    
+
     void addCorn();
 
     void showCropAmount(sf::RenderWindow &window);
-    
+
     void drawWheat(sf::RenderWindow &window);
-    
+
     void drawCorn(sf::RenderWindow &window);
 
     void changeToNormal() override;
@@ -66,7 +67,7 @@ public:
     sf::Vector2f getPosition();
 
     sf::FloatRect getCollider() override;
-    
+
     sf::FloatRect getAugerCollider();
 
     int getActiveType();

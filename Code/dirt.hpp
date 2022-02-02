@@ -65,7 +65,7 @@ public:
     bool getOwned();
     friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
     {
-        return lhs << " Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type;
+        return lhs << "Dirt@" << Dirt.position.x << ',' << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type << "owned=" << Dirt.getOwned();
         ;
     }
 
