@@ -12,7 +12,7 @@ dirt::dirt(sf::Vector2f position, sf::Clock & clock):
 
 void dirt::seed()
 {
-    if (state == unseeded)
+    if (state == unseeded && active_own == owned)
     {
         state = seeded;
         cropcounter++;
@@ -113,3 +113,15 @@ void dirt::changeCrop(type newType){
 dirt::state_t dirt::getState() {
     return this->state;
 }
+
+void dirt::setToOwned() {
+    this->active_own = owned;
+}
+
+bool dirt::getOwned() {
+    if(active_own == 0) {
+        return true;
+    }else{
+        return false;
+    }
+} 
