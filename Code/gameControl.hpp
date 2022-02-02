@@ -34,9 +34,6 @@ private:
     sf::Clock clock;
     sf::View view = window.getView();
     sf::Time updateTime = sf::milliseconds(15);
-    saver save = saver(Player, farmlands, silo);
-    menu Menu = menu(window, save);
-    pause_menu pMenu = pause_menu(window, save);
 
     std::vector<dirt *> farmlandMiddle{};
     std::vector<dirt *> farmlandLeft{};
@@ -64,7 +61,9 @@ private:
     saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
     shop winkel = shop(farmlands, market, clock);
 
-
+    saver save = saver(Player, farmlands, silo, market);
+    menu Menu = menu(window, save);
+    pause_menu pMenu = pause_menu(window, save);
 
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
@@ -120,7 +119,7 @@ public:
     void runGame()
     {
         loader Loader;
-        pPlayer = Loader.loadPlayer(pPlayer);
+        pPlayer = Loader.loadPlayerAndMoney(pPlayer, market);
 
         sf::Music music;
         if(!music.openFromFile("audio\\backgroundmusic.ogg")){
