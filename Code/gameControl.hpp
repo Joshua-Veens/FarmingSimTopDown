@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <memory>
 #include "picture.hpp"
@@ -26,7 +27,6 @@ class gameControl
 {
 private:
     bool speedhacks = false;
-
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
@@ -99,9 +99,6 @@ private:
 
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
-
-//        action(sf::Keyboard::M, [&]()
-//                { market.show(); }),
 
         action(sf::Keyboard::Escape, [this]{
             if(Menu.getActive() || pMenu.getActive()){
