@@ -23,6 +23,9 @@ player *loader::loadPlayer(player *P)
     // }
     // std::string to_decode = buffer.str();
     std::string decoded = base64_decode(temp);
+    if(decoded.size() <= 0){
+        return P;
+    }
     std::string player_str = decoded.substr(0, decoded.find("!"));
     // std::cout << player_str;
     std::string activeVehicle = player_str.substr(player_str.find("e: ") + 3, player_str.find(" oth") - 27);
