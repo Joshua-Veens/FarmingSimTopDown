@@ -285,8 +285,8 @@ void tractor::updateCollider(){
             tractor_collider.height = 5;
             tractor_collider.width = 20;
 
-            blokje.jump(sf::Vector2f(position.x - 10, position.y - 36));
-            blokje.setSize(sf::Vector2f(20, 5));
+//            blokje.jump(sf::Vector2f(position.x - 10, position.y - 36));
+//            blokje.setSize(sf::Vector2f(20, 5));
 
             trailer_collider.left = position.x - 20;
             trailer_collider.top = position.y + 55;
@@ -496,8 +496,20 @@ void tractor::showCropAmount(sf::RenderWindow &window, sf::Vector2f position) {
     drawWeed(window, position);
 }
 
-int tractor::getActiveType(){
+int tractor::getActiveType() {
     return active_type;
 }
 
+int tractor::getSize() {
+    return active_size;
+}
 
+void tractor::setSize(bool size) {
+    if(size){
+        active_size = big;
+        image.loadFromFile("tractor\\big_trekker.png");
+    }else{
+        active_size = small;
+        image.loadFromFile("tractor\\trekkerjurgen.png");
+    }
+}
