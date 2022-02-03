@@ -167,12 +167,11 @@ public:
 
                 trekker->update(farmlands);
                 combine->update(farmlands);
-                trekker->overloadCrop(combine);
+                trekker->overloadCrop(combine);            
+                sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+                changeLocation(windowsize);
+                window.setView(view);
             }
-
-            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
-            changeLocation(windowsize);
-            window.setView(view);
 
             render();
 
