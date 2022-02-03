@@ -19,13 +19,13 @@ public:
     enum property {notOwned=0, owned=1};
     enum state_t
     {
-        unseeded,
-        seeded,
-        growingStage1,
-        growingStage2,
-        growingStage3,
-        growingStage4,
-        grown
+        unseeded = 0,
+        seeded =1 ,
+        growingStage1 = 2,
+        growingStage2 = 3,
+        growingStage3 = 4,
+        growingStage4 = 5,
+        grown =6
     };
 private:
     property active_own = notOwned;

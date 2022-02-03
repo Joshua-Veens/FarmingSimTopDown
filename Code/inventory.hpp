@@ -42,6 +42,13 @@ public:
 
     int getWeed();
 
+
+    void setWheat(int newWheat);
+
+    void setCorn(int newCorn);
+
+    void setWeed(int newWeed);
+
     void removeCrops();
     
     friend std::ostream &operator<<(std::ostream &lhs, inventory & inv)

@@ -47,7 +47,6 @@ private:
     std::vector<dirt *> farmlandBottom{};
     std::vector<dirt *> farmlandLeftTop{};
     std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
-
     std::vector<std::shared_ptr<drawable>> objects = {
             std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
             std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
@@ -78,7 +77,9 @@ private:
     std::vector<drawable *> drawables = {barn, saveHome, market, silo};
 
 
+  
     action actions[12] = {
+
             action(sf::Keyboard::W, [&]()
             { movement(sf::Vector2f(0.0, -2.0), 0); }),
             action(sf::Keyboard::S, [&]()
@@ -125,7 +126,9 @@ public:
         tractorStartUpSound.setVolume(60);
 
         loader Loader;
-        pPlayer = Loader.loadPlayerAndMoney(pPlayer, market);
+
+        pPlayer = Loader.loadPlayerAndMoney(pPlayer,market);
+        silo = Loader.loadSilo(silo);
 
         sf::Music music;
         if(!music.openFromFile("audio\\backgroundmusic.ogg")){
@@ -142,10 +145,14 @@ public:
         makeTrees(sf::Vector2f(0, 55), 4);
         addTreesToVector();
 
+        makeTrees(sf::Vector2f(-130, 625), 13);
+        addTreesToVector();
+
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
         makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
         makeFarmLand(sf::Vector2f(-1850, -1000), 80, 20, 3);   //Top
+        farmlands = Loader.loadFarms(farmlands);
 
         if (window.isOpen())
         {
@@ -323,6 +330,7 @@ public:
             position.y += 32;
         }
     }
+
 
     void makeTrees(sf::Vector2f position, unsigned int amount, bool vertical = false){
         if(vertical){

@@ -138,3 +138,15 @@ sf::FloatRect inventory::getWeedTextCollider() {
 sf::Vector2f inventory::getPosition() {
     return position;
 }
+
+void inventory::setWheat(int newWheat){
+    wheatCount = newWheat;
+}
+
+void inventory::setCorn(int newCorn){
+    cornCount = newCorn;
+}
+
+void inventory::setWeed(int newWeed){
+    weedCount = newWeed;
+}

@@ -11,12 +11,14 @@ harvester::harvester(sf::Vector2f position) :
     wheatImage.loadFromFile("images\\wheatCrop.png");
     cornImage.loadFromFile("images\\cornCrop.png");
     weedImage.loadFromFile("images\\weedCrop.png");
+
     font.loadFromFile("Xhers_Regular.otf");
     text.setStyle(sf::Text::Bold);
     text.setFillColor(color);
     wheatSprite.setTexture(wheatImage);
     cornSprite.setTexture(cornImage);
     weedSprite.setTexture(weedImage);
+
 }
 
 void harvester::draw(sf::RenderWindow &window) {

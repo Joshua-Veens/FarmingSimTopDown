@@ -85,6 +85,8 @@ public:
 
     void drawWhatSeeding(sf::RenderWindow &window, sf::Vector2f position);
 
+    void drawWeed(sf::RenderWindow &window);
+
     void drawUnloadHelp(sf::RenderWindow &window, inventory * silo);
 
     void drawSellHelp(sf::RenderWindow &window, marketplace * market);
