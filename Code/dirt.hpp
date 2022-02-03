@@ -45,6 +45,7 @@ private:
         "weed\\growing_4.png", "weed\\growing_5.png",
         "weed\\grown.png"}
     };
+
     type active_type = wheat;
     int cropcounter = 0;
     int ticks = 0;                                    // used to count if growing is done;
@@ -57,7 +58,6 @@ private:
     particlePool particles = particlePool(40);
 
 public:
-
     dirt(sf::Vector2f position, sf::Clock & clock);
     void draw(sf::RenderWindow &window);
     void seed();

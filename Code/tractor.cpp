@@ -299,34 +299,52 @@ void tractor::setCrop(sf::Clock & clock){
     }
 }
 
-void tractor::drawWheat(sf::RenderWindow &window) {
+void tractor::drawWheat(sf::RenderWindow &window, sf::Vector2f position) {
     text_string = std::to_string(wheatCount);
     text = sf::Text(text_string, font);
     text.setCharacterSize(40);
-    text.setPosition(sf::Vector2f(80,30));
-    wheatSprite.setPosition(sf::Vector2f(10, 20));
+    text.setPosition(sf::Vector2f(position.x+80,position.y+30));
+    wheatSprite.setPosition(sf::Vector2f(position.x+10, position.y+20));
     window.draw(wheatSprite);
     window.draw(text);
 }
 
-void tractor::drawCorn(sf::RenderWindow &window) {
+void tractor::drawCorn(sf::RenderWindow &window, sf::Vector2f position) {
     text_string = std::to_string(cornCount);
     text = sf::Text(text_string, font);
     text.setCharacterSize(40);
-    text.setPosition(sf::Vector2f(80,90));
-    cornSprite.setPosition(sf::Vector2f(10, 80));
+    text.setPosition(sf::Vector2f(position.x+80,position.y+90));
+    cornSprite.setPosition(sf::Vector2f(position.x+10, position.y+80));
     window.draw(cornSprite);
     window.draw(text);
 }
 
-void tractor::drawWeed(sf::RenderWindow &window) {
+void tractor::drawWeed(sf::RenderWindow &window, sf::Vector2f position) {
     text_string = std::to_string(weedCount);
     text = sf::Text(text_string, font);
     text.setCharacterSize(40);
-    text.setPosition(sf::Vector2f(80,140));
-    weedSprite.setPosition(sf::Vector2f(10, 140));
+    text.setPosition(sf::Vector2f(position.x+80,position.y+140));
+    weedSprite.setPosition(sf::Vector2f(position.x+10, position.y+140));
     window.draw(weedSprite);
     window.draw(text);
+}
+
+void tractor::drawWhatSeeding(sf::RenderWindow &window, sf::Vector2f position) {
+    text_string = "Seeds";
+    text = sf::Text(text_string, font);
+    text.setCharacterSize(40);
+    text.setPosition(sf::Vector2f(position.x+92,position.y+24));
+    window.draw(text);
+    if(active_seeds == 0){
+        wheatSprite.setPosition(sf::Vector2f(position.x+20, position.y+20));
+        window.draw(wheatSprite);
+    }else if(active_seeds == 1){
+        cornSprite.setPosition(sf::Vector2f(position.x+20, position.y+20));
+        window.draw(cornSprite);
+    }else if(active_seeds == 2){
+        weedSprite.setPosition(sf::Vector2f(position.x+20, position.y+20));
+        window.draw(weedSprite);
+    }
 }
 
 void tractor::drawUnloadHelp(sf::RenderWindow &window, inventory * silo) {
@@ -345,10 +363,10 @@ void tractor::drawSellHelp(sf::RenderWindow &window, marketplace * market) {
     window.draw(text);
 }
 
-void tractor::showCropAmount(sf::RenderWindow &window) {
-    drawWheat(window);
-    drawCorn(window);
-    drawWeed(window);
+void tractor::showCropAmount(sf::RenderWindow &window, sf::Vector2f position) {
+    drawWheat(window, position);
+    drawCorn(window, position);
+    drawWeed(window, position);
 }
 
 int tractor::getActiveType(){

@@ -56,7 +56,7 @@ void marketplace::setMoney(float allMoney){
     money = allMoney;
 }
 
-void marketplace::drawMoney(sf::RenderWindow &window) {
+void marketplace::drawMoney(sf::RenderWindow &window, sf::Vector2f moneyPosition) {
     std::stringstream stream;
     stream << "$ " << std::fixed << std::setprecision(2) << money;
     text_string = stream.str();
@@ -64,7 +64,7 @@ void marketplace::drawMoney(sf::RenderWindow &window) {
     text.setStyle(sf::Text::Bold);
     text = sf::Text(text_string, font);
     text.setCharacterSize(32);
-    text.setPosition(sf::Vector2f (1800, 5));
+    text.setPosition(sf::Vector2f (moneyPosition.x+1750, moneyPosition.y+5));
     window.draw(text);
 }
 

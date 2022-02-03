@@ -28,7 +28,6 @@ class gameControl
 {
 private:
     bool speedhacks = false;
-
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
@@ -74,11 +73,6 @@ private:
 
   
     action actions[12] = {
-        //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
-        //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
-        //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
-        //            action( sf::Keyboard::S, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, +1.0 )); objectlist["Trekker"].setRotation(225); }),
-
         action(sf::Keyboard::W, [&]()
                { movement(sf::Vector2f(0.0, -4.0), 0); }),
         action(sf::Keyboard::S, [&]()
@@ -126,6 +120,10 @@ public:
         music.setLoop(true);
 
         makeTrees(sf::Vector2f(-130, 625), 13);
+        makeTrees(sf::Vector2f(1310, 743), 5, true);
+        makeTrees(sf::Vector2f(-130, 1330), 13);
+        makeTrees(sf::Vector2f(-650, 1530), 14);
+        makeTrees(sf::Vector2f(0, 55), 4);
         addTreesToVector();
 
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
@@ -219,23 +217,27 @@ public:
         {
             object->draw(window);
         }
+        sf::Vector2f windowsize = sf::Vector2f (window.getSize());
+        sf::Vector2f viewingpoint = sf::Vector2f (view.getCenter());
         winkel.draw(window);
         silo->drawSilo(window);
         if (pPlayer->getVehicle() == combine)
         {
-            combine->showCropAmount(window);
+            combine->showCropAmount(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         }
-
 
         if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 2)
         {
+            trekker->showCropAmount(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
 
-            trekker->showCropAmount(window);
+        }else if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 1)
+        {
+            trekker->drawWhatSeeding(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         }
         trekker->depositCrop(window, silo);
         trekker->sellCrops(window, market);
         silo->drawInventory(window);
-        market->drawMoney(window);
+        market->drawMoney(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         window.display();
     }
 
@@ -266,10 +268,17 @@ public:
         }
     }
 
-    void makeTrees(sf::Vector2f position, unsigned int amount){
-        for(unsigned int i = 0; i < amount; i++){
-            objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
-            position.x += 120;
+    void makeTrees(sf::Vector2f position, unsigned int amount, bool vertical = false){
+        if(vertical){
+            for(unsigned int i = 0; i < amount; i++){
+                objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
+                position.y += 120;
+            }
+        }else{
+            for(unsigned int i = 0; i < amount; i++){
+                objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
+                position.x += 120;
+            }
         }
     }
 

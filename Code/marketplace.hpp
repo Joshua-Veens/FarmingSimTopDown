@@ -33,7 +33,7 @@ public:
 
     void sellCrops(float wheat, float corn, float weed);
 
-    void drawMoney(sf::RenderWindow & window);
+    void drawMoney(sf::RenderWindow & window, sf::Vector2f moneyPosition);
     
     float getMoney();
     

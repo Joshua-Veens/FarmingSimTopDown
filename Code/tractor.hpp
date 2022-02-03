@@ -75,17 +75,19 @@ public:
 
     sf::FloatRect getCollider() override;
 
-    void drawWheat(sf::RenderWindow &window);
+    void drawWheat(sf::RenderWindow &window, sf::Vector2f position);
 
-    void drawCorn(sf::RenderWindow &window);
+    void drawCorn(sf::RenderWindow &window, sf::Vector2f position);
 
-    void drawWeed(sf::RenderWindow &window);
+    void drawWeed(sf::RenderWindow &window, sf::Vector2f position);
+
+    void drawWhatSeeding(sf::RenderWindow &window, sf::Vector2f position);
 
     void drawUnloadHelp(sf::RenderWindow &window, inventory * silo);
 
     void drawSellHelp(sf::RenderWindow &window, marketplace * market);
 
-    void showCropAmount(sf::RenderWindow &window);
+    void showCropAmount(sf::RenderWindow &window, sf::Vector2f position);
 
     int getActiveType();
 
