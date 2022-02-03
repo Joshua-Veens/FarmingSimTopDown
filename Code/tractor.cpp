@@ -6,9 +6,13 @@ tractor::tractor( sf::Vector2f position):
         seeder_collider(position.x-30, position.y+30, 60, 20),
         tractor_collider(position.x-10, position.y-36, 20, 5),
         trailer_collider(position.x-20, position.y+55, 40, 70),
-        blokje(sf::Vector2f(position.x-20, position.y+55), sf::Vector2f(40, 70))
+        blokje(sf::Vector2f(position.x-10, position.y-36), sf::Vector2f(20, 5))
 {
-    image.loadFromFile("images\\trekkerjurgen.png");
+    if(active_size == big){
+        image.loadFromFile("tractor\\big_trekker.png");
+    }else{
+        image.loadFromFile("tractor\\trekkerjurgen.png");
+    }
     wheatImage.loadFromFile("images\\wheatCrop.png");
     cornImage.loadFromFile("images\\cornCrop.png");
     weedImage.loadFromFile("images\\weedCrop.png");
@@ -24,9 +28,13 @@ void tractor::draw(sf::RenderWindow &window) {
     this->updateCollider();
     sprite.setTexture(image, true);
     sprite.setPosition(position);
-    sprite.setOrigin(sf::Vector2f(64,64));
+    if(active_size == big){
+        sprite.setOrigin(sf::Vector2f(128,128));
+    }else{
+        sprite.setOrigin(sf::Vector2f(64,64));
+    }
     window.draw(sprite);
-//    blokje.draw(window);
+    blokje.draw(window);
 }
 
 void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
@@ -103,7 +111,11 @@ void tractor::overloadCrop(harvester *combine) {
             combine->setWeedCount(0);
         }
         if(wheatCount + cornCount + weedCount > 0){
-            image.loadFromFile("images\\aanhanger_full.png");
+            if(active_size == big){
+                image.loadFromFile("tractor\\big_aanhanger_full.png");
+            }else{
+                image.loadFromFile("tractor\\aanhanger_full.png");
+            }
         }
     }
 }
@@ -118,7 +130,11 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
             cornCount = 0;
             silo->addWeed(weedCount);
             weedCount = 0;
-            image.loadFromFile("images\\aanhanger.png");
+            if(active_size == big){
+                image.loadFromFile("tractor\\big_aanhanger.png");
+            }else{
+                image.loadFromFile("tractor\\aanhanger.png");
+            }
         }
         int free_space = 40000 - wheatCount - cornCount - weedCount;
         if(free_space > 0){
@@ -132,7 +148,11 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
                     wheatCount += silo->getWheat();
                     silo->removeWheat(silo->getWheat());
                 }
-                image.loadFromFile("images\\aanhanger_full.png");
+                if(active_size == big){
+                    image.loadFromFile("tractor\\big_aanhanger_full.png");
+                }else{
+                    image.loadFromFile("tractor\\aanhanger_full.png");
+                }
             }
             if(silo->getCornTextCollider().contains(translated_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 if(silo->getCorn() >= free_space){
@@ -142,7 +162,11 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
                     cornCount += silo->getCorn();
                     silo->removeCorn(silo->getCorn());
                 }
-                image.loadFromFile("images\\aanhanger_full.png");
+                if(active_size == big){
+                    image.loadFromFile("tractor\\big_aanhanger_full.png");
+                }else{
+                    image.loadFromFile("tractor\\aanhanger_full.png");
+                }
             }
             if(silo->getWeedTextCollider().contains(translated_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 if(silo->getWeed() >= free_space){
@@ -152,7 +176,11 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
                     weedCount += silo->getWeed();
                     silo->removeWeed(silo->getWeed());
                 }
-                image.loadFromFile("images\\aanhanger_full.png");
+                if(active_size == big){
+                    image.loadFromFile("tractor\\big_aanhanger_full.png");
+                }else{
+                    image.loadFromFile("tractor\\aanhanger_full.png");
+                }
             }
         }
     }
@@ -166,7 +194,11 @@ void tractor::sellCrops(sf::RenderWindow & window, marketplace * market) {
             wheatCount = 0;
             cornCount = 0;
             weedCount = 0;
-            image.loadFromFile("images\\aanhanger.png");
+            if(active_size == big){
+                image.loadFromFile("tractor\\big_aanhanger.png");
+            }else{
+                image.loadFromFile("tractor\\aanhanger.png");
+            }
         }
     }
 }
@@ -180,7 +212,11 @@ void tractor::changeToNormal(){
     if(wheatCount > 0 || cornCount > 0 || weedCount > 0){
         return;
     }
-    image.loadFromFile("images\\trekkerjurgen.png");
+    if(active_size == big){
+        image.loadFromFile("tractor\\big_trekker.png");
+    }else{
+        image.loadFromFile("tractor\\trekkerjurgen.png");
+    }
     active_type = trekker;
 }
 
@@ -188,83 +224,178 @@ void tractor::changeToAction(){
     if(wheatCount > 0 || cornCount > 0 || weedCount > 0){
         return;
     }
-    image.loadFromFile("images\\trekkerseeder.png");
+    if(active_size == big){
+        image.loadFromFile("tractor\\big_trekkerseeder.png");
+    }else{
+        image.loadFromFile("tractor\\trekkerseeder.png");
+    }
     active_type = seeder;
 }
 
 void tractor::changeToTrailer() {
     if(wheatCount > 0 || cornCount > 0 || weedCount > 0){
-        image.loadFromFile("images\\aanhanger_full.png");
+        if(active_size == big){
+            image.loadFromFile("tractor\\big_aanhanger_full.png");
+        }else{
+            image.loadFromFile("tractor\\aanhanger_full.png");
+        }
     }else{
-        image.loadFromFile("images\\aanhanger.png");
+        if(active_size == big){
+            image.loadFromFile("tractor\\big_aanhanger.png");
+        }else{
+            image.loadFromFile("tractor\\aanhanger.png");
+        }
     }
     active_type = trailer;
 }
 
 void tractor::updateCollider(){
     if(savedRotation == 0){
-        seeder_collider.left = position.x - 30;
-        seeder_collider.top = position.y + 30;
-        seeder_collider.height = 20;
-        seeder_collider.width = 60;
+        if(active_size == big){
+            seeder_collider.left = position.x - 30;
+            seeder_collider.top = position.y + 30;
+            seeder_collider.height = 20;
+            seeder_collider.width = 60;
 
-        tractor_collider.left = position.x - 10;
-        tractor_collider.top = position.y - 36;
-        tractor_collider.height = 5;
-        tractor_collider.width = 20;
+            tractor_collider.left = position.x - 16;
+            tractor_collider.top = position.y - 60;
+            tractor_collider.height = 5;
+            tractor_collider.width = 30;
 
-        trailer_collider.left = position.x - 20;
-        trailer_collider.top = position.y + 55;
-        trailer_collider.height = 70;
-        trailer_collider.width = 40;
+            blokje.jump(sf::Vector2f(position.x - 16, position.y-60));
+            blokje.setSize(sf::Vector2f(30, 5));
+
+            trailer_collider.left = position.x - 20;
+            trailer_collider.top = position.y + 55;
+            trailer_collider.height = 70;
+            trailer_collider.width = 40;
+        }else{
+            seeder_collider.left = position.x - 30;
+            seeder_collider.top = position.y + 30;
+            seeder_collider.height = 20;
+            seeder_collider.width = 60;
+
+            tractor_collider.left = position.x - 10;
+            tractor_collider.top = position.y - 36;
+            tractor_collider.height = 5;
+            tractor_collider.width = 20;
+
+            blokje.jump(sf::Vector2f(position.x - 10, position.y - 36));
+            blokje.setSize(sf::Vector2f(20, 5));
+
+            trailer_collider.left = position.x - 20;
+            trailer_collider.top = position.y + 55;
+            trailer_collider.height = 70;
+            trailer_collider.width = 40;
+        }
     }
     else if(savedRotation == 180){
-        seeder_collider.left = position.x - 30;
-        seeder_collider.top = position.y - 50;
-        seeder_collider.height = 20;
-        seeder_collider.width = 60;
+        if(active_size == big){
+            seeder_collider.left = position.x - 30;
+            seeder_collider.top = position.y - 50;
+            seeder_collider.height = 20;
+            seeder_collider.width = 60;
 
-        tractor_collider.left = position.x - 10;
-        tractor_collider.top = position.y + 36;
-        tractor_collider.height = 5;
-        tractor_collider.width = 20;
+            tractor_collider.left = position.x - 16;
+            tractor_collider.top = position.y + 60;
+            tractor_collider.height = 5;
+            tractor_collider.width = 30;
 
-        trailer_collider.left = position.x - 20;
-        trailer_collider.top = position.y - 125;
-        trailer_collider.height = 70;
-        trailer_collider.width = 40;
+            blokje.jump(sf::Vector2f(position.x - 16, position.y+60));
+            blokje.setSize(sf::Vector2f(30, 5));
+
+            trailer_collider.left = position.x - 20;
+            trailer_collider.top = position.y - 125;
+            trailer_collider.height = 70;
+            trailer_collider.width = 40;
+        }else{
+            seeder_collider.left = position.x - 30;
+            seeder_collider.top = position.y - 50;
+            seeder_collider.height = 20;
+            seeder_collider.width = 60;
+
+            tractor_collider.left = position.x - 10;
+            tractor_collider.top = position.y + 36;
+            tractor_collider.height = 5;
+            tractor_collider.width = 20;
+
+            trailer_collider.left = position.x - 20;
+            trailer_collider.top = position.y - 125;
+            trailer_collider.height = 70;
+            trailer_collider.width = 40;
+        }
     }
     else if(savedRotation == 270){
-        seeder_collider.left = position.x + 30;
-        seeder_collider.top = position.y - 30;
-        seeder_collider.height = 60;
-        seeder_collider.width = 20;
+        if(active_size == big){
+            seeder_collider.left = position.x + 30;
+            seeder_collider.top = position.y - 30;
+            seeder_collider.height = 60;
+            seeder_collider.width = 20;
 
-        tractor_collider.left = position.x - 35;
-        tractor_collider.top = position.y - 10;
-        tractor_collider.height = 20;
-        tractor_collider.width = 5;
+            tractor_collider.left = position.x - 59;
+            tractor_collider.top = position.y - 14;
+            tractor_collider.height = 30;
+            tractor_collider.width = 5;
 
-        trailer_collider.left = position.x + 55;
-        trailer_collider.top = position.y - 20;
-        trailer_collider.height = 40;
-        trailer_collider.width = 70;
+            blokje.jump(sf::Vector2f(position.x - 59, position.y -14));
+            blokje.setSize(sf::Vector2f(5, 30));
+
+            trailer_collider.left = position.x + 55;
+            trailer_collider.top = position.y - 20;
+            trailer_collider.height = 40;
+            trailer_collider.width = 70;
+        }else{
+            seeder_collider.left = position.x + 30;
+            seeder_collider.top = position.y - 30;
+            seeder_collider.height = 60;
+            seeder_collider.width = 20;
+
+            tractor_collider.left = position.x - 35;
+            tractor_collider.top = position.y - 10;
+            tractor_collider.height = 20;
+            tractor_collider.width = 5;
+
+            trailer_collider.left = position.x + 55;
+            trailer_collider.top = position.y - 20;
+            trailer_collider.height = 40;
+            trailer_collider.width = 70;
+        }
     }
     else if(savedRotation == 90){
-        seeder_collider.left = position.x - 50;
-        seeder_collider.top = position.y - 30;
-        seeder_collider.height = 60;
-        seeder_collider.width = 20;
+        if(active_size == big){
+            seeder_collider.left = position.x - 50;
+            seeder_collider.top = position.y - 30;
+            seeder_collider.height = 60;
+            seeder_collider.width = 20;
 
-        tractor_collider.left = position.x + 32;
-        tractor_collider.top = position.y - 10;
-        tractor_collider.height = 20;
-        tractor_collider.width = 5;
+            tractor_collider.left = position.x + 59;
+            tractor_collider.top = position.y - 14;
+            tractor_collider.height = 30;
+            tractor_collider.width = 5;
 
-        trailer_collider.left = position.x - 125;
-        trailer_collider.top = position.y - 20;
-        trailer_collider.height = 40;
-        trailer_collider.width = 70;
+            blokje.jump(sf::Vector2f(position.x + 59, position.y -14));
+            blokje.setSize(sf::Vector2f(5, 30));
+
+            trailer_collider.left = position.x - 125;
+            trailer_collider.top = position.y - 20;
+            trailer_collider.height = 40;
+            trailer_collider.width = 70;
+        }else{
+            seeder_collider.left = position.x - 50;
+            seeder_collider.top = position.y - 30;
+            seeder_collider.height = 60;
+            seeder_collider.width = 20;
+
+            tractor_collider.left = position.x + 32;
+            tractor_collider.top = position.y - 10;
+            tractor_collider.height = 20;
+            tractor_collider.width = 5;
+
+            trailer_collider.left = position.x - 125;
+            trailer_collider.top = position.y - 20;
+            trailer_collider.height = 40;
+            trailer_collider.width = 70;
+        }
     }
 }
 
