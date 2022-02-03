@@ -32,7 +32,7 @@ private:
     bool busy = false;
     sf::Clock clock;
     sf::View view = window.getView();
-    sf::Time updateTime = sf::milliseconds(15);
+    sf::Time updateTime = sf::seconds(1.f/60.f);
     sf::Music harvesterSound;
     sf::Music harvesterStartUpSound;
     sf::Music tractorSound;;
@@ -78,13 +78,13 @@ private:
   
     action actions[12] = {
         action(sf::Keyboard::W, [&]()
-               { movement(sf::Vector2f(0.0, -4.0), 0); }),
+               { movement(sf::Vector2f(0.0, -2.0), 0); }),
         action(sf::Keyboard::S, [&]()
-               { movement(sf::Vector2f(0.0, +4.0), 180); }),
+               { movement(sf::Vector2f(0.0, +2.0), 180); }),
         action(sf::Keyboard::A, [&]()
-               { movement(sf::Vector2f(-4.0, 0.0), 270); }),
+               { movement(sf::Vector2f(-2.0, 0.0), 270); }),
         action(sf::Keyboard::D, [&]()
-               { movement(sf::Vector2f(+4.0, 0.0), 90); }),
+               { movement(sf::Vector2f(+2.0, 0.0), 90); }),
 
         action(sf::Keyboard::Num1, [&]()
                { pPlayer->getVehicle()->changeToNormal(); }),
@@ -148,24 +148,32 @@ public:
         {
             Menu.show();
         }
+        
+        sf::Clock clock;
+        sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
         while (window.isOpen())
         {
-            sf::Clock updateclock;
-            updateclock.restart();
-            while (updateclock.getElapsedTime() < updateTime)
+            timeSinceLastUpdate += clock.restart();
+            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+
+            while (timeSinceLastUpdate > updateTime)
             {
-                sf::sleep(sf::milliseconds(1));
+                timeSinceLastUpdate -= updateTime;
+
+                input();
+                changeLocation(windowsize);
+                window.setView(view);
+
+                trekker->update(farmlands);
+                combine->update(farmlands);
+                trekker->overloadCrop(combine);
             }
 
             sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
             changeLocation(windowsize);
             window.setView(view);
 
-            input();
-            trekker->update(farmlands);
-            combine->update(farmlands);
-            trekker->overloadCrop(combine);
             render();
 
             sf::Event event;
@@ -198,7 +206,7 @@ public:
         {
             if (speedhacks)
             {
-                updateTime = sf::milliseconds(15);
+                updateTime = sf::seconds(1.f/60.f);
                 speedhacks = false;
             }
             else
