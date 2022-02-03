@@ -143,7 +143,7 @@ void harvester::setRotation( int rotation ) {
 
 
 void harvester::changeToNormal(){
-    if(wheatCount > 0 || cornCount > 0){
+    if(wheatCount > 0 || cornCount > 0 || weedCount > 0){
         return;
     }
     if(active_size == big){

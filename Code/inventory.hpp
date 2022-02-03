@@ -7,9 +7,9 @@
 
 class inventory : public drawable{
 private:
-    unsigned int wheatCount = 69420;
-    unsigned int cornCount = 42069;
-    unsigned int weedCount = 6969;
+    unsigned int wheatCount = 0;
+    unsigned int cornCount = 0;
+    unsigned int weedCount = 0;
     sf::Texture image;
     sf::Sprite sprite;
     sf::Texture silo_texture;
