@@ -512,4 +512,5 @@ void tractor::setSize(bool size) {
         active_size = small;
         image.loadFromFile("tractor\\trekkerjurgen.png");
     }
+    active_type = trekker;
 }

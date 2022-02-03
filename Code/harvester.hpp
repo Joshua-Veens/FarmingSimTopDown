@@ -12,6 +12,8 @@
 class harvester : public vehicle{
 private:
     enum harversterTypes{harvesting=0, notHarvesting=1, overload=2};
+    enum sizeTypes{small=0, big=1};
+    sizeTypes active_size = big;
     harversterTypes active_vehicle = notHarvesting;
     sf::Texture image;
     sf::Sprite sprite;
@@ -92,6 +94,10 @@ public:
     void setCornCount(unsigned int corn);
 
     void setWeedCount(unsigned int weed);
+
+    int getSize();
+
+    void setSize(bool size);
 };
 
 
