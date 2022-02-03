@@ -10,6 +10,7 @@ class menu
 {
 protected:
     std::vector<option> options;
+    std::string filename = "images\\mainBack.png";
     sf::RenderWindow &window;
     sf::Vector2u window_middle = sf::Vector2u(window.getSize().x / 2, window.getSize().y / 2);
     const std::string font_file = "Xhers_Regular.otf";
@@ -20,9 +21,9 @@ protected:
 
 public:
     menu(sf::RenderWindow &window, saver & Save);
-    // menu(std::vector<option> &options, sf::RenderWindow &window);
 
     void show();
+    void show(std::string file);
     void showHelp();
     bool getActive();
 };

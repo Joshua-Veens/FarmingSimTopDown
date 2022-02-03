@@ -24,6 +24,7 @@
 #include "shop.hpp"
 #include "tree.hpp"
 #include "vehicle_shop.hpp"
+#include "map.hpp"
 
 class gameControl
 {
@@ -72,6 +73,7 @@ private:
     saver save = saver(Player, farmlands, silo, market);
     menu Menu = menu(window, save);
     pause_menu pMenu = pause_menu(window, save);
+    map worldmap = map(window, save);
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
@@ -79,7 +81,7 @@ private:
     switchMenu sMenu = switchMenu(window, save, pPlayer);
     std::vector<drawable *> drawables = {barn, saveHome, market, silo, vehicleShop};
   
-    action actions[12] = {
+    action actions[13] = {
             action(sf::Keyboard::W, [&]()
             { movement(sf::Vector2f(0.0, -2.0), 0); }),
             action(sf::Keyboard::S, [&]()
@@ -107,6 +109,9 @@ private:
             action(sf::Keyboard::P, [&]()
             { SPEEEDDD(); }),
 
+            action(sf::Keyboard::M, [&]()
+            { worldmap.show("images\\map.png"); }),
+
             action(sf::Keyboard::Escape, [this]{
                 if(Menu.getActive() || pMenu.getActive()){
                     return;
@@ -116,6 +121,12 @@ private:
 public:
     void runGame()
     {
+        objects.insert(objects.begin()+8,std::shared_ptr<drawable>(new picture{"images\\splash.png", sf::Vector2f(0,0)}));
+        render();
+        window.display();
+        sf::sleep(sf::milliseconds(2000));
+        objects.erase(objects.begin()+8);
+
         tractorSound.openFromFile("audio\\JohnDeer.ogg");
         tractorStartUpSound.openFromFile("audio\\TractorStarting.ogg");
         harvesterSound.openFromFile("audio\\Harvesting.ogg");
@@ -189,6 +200,7 @@ public:
             }
 
             render();
+            renderRest();
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -251,6 +263,9 @@ public:
         {
             object->draw(window);
         }
+    }
+
+    void renderRest(){
         sf::Vector2f windowsize = sf::Vector2f (window.getSize());
         sf::Vector2f viewingpoint = sf::Vector2f (view.getCenter());
         winkel.draw(window);

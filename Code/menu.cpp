@@ -24,7 +24,7 @@ void menu::create()
 
 void menu::draw()
 {
-    picture bkg("images\\mainBack.png",sf::Vector2f(0,0));
+    picture bkg(filename,sf::Vector2f(0,0));
     bkg.draw(window);
     sf::Font font;
     font.loadFromFile(font_file);
@@ -47,6 +47,28 @@ void menu::draw()
 
 void menu::show()
 {
+    active = true;
+    while (active)
+    {
+        create();
+        window.clear();
+        draw();
+        window.display();
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+                return;
+            }
+        }
+    }
+}
+
+void menu::show(std::string file)
+{
+    filename = file;
     active = true;
     while (active)
     {
