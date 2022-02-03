@@ -2,7 +2,6 @@
 #define V2CPSE2_EXAMPLES_TRACTOR_HPP
 
 #include "vehicle.hpp"
-#include "rectangle.hpp"
 #include "farmhouse.hpp"
 #include "saveHouse.hpp"
 #include "dirt.hpp"
@@ -18,7 +17,7 @@ private:
     enum tractorTypes{trekker=0, seeder=1, trailer=2};
     enum seederTypes{wheatSeeds=0, cornSeeds=1, weedSeeds=2};
     enum sizeTypes{small=0, big=1};
-    sizeTypes active_size = big;
+    sizeTypes active_size = small;
     seederTypes active_seeds = wheatSeeds;
     tractorTypes active_type = trekker;
     sf::Texture image;
@@ -27,7 +26,6 @@ private:
     sf::FloatRect seeder_collider;
     sf::FloatRect tractor_collider;
     sf::FloatRect trailer_collider;
-    rectangle blokje;
     type currentCrop = wheat;
     std::string text_string;
     sf::Font font;
@@ -42,9 +40,9 @@ private:
     unsigned int wheatCount = 0;
     unsigned int cornCount = 0;
     unsigned int weedCount = 0;
-
-
 public:
+
+
     tractor( sf::Vector2f position);
 
     void draw( sf::RenderWindow & window ) override;
@@ -96,6 +94,10 @@ public:
     int getActiveType();
 
     void setCrop(sf::Clock & clock);
+
+    int getSize();
+
+    void setSize(bool size);
 };
 
 

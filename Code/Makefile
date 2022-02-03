@@ -32,6 +32,7 @@ SOURCES += drawable.cpp
         SOURCES += switchMenu.cpp
         SOURCES += shop.cpp
         SOURCES += tree.cpp
+        SOURCES += vehicle_shop.cpp
 
 # header files in this project
 HEADERS += drawable.hpp
@@ -58,6 +59,7 @@ HEADERS += drawable.hpp
         HEADERS += switchMenu.hpp
         HEADERS += shop.hpp
         HEADERS += tree.hpp
+        HEADERS += vehicle_shop.hpp
 
 # other places to look for files for this project
 SEARCH  :=

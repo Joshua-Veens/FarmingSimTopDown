@@ -23,6 +23,7 @@
 #include "loader.hpp"
 #include "shop.hpp"
 #include "tree.hpp"
+#include "vehicle_shop.hpp"
 
 class gameControl
 {
@@ -48,21 +49,23 @@ private:
     std::vector<dirt *> farmlandLeftTop{};
     std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
     std::vector<std::shared_ptr<drawable>> objects = {
-            std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
-            std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
-            std::shared_ptr<drawable>(new marketplace{sf::Vector2f(3160, 300)}),
-            std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
-            std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
-            std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
-            std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
+        std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
+        std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
+        std::shared_ptr<drawable>(new marketplace{sf::Vector2f(3160, 300)}),
+        std::shared_ptr<drawable>(new vehicle_shop{sf::Vector2f(3050, -957),clock}),
+        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
+        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
+        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
+        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
     };
 
     inventory *silo = dynamic_cast<inventory *>(objects[1].get());
     marketplace *market = dynamic_cast<marketplace *>(objects[2].get());
-    tractor *trekker = dynamic_cast<tractor *>(objects[3].get());
-    harvester *combine = dynamic_cast<harvester *>(objects[4].get());
-    farmhouse *barn = dynamic_cast<farmhouse *>(objects[5].get());
-    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
+    vehicle_shop *vehicleShop = dynamic_cast<vehicle_shop *>(objects[3].get());
+    tractor *trekker = dynamic_cast<tractor *>(objects[4].get());
+    harvester *combine = dynamic_cast<harvester *>(objects[5].get());
+    farmhouse *barn = dynamic_cast<farmhouse *>(objects[6].get());
+    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[7].get());
     shop winkel = shop(farmlands, market, clock);
 
     saver save = saver(Player, farmlands, silo, market);
@@ -74,12 +77,11 @@ private:
     player Player = player(vehicles);
     player *pPlayer = &Player;
     switchMenu sMenu = switchMenu(window, save, pPlayer);
-    std::vector<drawable *> drawables = {barn, saveHome, market, silo};
+    std::vector<drawable *> drawables = {barn, saveHome, market, silo, vehicleShop};
 
 
   
     action actions[12] = {
-
             action(sf::Keyboard::W, [&]()
             { movement(sf::Vector2f(0.0, -2.0), 0); }),
             action(sf::Keyboard::S, [&]()
@@ -143,7 +145,6 @@ public:
         makeTrees(sf::Vector2f(-130, 1330), 13);
         makeTrees(sf::Vector2f(-650, 1530), 14);
         makeTrees(sf::Vector2f(0, 55), 4);
-        addTreesToVector();
 
         makeTrees(sf::Vector2f(-130, 625), 13);
         addTreesToVector();
@@ -265,6 +266,7 @@ public:
         trekker->sellCrops(window, market);
         silo->drawInventory(window);
         market->drawMoney(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
+        vehicleShop->buyVehicle(window, trekker, combine, market);
         window.display();
     }
 
@@ -336,19 +338,15 @@ public:
         if(vertical){
             for(unsigned int i = 0; i < amount; i++){
                 objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
+                drawables.push_back(dynamic_cast<tree *>(objects[objects.size()-1].get()));
                 position.y += 120;
             }
         }else{
             for(unsigned int i = 0; i < amount; i++){
                 objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
+                drawables.push_back(dynamic_cast<tree *>(objects[objects.size()-1].get()));
                 position.x += 120;
             }
-        }
-    }
-
-    void addTreesToVector(){
-        for(unsigned int i = 7; i < objects.size(); i++){
-            drawables.push_back(dynamic_cast<tree *>(objects[i].get()));
         }
     }
 
