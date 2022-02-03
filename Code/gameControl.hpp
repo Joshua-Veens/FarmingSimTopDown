@@ -145,9 +145,7 @@ public:
         makeTrees(sf::Vector2f(-130, 1330), 13);
         makeTrees(sf::Vector2f(-650, 1530), 14);
         makeTrees(sf::Vector2f(0, 55), 4);
-
         makeTrees(sf::Vector2f(-130, 625), 13);
-        addTreesToVector();
 
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
@@ -284,7 +282,6 @@ public:
     void playSound(){
         if(pPlayer->getVehicle() == combine){
             if(!harvesterStarted){
-                std::cout << "kutzooi\n";
                 harvesterSound.stop();
                 harvesterStarted = true;
                 harvesterStartUpSound.play();
@@ -300,7 +297,6 @@ public:
         }
         if(pPlayer->getVehicle() == trekker){
             if(!tractorStarted){
-                std::cout << "kutzooi\n";
                 tractorSound.stop();
                 tractorStarted = true;
                 tractorStartUpSound.play();
