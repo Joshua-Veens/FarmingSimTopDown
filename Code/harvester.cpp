@@ -143,7 +143,7 @@ void harvester::setRotation( int rotation ) {
 
 
 void harvester::changeToNormal(){
-    if(wheatCount > 0 || cornCount > 0 || weedCount > 0){
+    if(wheatCount > 0 || cornCount > 0  || weedCount > 0){
         return;
     }
     if(active_size == big){
@@ -334,4 +334,14 @@ void harvester::setSize(bool size) {
         image.loadFromFile("harvester\\harvester_closed.png");
     }
     active_vehicle = notHarvesting;
+}
+
+void harvester::setState(int newType){
+    if(newType == notHarvesting){
+        changeToNormal();
+    }else if(newType == harvesting){
+        changeToAction();
+    }else{
+        changeToTrailer();
+    }
 }

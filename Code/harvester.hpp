@@ -8,11 +8,20 @@
 #include "farmhouse.hpp"
 #include "saveHouse.hpp"
 
-
-class harvester : public vehicle{
+class harvester : public vehicle
+{
 private:
-    enum harversterTypes{harvesting=0, notHarvesting=1, overload=2};
-    enum sizeTypes{small=0, big=1};
+    enum harversterTypes
+    {
+        harvesting = 0,
+        notHarvesting = 1,
+        overload = 2
+    };
+    enum sizeTypes
+    {
+        small = 0,
+        big = 1
+    };
     sizeTypes active_size = small;
     harversterTypes active_vehicle = notHarvesting;
     sf::Texture image;
@@ -39,13 +48,13 @@ private:
 public:
     harvester(sf::Vector2f position);
 
-    void draw( sf::RenderWindow & window ) override;
+    void draw(sf::RenderWindow &window) override;
 
-    void move( sf::Vector2f delta, std::vector<drawable *> objects) override;
+    void move(sf::Vector2f delta, std::vector<drawable *> objects) override;
 
     void update(std::vector<std::vector<dirt *>> farmlands);
 
-    void setRotation( int rotation ) override;
+    void setRotation(int rotation) override;
 
     void checkIfFull();
 
@@ -100,7 +109,13 @@ public:
     int getSize();
 
     void setSize(bool size);
+
+    void setState(int newType);
+
+    friend std::ostream &operator<<(std::ostream &lhs, harvester &combine)
+    {
+        return lhs << "wheat: " << combine.wheatCount << " corn: " << combine.cornCount << " weed: " << combine.weedCount << " size: " << combine.active_size << " active_type: " << combine.active_vehicle;
+    }
 };
 
-
-#endif //V2CPSE2_EXAMPLES_HARVESTER_HPP
+#endif // V2CPSE2_EXAMPLES_HARVESTER_HPP

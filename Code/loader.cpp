@@ -121,10 +121,10 @@ std::vector<std::vector<dirt *>> loader::loadFarms(std::vector<std::vector<dirt 
     // log << next_term;
     std::vector<std::string> strings;
     strings.push_back(next_term);
-    //farm_strs.erase(0, 38);
+    // farm_strs.erase(0, 38);
     while (!str_contains(next_term, '#'))
     {
-        farm_strs.erase(farm_strs.find('!'), farm_strs.find('!')+1);
+        farm_strs.erase(farm_strs.find('!'), farm_strs.find('!') + 1);
         // std::cout << next_term << std::endl;
         next_term = farm_strs.substr(farm_strs.find('!'), farm_strs.find('!') + 1);
         strings.push_back(next_term);
@@ -208,8 +208,7 @@ std::vector<std::vector<dirt *>> loader::loadFarms(std::vector<std::vector<dirt 
     return farms;
 }
 
-
-inventory *loader::loadSilo(inventory *silo)
+inventory *loader::loadSiloAndVehicles(inventory *silo, tractor *Trekker, harvester *Combine, vehicle_shop * VS)
 {
     std::ifstream rFile("save.txt");
     std::ostringstream buffer;
@@ -237,10 +236,80 @@ inventory *loader::loadSilo(inventory *silo)
     inv_str.erase(0, inv_str.find_first_of(' '));
     inv_str.erase(0, inv_str.find_first_of(' '));
     inv_str.erase(0, inv_str.find_first_of('C'));
+
+    std::string corn_str = inv_str.substr(inv_str.find_first_of(' '), inv_str.find_first_of('w'));
+    int cornc = atoi(corn_str.c_str());
+    inv_str.erase(inv_str.find_first_of(' '), inv_str.find_first_of('w'));
     inv_str.erase(0, inv_str.find_first_of(' '));
-    int cornc = atoi(inv_str.c_str());
+    std::string weed_str = inv_str.substr(0, inv_str.find_first_of('!'));
     silo->setWheat(wheatc);
     silo->setCorn(cornc);
+    silo->setWeed(atoi(weed_str.c_str()));
+    inv_str.erase(0, inv_str.find_first_of('!')); // trekker is first
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string trekker_wheat_str = inv_str.substr(0, inv_str.find_first_of(' '));
+    int trekker_wheat = atoi(trekker_wheat_str.c_str());
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string corn_str_trekker = inv_str.substr(0, inv_str.find(" "));
+    int corn_trekker = atoi(corn_str_trekker.c_str());
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string weed_str_trekker = inv_str.substr(0, inv_str.find(" "));
+    int weed_trekker = atoi(weed_str_trekker.c_str());
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string size_str_trekker = inv_str.substr(0, inv_str.find(" "));
+    int size_trekker = atoi(size_str_trekker.c_str());
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string type_str_trekker = inv_str.substr(0, inv_str.find("!"));
+    int type_trekker = atoi(type_str_trekker.c_str());
+
+    Trekker->setWheat(trekker_wheat);
+    Trekker->setCorn(corn_trekker);
+    Trekker->setWeed(weed_trekker);
+    Trekker->setSize(size_trekker);
+    Trekker->setState(type_trekker);
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string wheat_str_combine = inv_str.substr(0, inv_str.find(" "));
+    int wheat_combine = atoi(wheat_str_combine.c_str());
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string corn_str_combine = inv_str.substr(0, inv_str.find(" "));
+    int corn_combine = atoi(corn_str_combine.c_str());
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string weed_str_combine = inv_str.substr(0, inv_str.find(" "));
+    int weed_combine = atoi(weed_str_combine.c_str());
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string size_str_combine = inv_str.substr(0, inv_str.find(" "));
+    int size_combine = atoi(size_str_combine.c_str());
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string type_str_combine = inv_str.substr(0, inv_str.find('!'));
+    int type_combine = atoi(type_str_combine.c_str());
+    inv_str.erase(0, inv_str.find('!'));
+    Combine->setWheatCount(wheat_combine);
+    Combine->setCornCount(corn_combine);
+    Combine->setWeedCount(weed_combine);
+    Combine->setSize(size_combine);
+    Combine->setState(type_combine);
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string BT_str = inv_str.substr(0, inv_str.find(" "));
+    int BTI = atoi(BT_str.c_str());
+    bool BT = (BTI>=1 ? true : false);
+    inv_str.erase(0, inv_str.find_first_of(':') + 1);
+    inv_str.erase(0, inv_str.find_first_of(' ')+1);
+    std::string BH_str = inv_str.substr(0, inv_str.find(" "));
+    int BHI = atoi(BH_str.c_str());
+    bool BH = (BHI>=1 ? true : false);
+    inv_str.erase(0, inv_str.size());
+    VS->setBigTractor(BT);
+    VS->setBigHarvester(BH);
     return silo;
 }
-

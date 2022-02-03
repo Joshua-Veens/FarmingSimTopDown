@@ -2,7 +2,7 @@
 
 saveHouse::saveHouse(sf::Vector2f position):
     position(position),
-    save_collider(position.x - 25, position.y+255, 300, 120),
+    save_collider(position.x+150, position.y+260, 80, 50),
     house_collider(position.x+13, position.y+115, 235, 133)
 {
     image.loadFromFile("images\\saveHouse.png");

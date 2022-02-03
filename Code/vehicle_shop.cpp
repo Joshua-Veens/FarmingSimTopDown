@@ -108,3 +108,13 @@ void vehicle_shop::buyVehicle(sf::RenderWindow & window, tractor * trekker, harv
         }
     }
 }
+
+
+
+void vehicle_shop::setBigTractor(bool bought ){
+    boughtBigTractor = bought;
+}
+
+void vehicle_shop::setBigHarvester(bool bought ){
+    boughtBigHarvester = bought;
+}

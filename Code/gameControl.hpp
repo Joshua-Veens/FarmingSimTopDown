@@ -69,17 +69,19 @@ private:
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[6].get());
     saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[7].get());
     shop winkel = shop(farmlands, market, clock);
+    std::array<vehicle *, 2> vehicles = {trekker, combine};
 
-    saver save = saver(Player, farmlands, silo, market);
+    player Player = player(vehicles);
+    player *pPlayer = &Player;
+    saver save = saver(Player, farmlands, silo, market,combine,trekker,vehicleShop);
+
     menu Menu = menu(window, save);
     pause_menu pMenu = pause_menu(window, save);
     map worldmap = map(window, save);
 
-    std::array<vehicle *, 2> vehicles = {trekker, combine};
-    player Player = player(vehicles);
-    player *pPlayer = &Player;
+
     switchMenu sMenu = switchMenu(window, save, pPlayer);
-    std::vector<drawable *> drawables = {barn, saveHome, market, silo, vehicleShop};
+    std::vector<drawable *> drawables = {barn, saveHome, market, silo, vehicleShop,};
   
     action actions[13] = {
             action(sf::Keyboard::W, [&]()

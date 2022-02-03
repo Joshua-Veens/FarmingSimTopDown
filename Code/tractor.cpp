@@ -45,9 +45,6 @@ void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
             return;
         }
     }
-    if(objects[1]->getSavePoint().intersects(tractor_collider)){
-//        SPECIAAL PLEKJE VOOR JUSTIN ZIJN CODE
-    }
     if(active_type == 1){
         position += sf::Vector2f(delta.x/1.5, delta.y/1.5);
     }else if(active_type == trekker or active_type == trailer){
@@ -522,4 +519,28 @@ void tractor::setSize(bool size) {
         image.loadFromFile("tractor\\trekkerjurgen.png");
     }
     active_type = trekker;
+}
+
+void tractor::setWheat(int newWheat){
+    wheatCount = newWheat;
+}
+
+
+void tractor::setCorn(int newCorn){
+    cornCount = newCorn;
+}
+
+void tractor::setWeed(int newWeed){
+    weedCount = newWeed;
+}
+
+
+void tractor::setState(int newType){
+    if(newType == trekker){
+        changeToNormal();
+    }else if(newType == seeder){
+        changeToAction();
+    }else{
+        changeToTrailer();
+    }
 }

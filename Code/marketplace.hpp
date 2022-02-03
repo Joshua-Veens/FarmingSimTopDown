@@ -10,7 +10,7 @@
 
 class marketplace : public drawable{
 private:
-    float money = 1000000;
+    float money = 30000;
 //    inventory * inv;
     sf::Texture image;
     sf::Sprite sprite;
