@@ -195,6 +195,7 @@ std::vector<std::vector<dirt *>> loader::loadFarms(std::vector<std::vector<dirt 
                 y->changeToWeed();
             }
             y->setState((dirt::state_t)parsed[j][2]);
+
             if (parsed[j][4] == 1)
             {
                 y->setToOwned();
@@ -206,6 +207,7 @@ std::vector<std::vector<dirt *>> loader::loadFarms(std::vector<std::vector<dirt 
     }
     return farms;
 }
+
 
 inventory *loader::loadSilo(inventory *silo)
 {
@@ -241,3 +243,4 @@ inventory *loader::loadSilo(inventory *silo)
     silo->setCorn(cornc);
     return silo;
 }
+

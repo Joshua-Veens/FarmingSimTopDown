@@ -28,12 +28,17 @@ class gameControl
 {
 private:
     bool speedhacks = false;
-
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
     sf::View view = window.getView();
-    sf::Time updateTime = sf::milliseconds(15);
+    sf::Time updateTime = sf::seconds(1.f/60.f);
+    sf::Music harvesterSound;
+    sf::Music harvesterStartUpSound;
+    sf::Music tractorSound;
+    sf::Music tractorStartUpSound;
+    bool tractorStarted = false;
+    bool harvesterStarted = false;
 
     std::vector<dirt *> farmlandMiddle{};
     std::vector<dirt *> farmlandLeft{};
@@ -42,15 +47,14 @@ private:
     std::vector<dirt *> farmlandBottom{};
     std::vector<dirt *> farmlandLeftTop{};
     std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
-    
     std::vector<std::shared_ptr<drawable>> objects = {
-        std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
-        std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
-        std::shared_ptr<drawable>(new marketplace{sf::Vector2f(3160, 300)}),
-        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
-        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
+            std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
+            std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
+            std::shared_ptr<drawable>(new marketplace{sf::Vector2f(3160, 300)}),
+            std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
+            std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
+            std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
+            std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
     };
 
     inventory *silo = dynamic_cast<inventory *>(objects[1].get());
@@ -72,59 +76,74 @@ private:
     switchMenu sMenu = switchMenu(window, save, pPlayer);
     std::vector<drawable *> drawables = {barn, saveHome, market, silo};
 
+
   
     action actions[12] = {
-        //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
-        //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
-        //            action( sf::Keyboard::S, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, +1.0 )); objectlist["Trekker"].setRotation(135); }),
-        //            action( sf::Keyboard::S, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, +1.0 )); objectlist["Trekker"].setRotation(225); }),
 
-        action(sf::Keyboard::W, [&]()
-               { movement(sf::Vector2f(0.0, -4.0), 0); }),
-        action(sf::Keyboard::S, [&]()
-               { movement(sf::Vector2f(0.0, +4.0), 180); }),
-        action(sf::Keyboard::A, [&]()
-               { movement(sf::Vector2f(-4.0, 0.0), 270); }),
-        action(sf::Keyboard::D, [&]()
-               { movement(sf::Vector2f(+4.0, 0.0), 90); }),
+            action(sf::Keyboard::W, [&]()
+            { movement(sf::Vector2f(0.0, -2.0), 0); }),
+            action(sf::Keyboard::S, [&]()
+            { movement(sf::Vector2f(0.0, +2.0), 180); }),
+            action(sf::Keyboard::A, [&]()
+            { movement(sf::Vector2f(-2.0, 0.0), 270); }),
+            action(sf::Keyboard::D, [&]()
+            { movement(sf::Vector2f(+2.0, 0.0), 90); }),
 
-        action(sf::Keyboard::Num1, [&]()
-               { pPlayer->getVehicle()->changeToNormal(); }),
-        action(sf::Keyboard::Num2, [&]()
-               { pPlayer->getVehicle()->changeToAction(); }),
-        action(sf::Keyboard::Num3, [&]()
-               { pPlayer->getVehicle()->changeToTrailer(); }),
-        action(sf::Keyboard::R, [&]()
-               { sMenu.show(); }),
+            action(sf::Keyboard::Num1, [&]()
+            { pPlayer->getVehicle()->changeToNormal(); }),
+            action(sf::Keyboard::Num2, [&]()
+            { pPlayer->getVehicle()->changeToAction(); }),
+            action(sf::Keyboard::Num3, [&]()
+            { pPlayer->getVehicle()->changeToTrailer(); }),
+            action(sf::Keyboard::R, [&]()
+            { sMenu.show(), tractorStarted = false, harvesterStarted = false; }),
 
-        action(sf::Keyboard::V, [&]()
-                { trekker->setCrop(clock); }),
-        
-        action(sf::Mouse::Button::Left, [&]()
-                { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))), window); }),
+            action(sf::Keyboard::V, [&]()
+            { trekker->setCrop(clock); }),
 
-        action(sf::Keyboard::P, [&]()
-               { SPEEEDDD(); }),
+            action(sf::Mouse::Button::Left, [&]()
+            { winkel.buyLand(sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window))), window); }),
 
-        action(sf::Keyboard::Escape, [this]{
-            if(Menu.getActive() || pMenu.getActive()){
-                return;
-            }pMenu.show(); })
-      };
+            action(sf::Keyboard::P, [&]()
+            { SPEEEDDD(); }),
+
+            action(sf::Keyboard::Escape, [this]{
+                if(Menu.getActive() || pMenu.getActive()){
+                    return;
+                }pMenu.show(); })
+    };
 
 public:
     void runGame()
     {
+        tractorSound.openFromFile("audio\\JohnDeer.ogg");
+        tractorStartUpSound.openFromFile("audio\\TractorStarting.ogg");
+        harvesterSound.openFromFile("audio\\Harvesting.ogg");
+        harvesterStartUpSound.openFromFile("audio\\HarvesterStarting.ogg");
+        harvesterSound.setVolume(10);
+        harvesterStartUpSound.setVolume(50);
+        tractorSound.setVolume(40);
+        tractorStartUpSound.setVolume(60);
+
         loader Loader;
+
         pPlayer = Loader.loadPlayerAndMoney(pPlayer,market);
         silo = Loader.loadSilo(silo);
 
         sf::Music music;
         if(!music.openFromFile("audio\\backgroundmusic.ogg")){
-            std::cout << "error\n";
+            std::cout << "Cant load audio\n";
         }
         music.play();
         music.setLoop(true);
+        music.setVolume(75);
+
+        makeTrees(sf::Vector2f(-130, 625), 13);
+        makeTrees(sf::Vector2f(1310, 743), 5, true);
+        makeTrees(sf::Vector2f(-130, 1330), 13);
+        makeTrees(sf::Vector2f(-650, 1530), 14);
+        makeTrees(sf::Vector2f(0, 55), 4);
+        addTreesToVector();
 
         makeTrees(sf::Vector2f(-130, 625), 13);
         addTreesToVector();
@@ -140,26 +159,30 @@ public:
             Menu.show();
         }
 
+        sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
         while (window.isOpen())
         {
-            sf::Clock updateclock;
-            updateclock.restart();
-            while (updateclock.getElapsedTime() < updateTime)
+            timeSinceLastUpdate += clock.restart();
+            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+
+            while (timeSinceLastUpdate > updateTime)
             {
-                sf::sleep(sf::milliseconds(1));
+                timeSinceLastUpdate -= updateTime;
+
+                input();
+                changeLocation(windowsize);
+                window.setView(view);
+
+                trekker->update(farmlands);
+                combine->update(farmlands);
+                trekker->overloadCrop(combine);
+                windowsize = (sf::Vector2f)window.getSize();
+                changeLocation(windowsize);
+                window.setView(view);
             }
 
-            input();
             render();
-
-            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
-            changeLocation(windowsize);
-            window.setView(view);
-
-            trekker->update(farmlands);
-            combine->update(farmlands);
-            trekker->overloadCrop(combine);
-
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -191,7 +214,7 @@ public:
         {
             if (speedhacks)
             {
-                updateTime = sf::milliseconds(15);
+                updateTime = sf::seconds(1.f/60.f);
                 speedhacks = false;
             }
             else
@@ -217,37 +240,77 @@ public:
     void render()
     {
         window.clear();
+
         for (auto &object : objects)
         {
             object->draw(window);
         }
+        sf::Vector2f windowsize = sf::Vector2f (window.getSize());
+        sf::Vector2f viewingpoint = sf::Vector2f (view.getCenter());
         winkel.draw(window);
         silo->drawSilo(window);
         if (pPlayer->getVehicle() == combine)
         {
-            combine->showCropAmount(window);
+            combine->showCropAmount(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         }
-
-
         if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 2)
         {
-
-            trekker->showCropAmount(window);
+            trekker->showCropAmount(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
+        }
+        else if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 1)
+        {
+            trekker->drawWhatSeeding(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         }
         trekker->depositCrop(window, silo);
         trekker->sellCrops(window, market);
         silo->drawInventory(window);
-        market->drawMoney(window);
+        market->drawMoney(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         window.display();
     }
 
     void movement(sf::Vector2f speed, int rotation)
     {
+        playSound();
         pPlayer->getVehicle()->move(speed, drawables);
         pPlayer->getVehicle()->setRotation(rotation);
         if (pPlayer->getVehicle()->getCollider().intersects(barn->getCollider()))
         {
             sMenu.show();
+        }
+    }
+
+    void playSound(){
+        if(pPlayer->getVehicle() == combine){
+            if(!harvesterStarted){
+                std::cout << "kutzooi\n";
+                harvesterSound.stop();
+                harvesterStarted = true;
+                harvesterStartUpSound.play();
+            }if(harvesterStartUpSound.getStatus() == sf::SoundSource::Playing) {
+            }else{
+                if (harvesterSound.getStatus() == sf::SoundSource::Playing) {
+                } else {
+                    tractorSound.stop();
+                    harvesterSound.play();
+                    harvesterSound.setLoop(true);
+                }
+            }
+        }
+        if(pPlayer->getVehicle() == trekker){
+            if(!tractorStarted){
+                std::cout << "kutzooi\n";
+                tractorSound.stop();
+                tractorStarted = true;
+                tractorStartUpSound.play();
+            }if(tractorStartUpSound.getStatus() == sf::SoundSource::Playing) {
+            }else {
+                if (tractorSound.getStatus() == sf::SoundSource::Playing) {
+                } else {
+                    harvesterSound.stop();
+                    tractorSound.play();
+                    tractorSound.setLoop(true);
+                }
+            }
         }
     }
 
@@ -268,10 +331,18 @@ public:
         }
     }
 
-    void makeTrees(sf::Vector2f position, unsigned int amount){
-        for(unsigned int i = 0; i < amount; i++){
-            objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
-            position.x += 120;
+
+    void makeTrees(sf::Vector2f position, unsigned int amount, bool vertical = false){
+        if(vertical){
+            for(unsigned int i = 0; i < amount; i++){
+                objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
+                position.y += 120;
+            }
+        }else{
+            for(unsigned int i = 0; i < amount; i++){
+                objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
+                position.x += 120;
+            }
         }
     }
 
@@ -315,6 +386,7 @@ public:
             view.setCenter(x, y);
         }
     }
+
 };
 
 #endif // V2CPSE2_EXAMPLES_GAMECONTROL_HPP

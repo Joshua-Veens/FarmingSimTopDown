@@ -42,6 +42,7 @@ public:
 
     int getWeed();
 
+
     void setWheat(int newWheat);
 
     void setCorn(int newCorn);

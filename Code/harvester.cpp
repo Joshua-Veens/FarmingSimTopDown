@@ -11,6 +11,14 @@ harvester::harvester(sf::Vector2f position) :
     wheatImage.loadFromFile("images\\wheatCrop.png");
     cornImage.loadFromFile("images\\cornCrop.png");
     weedImage.loadFromFile("images\\weedCrop.png");
+
+    font.loadFromFile("Xhers_Regular.otf");
+    text.setStyle(sf::Text::Bold);
+    text.setFillColor(color);
+    wheatSprite.setTexture(wheatImage);
+    cornSprite.setTexture(cornImage);
+    weedSprite.setTexture(weedImage);
+
 }
 
 void harvester::draw(sf::RenderWindow &window) {
@@ -22,55 +30,40 @@ void harvester::draw(sf::RenderWindow &window) {
 //    blokje.draw(window);
 }
 
-void harvester::drawWheat(sf::RenderWindow &window) {
+
+void harvester::drawWheat(sf::RenderWindow &window, sf::Vector2f position) {
     text_string = std::to_string(wheatCount);
-    sf::Font font;
-    font.loadFromFile(font_file);
-    sf::Text text(text_string, font);
+    text = sf::Text(text_string, font);
     text.setCharacterSize(40);
-    text.setStyle(sf::Text::Bold);
-    text.setFillColor(color);
-    text.setPosition(sf::Vector2f(80,20));
-    wheatSprite.setTexture(wheatImage);
-    wheatSprite.setPosition(sf::Vector2f(10, 20));
+    text.setPosition(sf::Vector2f(position.x+80,position.y+30));
+    wheatSprite.setPosition(sf::Vector2f(position.x+10, position.y+20));
     window.draw(wheatSprite);
     window.draw(text);
 }
 
-void harvester::drawCorn(sf::RenderWindow &window) {
+void harvester::drawCorn(sf::RenderWindow &window, sf::Vector2f position) {
     text_string = std::to_string(cornCount);
-    sf::Font font;
-    font.loadFromFile(font_file);
-    sf::Text text(text_string, font);
+    text = sf::Text(text_string, font);
     text.setCharacterSize(40);
-    text.setStyle(sf::Text::Bold);
-    text.setFillColor(color);
-    text.setPosition(sf::Vector2f(80,80));
-    cornSprite.setTexture(cornImage);
-    cornSprite.setPosition(sf::Vector2f(10, 80));
+    text.setPosition(sf::Vector2f(position.x+80,position.y+90));
+    cornSprite.setPosition(sf::Vector2f(position.x+10, position.y+80));
     window.draw(cornSprite);
     window.draw(text);
 }
 
-void harvester::drawWeed(sf::RenderWindow &window) {
+void harvester::drawWeed(sf::RenderWindow &window, sf::Vector2f position) {
     text_string = std::to_string(weedCount);
-    sf::Font font;
-    font.loadFromFile(font_file);
-    sf::Text text(text_string, font);
+    text = sf::Text(text_string, font);
     text.setCharacterSize(40);
-    text.setStyle(sf::Text::Bold);
-    text.setFillColor(color);
-    text.setPosition(sf::Vector2f(80,140));
-    weedSprite.setTexture(weedImage);
-    weedSprite.setPosition(sf::Vector2f(10, 140));
+    text.setPosition(sf::Vector2f(position.x+80,position.y+140));
+    weedSprite.setPosition(sf::Vector2f(position.x+10, position.y+140));
     window.draw(weedSprite);
     window.draw(text);
 }
-
-void harvester::showCropAmount(sf::RenderWindow &window) {
-    drawWheat(window);
-    drawCorn(window);
-    drawWeed(window);
+void harvester::showCropAmount(sf::RenderWindow &window, sf::Vector2f position) {
+    drawWheat(window, position);
+    drawCorn(window, position);
+    drawWeed(window, position);
 }
 
 

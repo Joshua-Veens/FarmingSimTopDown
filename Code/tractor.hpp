@@ -17,6 +17,8 @@ class tractor : public vehicle{
 private:
     enum tractorTypes{trekker=0, seeder=1, trailer=2};
     enum seederTypes{wheatSeeds=0, cornSeeds=1, weedSeeds=2};
+    enum sizeTypes{small=0, big=1};
+    sizeTypes active_size = big;
     seederTypes active_seeds = wheatSeeds;
     tractorTypes active_type = trekker;
     sf::Texture image;
@@ -75,9 +77,13 @@ public:
 
     sf::FloatRect getCollider() override;
 
-    void drawWheat(sf::RenderWindow &window);
+    void drawWheat(sf::RenderWindow &window, sf::Vector2f position);
 
-    void drawCorn(sf::RenderWindow &window);
+    void drawCorn(sf::RenderWindow &window, sf::Vector2f position);
+
+    void drawWeed(sf::RenderWindow &window, sf::Vector2f position);
+
+    void drawWhatSeeding(sf::RenderWindow &window, sf::Vector2f position);
 
     void drawWeed(sf::RenderWindow &window);
 
@@ -85,7 +91,7 @@ public:
 
     void drawSellHelp(sf::RenderWindow &window, marketplace * market);
 
-    void showCropAmount(sf::RenderWindow &window);
+    void showCropAmount(sf::RenderWindow &window, sf::Vector2f position);
 
     int getActiveType();
 

@@ -8,8 +8,9 @@ dirt::dirt(sf::Vector2f position, sf::Clock &clock) : position(position),
     texture.loadFromImage(image);
 }
 
-type dirt::getActiveType()
-{
+
+type dirt::getActiveType() {
+
     return active_type;
 }
 
@@ -23,7 +24,8 @@ void dirt::seed()
         texture.loadFromImage(image);
         sf::Time time = clock.getElapsedTime();
         int64_t elpasedTime = time.asMicroseconds();
-        particles.generate(sf::Vector2i(position.x + 5, position.y - 5), elpasedTime, {128, 55, 15}, sf::Vector2f(6, 6));
+
+        particles.generate(sf::Vector2f (position.x+5,position.y-5), elpasedTime, {128, 55, 15}, sf::Vector2f(6,6));
     }
 }
 
@@ -85,7 +87,8 @@ bool dirt::harvest()
         texture.loadFromImage(image);
         sf::Time time = clock.getElapsedTime();
         int64_t elpasedTime = time.asMicroseconds();
-        particles.generate(sf::Vector2i(position.x + 5, position.y - 5), elpasedTime, {237, 193, 33, 150}, sf::Vector2f(4, 4));
+
+        particles.generate(sf::Vector2f (position.x+5,position.y-5), elpasedTime, {237, 193, 33, 150}, sf::Vector2f(4,4));
         ticks = 0;
         return true;
     }
@@ -115,13 +118,12 @@ void dirt::changeToCorn()
     this->active_type = corn;
 }
 
-void dirt::changeToWeed()
-{
+
+void dirt::changeToWeed() {
     this->active_type = weed;
 }
 
-dirt::state_t dirt::getState()
-{
+dirt::state_t dirt::getState() {
     return this->state;
 }
 
@@ -140,10 +142,10 @@ bool dirt::getOwned()
     {
         return false;
     }
-}
 
-void dirt::setPosition(sf::Vector2f newPos)
-{
+} 
+
+void dirt::setPosition(sf::Vector2f newPos){
     position = newPos;
 }
 
