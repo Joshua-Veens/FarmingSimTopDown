@@ -1,13 +1,15 @@
 #include "harvester.hpp"
-#include "iostream"
 
 harvester::harvester(sf::Vector2f position) :
         vehicle(position),
         collider(position.x - 40, position.y - 42, 80, 20),
-        auger_collider(position.x - 70, position.y+5, 20, 20),
-        blokje(sf::Vector2f(position.x - 70, position.y+5), sf::Vector2f(20, 20))
+        auger_collider(position.x - 70, position.y+5, 20, 20)
 {
-    image.loadFromFile("images\\harvester_closed.png");
+    if(active_size == big){
+        image.loadFromFile("harvester\\newholland_closed.png");
+    }else{
+        image.loadFromFile("harvester\\harvester_closed.png");
+    }
     wheatImage.loadFromFile("images\\wheatCrop.png");
     cornImage.loadFromFile("images\\cornCrop.png");
     weedImage.loadFromFile("images\\weedCrop.png");
@@ -25,9 +27,12 @@ void harvester::draw(sf::RenderWindow &window) {
     this->updateCollider();
     sprite.setTexture(image, true);
     sprite.setPosition(position);
-    sprite.setOrigin(sf::Vector2f(64,64));
+    if(active_size == big){
+        sprite.setOrigin(sf::Vector2f(128,128));
+    }else{
+        sprite.setOrigin(sf::Vector2f(64,64));
+    }
     window.draw(sprite);
-//    blokje.draw(window);
 }
 
 
@@ -101,8 +106,14 @@ void harvester::move(sf::Vector2f delta, std::vector<drawable *> objects) {
 
 
 void harvester::checkIfFull() {
-    if (wheatCount + cornCount >= 10000){
-        changeToFull();
+    if(active_size == big){
+        if (wheatCount + cornCount + weedCount >= 20000){
+            changeToFull();
+        }
+    }else{
+        if (wheatCount + cornCount + weedCount >= 10000){
+            changeToFull();
+        }
     }
 }
 
@@ -135,81 +146,134 @@ void harvester::changeToNormal(){
     if(wheatCount > 0 || cornCount > 0){
         return;
     }
-    image.loadFromFile("images\\harvester_closed.png");
+    if(active_size == big){
+        image.loadFromFile("harvester\\newholland_closed.png");
+    }else{
+        image.loadFromFile("harvester\\harvester_closed.png");
+    }
     active_vehicle = notHarvesting;
 }
 
 void harvester::changeToAction(){
-    image.loadFromFile("images\\harvester.png");
+    if(active_size == big){
+        image.loadFromFile("harvester\\newhollandharvest.png");
+    }else{
+        image.loadFromFile("harvester\\harvester.png");
+    }
     active_vehicle = harvesting;
 }
 
 void harvester::changeToTrailer() {
-    image.loadFromFile("images\\harvester_empty.png");
+    if(active_size == big){
+        image.loadFromFile("harvester\\newhollandempty.png");
+    }else{
+        image.loadFromFile("harvester\\harvester_empty.png");
+    }
     active_vehicle = overload;
 }
 
 void harvester::changeToFull() {
-    image.loadFromFile("images\\harvester_empty.png");
+    if(active_size == big){
+        image.loadFromFile("harvester\\newhollandempty.png");
+    }else{
+        image.loadFromFile("harvester\\harvester_empty.png");
+    }
     active_vehicle = overload;
 }
 
 void harvester::updateCollider(){
     if(savedRotation == 0){
-        collider.left = position.x - 40;
-        collider.top = position.y - 42;
-        collider.height = 20;
-        collider.width = 80;
+        if(active_size == big){
+            collider.left = position.x - 60;
+            collider.top = position.y - 47;
+            collider.height = 20;
+            collider.width = 120;
 
-        auger_collider.left = position.x - 70;
-        auger_collider.top = position.y + 5;
-        auger_collider.height = 20;
-        auger_collider.width = 20;
+            auger_collider.left = position.x - 90;
+            auger_collider.top = position.y - 10;
+            auger_collider.height = 20;
+            auger_collider.width = 20;
+        }else{
+            collider.left = position.x - 40;
+            collider.top = position.y - 42;
+            collider.height = 20;
+            collider.width = 80;
 
-        blokje.jump(sf::Vector2f(position.x - 70, position.y+5));
-        blokje.setSize(sf::Vector2f(20, 20));
+            auger_collider.left = position.x - 70;
+            auger_collider.top = position.y + 5;
+            auger_collider.height = 20;
+            auger_collider.width = 20;
+        }
+
     }
     else if(savedRotation == 180){
-        collider.left = position.x - 40;
-        collider.top = position.y + 22;
-        collider.height = 20;
-        collider.width = 80;
+        if(active_size == big){
+            collider.left = position.x - 60;
+            collider.top = position.y + 27;
+            collider.height = 20;
+            collider.width = 120;
 
-        auger_collider.left = position.x + 52;
-        auger_collider.top = position.y - 25;
-        auger_collider.height = 20;
-        auger_collider.width = 20;
+            auger_collider.left = position.x + 72;
+            auger_collider.top = position.y - 10;
+            auger_collider.height = 20;
+            auger_collider.width = 20;
+        }else{
+            collider.left = position.x - 40;
+            collider.top = position.y + 22;
+            collider.height = 20;
+            collider.width = 80;
 
-        blokje.jump(sf::Vector2f(position.x + 52, position.y-25));
-        blokje.setSize(sf::Vector2f(20, 20));
+            auger_collider.left = position.x + 52;
+            auger_collider.top = position.y - 25;
+            auger_collider.height = 20;
+            auger_collider.width = 20;
+        }
     }
     else if(savedRotation == 270){
-        collider.left = position.x - 42;
-        collider.top = position.y - 40;
-        collider.height = 80;
-        collider.width = 20;
+        if(active_size == big){
+            collider.left = position.x - 47;
+            collider.top = position.y - 60;
+            collider.height = 120;
+            collider.width = 20;
 
-        auger_collider.left = position.x + 5;
-        auger_collider.top = position.y + 50;
-        auger_collider.height = 20;
-        auger_collider.width = 20;
+            auger_collider.left = position.x - 10;
+            auger_collider.top = position.y + 70;
+            auger_collider.height = 20;
+            auger_collider.width = 20;
+        }else{
+            collider.left = position.x - 42;
+            collider.top = position.y - 40;
+            collider.height = 80;
+            collider.width = 20;
 
-        blokje.jump(sf::Vector2f(position.x+5, position.y+50));
-        blokje.setSize(sf::Vector2f(20, 20));
+            auger_collider.left = position.x + 5;
+            auger_collider.top = position.y + 50;
+            auger_collider.height = 20;
+            auger_collider.width = 20;
+        }
     }
     else if(savedRotation == 90){
-        collider.left = position.x + 22;
-        collider.top = position.y - 40;
-        collider.height = 80;
-        collider.width = 20;
+        if(active_size == big){
+            collider.left = position.x + 27;
+            collider.top = position.y - 60;
+            collider.height = 120;
+            collider.width = 20;
 
-        auger_collider.left = position.x - 25;
-        auger_collider.top = position.y - 70;
-        auger_collider.height = 20;
-        auger_collider.width = 20;
+            auger_collider.left = position.x - 10;
+            auger_collider.top = position.y - 90;
+            auger_collider.height = 20;
+            auger_collider.width = 20;
+        }else{
+            collider.left = position.x + 22;
+            collider.top = position.y - 40;
+            collider.height = 80;
+            collider.width = 20;
 
-        blokje.jump(sf::Vector2f(position.x - 25, position.y - 70));
-        blokje.setSize(sf::Vector2f(20, 20));
+            auger_collider.left = position.x - 25;
+            auger_collider.top = position.y - 70;
+            auger_collider.height = 20;
+            auger_collider.width = 20;
+        }
     }
 }
 
@@ -255,4 +319,19 @@ void harvester::setCornCount(unsigned int corn) {
 
 void harvester::setWeedCount(unsigned int weed) {
     weedCount = weed;
+}
+
+int harvester::getSize() {
+    return active_size;
+}
+
+void harvester::setSize(bool size) {
+    if(size){
+        active_size = big;
+        image.loadFromFile("harvester\\newholland_closed.png");
+    }else{
+        active_size = small;
+        image.loadFromFile("harvester\\harvester_closed.png");
+    }
+    active_vehicle = notHarvesting;
 }

@@ -1,12 +1,10 @@
 #include "tractor.hpp"
-#include "iostream"
 
 tractor::tractor( sf::Vector2f position):
         vehicle(position),
         seeder_collider(position.x-30, position.y+30, 60, 20),
         tractor_collider(position.x-10, position.y-36, 20, 5),
-        trailer_collider(position.x-20, position.y+55, 40, 70),
-        blokje(sf::Vector2f(position.x-10, position.y-36), sf::Vector2f(20, 5))
+        trailer_collider(position.x-20, position.y+55, 40, 70)
 {
     if(active_size == big){
         image.loadFromFile("tractor\\big_trekker.png");
@@ -34,7 +32,6 @@ void tractor::draw(sf::RenderWindow &window) {
         sprite.setOrigin(sf::Vector2f(64,64));
     }
     window.draw(sprite);
-    blokje.draw(window);
 }
 
 void tractor::move(sf::Vector2f delta, std::vector<drawable *> objects) {
@@ -298,9 +295,6 @@ void tractor::updateCollider(){
             tractor_collider.height = 5;
             tractor_collider.width = 20;
 
-            blokje.jump(sf::Vector2f(position.x - 10, position.y - 36));
-            blokje.setSize(sf::Vector2f(20, 5));
-
             trailer_collider.left = position.x - 20;
             trailer_collider.top = position.y + 55;
             trailer_collider.height = 70;
@@ -511,8 +505,21 @@ void tractor::showCropAmount(sf::RenderWindow &window, sf::Vector2f position) {
     drawWeed(window, position);
 }
 
-int tractor::getActiveType(){
+int tractor::getActiveType() {
     return active_type;
 }
 
+int tractor::getSize() {
+    return active_size;
+}
 
+void tractor::setSize(bool size) {
+    if(size){
+        active_size = big;
+        image.loadFromFile("tractor\\big_trekker.png");
+    }else{
+        active_size = small;
+        image.loadFromFile("tractor\\trekkerjurgen.png");
+    }
+    active_type = trekker;
+}
