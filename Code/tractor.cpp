@@ -76,6 +76,7 @@ void tractor::update(std::vector<std::vector<dirt *>> farmlands){
 
 void tractor::overloadCrop(harvester *combine) {
     unsigned int total = wheatCount + cornCount + weedCount;
+
     unsigned int space = 40000;
     if(active_size == big){
         space = 65000;
@@ -131,6 +132,7 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
             cornCount = 0;
             silo->addWeed(weedCount);
             weedCount = 0;
+
             if(active_size == big){
                 image.loadFromFile("tractor\\big_aanhanger.png");
             }else{
@@ -186,6 +188,16 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
                 }else{
                     image.loadFromFile("tractor\\aanhanger_full.png");
                 }
+            }
+            if(silo->getWeedTextCollider().contains(translated_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                if(silo->getWeed() >= free_space){
+                    silo->removeWeed(free_space);
+                    weedCount += free_space;
+                }else{
+                    weedCount += silo->getWeed();
+                    silo->removeWeed(silo->getWeed());
+                }
+                image.loadFromFile("images\\aanhanger_full.png");
             }
         }
     }
@@ -256,6 +268,7 @@ void tractor::changeToTrailer() {
 
 void tractor::updateCollider(){
     if(savedRotation == 0){
+
         if(active_size == big){
             seeder_collider.left = position.x - 65;
             seeder_collider.top = position.y + 75;
@@ -450,6 +463,7 @@ void tractor::drawWeed(sf::RenderWindow &window, sf::Vector2f position) {
     window.draw(text);
 }
 
+
 void tractor::drawWhatSeeding(sf::RenderWindow &window, sf::Vector2f position) {
     text_string = "Seeds";
     text = sf::Text(text_string, font);
@@ -483,6 +497,7 @@ void tractor::drawSellHelp(sf::RenderWindow &window, marketplace * market) {
     text.setPosition(sf::Vector2f(market->getPosition().x+160, market->getPosition().y+160));
     window.draw(text);
 }
+
 
 void tractor::showCropAmount(sf::RenderWindow &window, sf::Vector2f position) {
     drawWheat(window, position);

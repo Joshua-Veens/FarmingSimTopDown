@@ -26,6 +26,7 @@ private:
     sf::Texture wheatImage;
     sf::Texture cornImage;
     sf::Texture weedImage;
+
     sf::Font font;
     sf::Text text;
     int savedRotation = 0;
@@ -61,6 +62,8 @@ public:
     void drawCorn(sf::RenderWindow &window, sf::Vector2f position);
 
     void drawWeed(sf::RenderWindow &window, sf::Vector2f position);
+
+    void drawWeed(sf::RenderWindow &window);
 
     void changeToNormal() override;
 
