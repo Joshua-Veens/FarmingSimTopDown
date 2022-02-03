@@ -7,9 +7,9 @@
 
 class inventory : public drawable{
 private:
-    unsigned int wheatCount = 0;
-    unsigned int cornCount = 0;
-    unsigned int weedCount = 0;
+    unsigned int wheatCount = 69420;
+    unsigned int cornCount = 42069;
+    unsigned int weedCount = 6969;
     sf::Texture image;
     sf::Sprite sprite;
     sf::Texture silo_texture;
@@ -53,7 +53,7 @@ public:
     
     friend std::ostream &operator<<(std::ostream &lhs, inventory & inv)
     {
-        return lhs << "Wheat: " << inv.wheatCount << " Corn: "<< inv.cornCount;
+        return lhs << "Wheat: " << inv.wheatCount << " Corn: "<< inv.cornCount << "weed: " << inv.weedCount;
     }
 
     void addWheat(unsigned int wheat);

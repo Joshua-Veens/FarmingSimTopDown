@@ -3,7 +3,6 @@
 
 #include "vehicle.hpp"
 #include "farmhouse.hpp"
-#include "saveHouse.hpp"
 #include "dirt.hpp"
 #include "harvester.hpp"
 #include "inventory.hpp"
@@ -98,6 +97,18 @@ public:
     int getSize();
 
     void setSize(bool size);
+
+    void setState(int newType);
+
+    friend std::ostream & operator<<(std::ostream& lhs, tractor &trekker){
+        return lhs << "wheat: " << trekker.wheatCount << " corn: " << trekker.cornCount << " weed: " << trekker.weedCount << " size: " << trekker.active_size << " active_type: " << trekker.active_type;
+    }
+    
+    void setWheat(int newWheat);
+
+    void setCorn(int newCorn);
+
+    void setWeed(int newWeed);
 };
 
 

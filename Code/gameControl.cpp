@@ -24,7 +24,7 @@ void gameControl::runGame()
     loader Loader;
 
     pPlayer = Loader.loadPlayerAndMoney(pPlayer,market);
-    silo = Loader.loadSilo(silo);
+    silo = Loader.loadSiloAndVehicles(silo,trekker,combine,vehicleShop);
 
     sf::Music music;
     if(!music.openFromFile("audio\\backgroundmusic.ogg")){
