@@ -5,6 +5,7 @@
 #include "harvester.hpp"
 #include <array>
 #include <iostream>
+#include <SFML/Audio.hpp>
 
 enum active_t
 {

@@ -17,8 +17,6 @@ class tractor : public vehicle{
 private:
     enum tractorTypes{trekker=0, seeder=1, trailer=2};
     enum seederTypes{wheatSeeds=0, cornSeeds=1, weedSeeds=2};
-    enum sizeTypes{small=0, big=1};
-    sizeTypes active_size = big;
     seederTypes active_seeds = wheatSeeds;
     tractorTypes active_type = trekker;
     sf::Texture image;

@@ -12,15 +12,15 @@
 
 class particle : public drawable {
 private:
-    unsigned int lifetime = rand() % ((55 - 40) + 1) + 40;
-    sf::Vector2f position;
-    sf::Vector2f velocity;
+    unsigned int lifetime = rand() % ((25 - 10) + 1) + 10;
+    sf::Vector2i position;
+    sf::Vector2i velocity;
     sf::RectangleShape rect;
     sf::Color color;
     sf::Vector2f size;
 
 public:
-    particle(sf::Vector2f position, sf::Vector2f velocity, sf::Color color, sf::Vector2f size);
+    particle(sf::Vector2i position, sf::Vector2i velocity, sf::Color color, sf::Vector2f size);
 
     void update();
 
@@ -38,7 +38,7 @@ private:
 public:
     particlePool(unsigned int poolsize);
 
-    void generate(sf::Vector2f position, int64_t elapsedTime, sf::Color color, sf::Vector2f size);
+    void generate(sf::Vector2i position, int64_t elapsedTime, sf::Color color, sf::Vector2f size);
 
     void updatePool(sf::RenderWindow &window);
 

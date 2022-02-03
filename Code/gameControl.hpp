@@ -32,7 +32,12 @@ private:
     bool busy = false;
     sf::Clock clock;
     sf::View view = window.getView();
-    sf::Time updateTime = sf::seconds(1.f/60.f);
+    sf::Time updateTime = sf::milliseconds(15);
+    sf::Music harvesterSound;
+    sf::Music harvesterStartUpSound;
+    sf::Music tractorSound;;
+    sf::Music tractorStartUpSound;;
+
     std::vector<dirt *> farmlandMiddle{};
     std::vector<dirt *> farmlandLeft{};
     std::vector<dirt *> farmlandRight{};
@@ -73,13 +78,13 @@ private:
   
     action actions[12] = {
         action(sf::Keyboard::W, [&]()
-               { movement(sf::Vector2f(0.0, -2.0), 0); }),
+               { movement(sf::Vector2f(0.0, -4.0), 0); }),
         action(sf::Keyboard::S, [&]()
-               { movement(sf::Vector2f(0.0, +2.0), 180); }),
+               { movement(sf::Vector2f(0.0, +4.0), 180); }),
         action(sf::Keyboard::A, [&]()
-               { movement(sf::Vector2f(-2.0, 0.0), 270); }),
+               { movement(sf::Vector2f(-4.0, 0.0), 270); }),
         action(sf::Keyboard::D, [&]()
-               { movement(sf::Vector2f(+2.0, 0.0), 90); }),
+               { movement(sf::Vector2f(+4.0, 0.0), 90); }),
 
         action(sf::Keyboard::Num1, [&]()
                { pPlayer->getVehicle()->changeToNormal(); }),
@@ -108,15 +113,24 @@ private:
 public:
     void runGame()
     {
+        tractorSound.openFromFile("audio\\JohnDeer.ogg");
+        tractorStartUpSound.openFromFile("audio\\TractorStarting.ogg");
+        harvesterSound.openFromFile("audio\\Harvesting.ogg");
+        harvesterStartUpSound.openFromFile("audio\\HarvesterStarting.ogg");
+        harvesterSound.setVolume(10);
+        tractorSound.setVolume(40);
+        tractorStartUpSound.setVolume(60);
+
         loader Loader;
         pPlayer = Loader.loadPlayerAndMoney(pPlayer, market);
 
         sf::Music music;
         if(!music.openFromFile("audio\\backgroundmusic.ogg")){
-            std::cout << "error\n";
+            std::cout << "Cant load audio\n";
         }
         music.play();
         music.setLoop(true);
+        music.setVolume(75);
 
         makeTrees(sf::Vector2f(-130, 625), 13);
         makeTrees(sf::Vector2f(1310, 743), 5, true);
@@ -134,31 +148,25 @@ public:
         {
             Menu.show();
         }
-        sf::Clock clock;
-        sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
         while (window.isOpen())
         {
-            timeSinceLastUpdate += clock.restart();
-            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
-
-            while (timeSinceLastUpdate > updateTime)
+            sf::Clock updateclock;
+            updateclock.restart();
+            while (updateclock.getElapsedTime() < updateTime)
             {
-                timeSinceLastUpdate -= updateTime;
-
-                input();
-                changeLocation(windowsize);
-                window.setView(view);
-
-                trekker->update(farmlands);
-                combine->update(farmlands);
-                trekker->overloadCrop(combine);
-
+                sf::sleep(sf::milliseconds(1));
             }
 
+            sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
+            changeLocation(windowsize);
+            window.setView(view);
+
+            input();
+            trekker->update(farmlands);
+            combine->update(farmlands);
+            trekker->overloadCrop(combine);
             render();
-
-
-
 
             sf::Event event;
             while (window.pollEvent(event))
@@ -190,7 +198,7 @@ public:
         {
             if (speedhacks)
             {
-                updateTime = sf::seconds(1.f/60.f);
+                updateTime = sf::milliseconds(15);
                 speedhacks = false;
             }
             else
@@ -216,6 +224,7 @@ public:
     void render()
     {
         window.clear();
+
         for (auto &object : objects)
         {
             object->draw(window);
@@ -228,12 +237,11 @@ public:
         {
             combine->showCropAmount(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         }
-
         if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 2)
         {
             trekker->showCropAmount(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
-
-        }else if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 1)
+        }
+        else if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 1)
         {
             trekker->drawWhatSeeding(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         }
@@ -246,11 +254,37 @@ public:
 
     void movement(sf::Vector2f speed, int rotation)
     {
+        playSound();
         pPlayer->getVehicle()->move(speed, drawables);
         pPlayer->getVehicle()->setRotation(rotation);
         if (pPlayer->getVehicle()->getCollider().intersects(barn->getCollider()))
         {
             sMenu.show();
+        }
+    }
+
+    void playSound(){
+        if(pPlayer->getVehicle() == combine){
+            if(harvesterSound.getStatus() == sf::SoundSource::Playing){
+            }else{
+                tractorSound.stop();
+                harvesterStartUpSound.play();
+                while (harvesterStartUpSound.getStatus() == sf::SoundSource::Playing);
+                harvesterStartUpSound.stop();
+                harvesterSound.play();
+                harvesterSound.setLoop(true);
+            }
+        }
+        if(pPlayer->getVehicle() == trekker){
+            if(tractorSound.getStatus() == sf::SoundSource::Playing){
+            }else{
+                harvesterSound.stop();
+                tractorStartUpSound.play();
+                while (tractorStartUpSound.getStatus() == sf::SoundSource::Playing);
+                tractorStartUpSound.stop();
+                tractorSound.play();
+                tractorSound.setLoop(true);
+            }
         }
     }
 
@@ -325,6 +359,7 @@ public:
             view.setCenter(x, y);
         }
     }
+
 };
 
 #endif // V2CPSE2_EXAMPLES_GAMECONTROL_HPP
