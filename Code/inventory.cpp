@@ -3,7 +3,6 @@
 inventory::inventory(sf::Vector2f position):
     position(position),
     collider(position.x+172, position.y+208, 48, 43),
-
     silo_collider(position.x+38, position.y+180, 110, 72),
     blokje(sf::Vector2f(position.x+38, position.y+180), sf::Vector2f(110, 72))
 {
@@ -15,16 +14,18 @@ inventory::inventory(sf::Vector2f position):
     silo_sprite.setPosition(position);
     wheatImage.loadFromFile("images\\wheatCrop.png");
     cornImage.loadFromFile("images\\cornCrop.png");
+    weedImage.loadFromFile("images\\weedCrop.png");
     font.loadFromFile("Xhers_Regular.otf");
     wheat_text.setStyle(sf::Text::Bold);
     corn_text.setStyle(sf::Text::Bold);
+    weed_text.setStyle(sf::Text::Bold);
     wheatSprite.setTexture(wheatImage);
     cornSprite.setTexture(cornImage);
+    weedSprite.setTexture(weedImage);
 }
 
 void inventory::draw(sf::RenderWindow &window) {
     window.draw(sprite);
-//    blokje.draw(window);
 }
 
 void inventory::drawSilo(sf::RenderWindow &window) {
@@ -40,9 +41,14 @@ int inventory::getCorn() {
     return cornCount;
 }
 
+int inventory::getWeed() {
+    return weedCount;
+}
+
 void inventory::removeCrops() {
     wheatCount = 0;
     cornCount = 0;
+    weedCount = 0;
 }
 
 void inventory::addWheat(unsigned int wheat) {
@@ -53,6 +59,10 @@ void inventory::addCorn(unsigned int corn) {
     cornCount += corn;
 }
 
+void inventory::addWeed(unsigned int weed) {
+    weedCount += weed;
+}
+
 void inventory::removeWheat(unsigned int wheat) {
     wheatCount -= wheat;
 }
@@ -61,9 +71,14 @@ void inventory::removeCorn(unsigned int corn) {
     cornCount -= corn;
 }
 
+void inventory::removeWeed(unsigned int weed) {
+    weedCount -= weed;
+}
+
 void inventory::drawInventory(sf::RenderWindow &window) {
     drawWheat(window);
     drawCorn(window);
+    drawWeed(window);
 }
 
 void inventory::drawWheat(sf::RenderWindow &window) {
@@ -88,6 +103,18 @@ void inventory::drawCorn(sf::RenderWindow &window) {
     window.draw(corn_text);
 }
 
+void inventory::drawWeed(sf::RenderWindow &window) {
+    text_string = std::to_string(weedCount);
+    text_string = std::to_string(weedCount);
+    weed_text = sf::Text(text_string, font);
+    weed_text.setCharacterSize(28);
+    weed_text.setPosition(sf::Vector2f(position.x+64,position.y+193));
+    weedSprite.setScale(0.4, 0.4);
+    weedSprite.setPosition(sf::Vector2f(position.x+38, position.y+191));
+    window.draw(weedSprite);
+    window.draw(weed_text);
+}
+
 sf::FloatRect inventory::getCollider() {
     return silo_collider;
 }
@@ -104,6 +131,22 @@ sf::FloatRect inventory::getCornTextCollider() {
     return corn_text.getGlobalBounds();
 }
 
+sf::FloatRect inventory::getWeedTextCollider() {
+    return weed_text.getGlobalBounds();
+}
+
 sf::Vector2f inventory::getPosition() {
     return position;
+}
+
+void inventory::setWheat(int newWheat){
+    wheatCount = newWheat;
+}
+
+void inventory::setCorn(int newCorn){
+    cornCount = newCorn;
+}
+
+void inventory::setWeed(int newWeed){
+    weedCount = newWeed;
 }

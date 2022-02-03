@@ -11,11 +11,13 @@ tractor::tractor( sf::Vector2f position):
     image.loadFromFile("images\\trekkerjurgen.png");
     wheatImage.loadFromFile("images\\wheatCrop.png");
     cornImage.loadFromFile("images\\cornCrop.png");
+    weedImage.loadFromFile("images\\weedCrop.png");
     font.loadFromFile("Xhers_Regular.otf");
     text.setStyle(sf::Text::Bold);
     text.setFillColor(color);
     wheatSprite.setTexture(wheatImage);
     cornSprite.setTexture(cornImage);
+    weedSprite.setTexture(weedImage);
 }
 
 void tractor::draw(sf::RenderWindow &window) {
@@ -58,6 +60,8 @@ void tractor::update(std::vector<std::vector<dirt *>> farmlands){
                     p->changeToWheat();
                 }else if(active_seeds == 1){
                     p->changeToCorn();
+                }else if(active_seeds == 2){
+                    p->changeToWeed();
                 }
             }
             p->update();
@@ -66,7 +70,7 @@ void tractor::update(std::vector<std::vector<dirt *>> farmlands){
 }
 
 void tractor::overloadCrop(harvester *combine) {
-    unsigned int total = wheatCount + cornCount;
+    unsigned int total = wheatCount + cornCount + weedCount;
     if(total == 40000){
         return;
     }
@@ -89,7 +93,16 @@ void tractor::overloadCrop(harvester *combine) {
             cornCount += combine->getCorn();
             combine->setCornCount(0);
         }
-        if(wheatCount + cornCount > 0){
+        if(total + combine->getWeed() > 40000){
+            unsigned int weed = total + combine->getWeed() - 40000;
+            weedCount += combine->getWeed() - weed;
+            combine->setWeedCount(weed);
+            return;
+        }else{
+            weedCount += combine->getWeed();
+            combine->setWeedCount(0);
+        }
+        if(wheatCount + cornCount + weedCount > 0){
             image.loadFromFile("images\\aanhanger_full.png");
         }
     }
@@ -103,9 +116,11 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
             wheatCount = 0;
             silo->addCorn(cornCount);
             cornCount = 0;
+            silo->addWeed(weedCount);
+            weedCount = 0;
             image.loadFromFile("images\\aanhanger.png");
         }
-        int free_space = 40000 - wheatCount - cornCount;
+        int free_space = 40000 - wheatCount - cornCount - weedCount;
         if(free_space > 0){
             auto mouse_pos = sf::Mouse::getPosition(window);
             auto translated_pos = window.mapPixelToCoords(mouse_pos);
@@ -129,6 +144,16 @@ void tractor::depositCrop(sf::RenderWindow & window, inventory *silo) {
                 }
                 image.loadFromFile("images\\aanhanger_full.png");
             }
+            if(silo->getWeedTextCollider().contains(translated_pos) && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                if(silo->getWeed() >= free_space){
+                    silo->removeWeed(free_space);
+                    weedCount += free_space;
+                }else{
+                    weedCount += silo->getWeed();
+                    silo->removeWeed(silo->getWeed());
+                }
+                image.loadFromFile("images\\aanhanger_full.png");
+            }
         }
     }
 }
@@ -137,9 +162,10 @@ void tractor::sellCrops(sf::RenderWindow & window, marketplace * market) {
     if(market->getSellCollider().intersects(trailer_collider) && active_type == trailer){
         drawSellHelp(window, market);
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
-            market->sellCrops(wheatCount, cornCount);
+            market->sellCrops(wheatCount, cornCount, weedCount);
             wheatCount = 0;
             cornCount = 0;
+            weedCount = 0;
             image.loadFromFile("images\\aanhanger.png");
         }
     }
@@ -151,7 +177,7 @@ void tractor::setRotation( int rotation ) {
 }
 
 void tractor::changeToNormal(){
-    if(wheatCount > 0 || cornCount > 0){
+    if(wheatCount > 0 || cornCount > 0 || weedCount > 0){
         return;
     }
     image.loadFromFile("images\\trekkerjurgen.png");
@@ -159,7 +185,7 @@ void tractor::changeToNormal(){
 }
 
 void tractor::changeToAction(){
-    if(wheatCount > 0 || cornCount > 0){
+    if(wheatCount > 0 || cornCount > 0 || weedCount > 0){
         return;
     }
     image.loadFromFile("images\\trekkerseeder.png");
@@ -167,7 +193,7 @@ void tractor::changeToAction(){
 }
 
 void tractor::changeToTrailer() {
-    if(wheatCount > 0 || cornCount > 0){
+    if(wheatCount > 0 || cornCount > 0 || weedCount > 0){
         image.loadFromFile("images\\aanhanger_full.png");
     }else{
         image.loadFromFile("images\\aanhanger.png");
@@ -191,9 +217,6 @@ void tractor::updateCollider(){
         trailer_collider.top = position.y + 55;
         trailer_collider.height = 70;
         trailer_collider.width = 40;
-
-        blokje.jump(sf::Vector2f(position.x - 20, position.y + 55));
-        blokje.setSize(sf::Vector2f(40, 70));
     }
     else if(savedRotation == 180){
         seeder_collider.left = position.x - 30;
@@ -210,9 +233,6 @@ void tractor::updateCollider(){
         trailer_collider.top = position.y - 125;
         trailer_collider.height = 70;
         trailer_collider.width = 40;
-
-        blokje.jump(sf::Vector2f(position.x - 20, position.y - 125));
-        blokje.setSize(sf::Vector2f(40, 70));
     }
     else if(savedRotation == 270){
         seeder_collider.left = position.x + 30;
@@ -229,9 +249,6 @@ void tractor::updateCollider(){
         trailer_collider.top = position.y - 20;
         trailer_collider.height = 40;
         trailer_collider.width = 70;
-
-        blokje.jump(sf::Vector2f(position.x + 55, position.y - 20));
-        blokje.setSize(sf::Vector2f(70, 40));
     }
     else if(savedRotation == 90){
         seeder_collider.left = position.x - 50;
@@ -248,9 +265,6 @@ void tractor::updateCollider(){
         trailer_collider.top = position.y - 20;
         trailer_collider.height = 40;
         trailer_collider.width = 70;
-
-        blokje.jump(sf::Vector2f(position.x - 125, position.y - 20));
-        blokje.setSize(sf::Vector2f(70, 40));
     }
 }
 
@@ -278,6 +292,8 @@ void tractor::setCrop(sf::Clock & clock){
         if(active_seeds == 0){
             this->active_seeds = cornSeeds;
         }else if(active_seeds == 1){
+            this->active_seeds = weedSeeds;
+        }else if(active_seeds == 2){
             this->active_seeds = wheatSeeds;
         }
     }
@@ -303,6 +319,16 @@ void tractor::drawCorn(sf::RenderWindow &window) {
     window.draw(text);
 }
 
+void tractor::drawWeed(sf::RenderWindow &window) {
+    text_string = std::to_string(weedCount);
+    text = sf::Text(text_string, font);
+    text.setCharacterSize(40);
+    text.setPosition(sf::Vector2f(80,140));
+    weedSprite.setPosition(sf::Vector2f(10, 140));
+    window.draw(weedSprite);
+    window.draw(text);
+}
+
 void tractor::drawUnloadHelp(sf::RenderWindow &window, inventory * silo) {
     text_string = "Press \"I\" to unload";
     text = sf::Text(text_string, font);
@@ -322,6 +348,7 @@ void tractor::drawSellHelp(sf::RenderWindow &window, marketplace * market) {
 void tractor::showCropAmount(sf::RenderWindow &window) {
     drawWheat(window);
     drawCorn(window);
+    drawWeed(window);
 }
 
 int tractor::getActiveType(){

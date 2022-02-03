@@ -22,6 +22,7 @@
 #include "saver.hpp"
 #include "loader.hpp"
 #include "shop.hpp"
+#include "tree.hpp"
 
 class gameControl
 {
@@ -40,9 +41,8 @@ private:
     std::vector<dirt *> farmlandTop{};
     std::vector<dirt *> farmlandBottom{};
     std::vector<dirt *> farmlandLeftTop{};
-    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle, farmlandLeft, farmlandRight, farmlandTop, farmlandBottom, farmlandLeftTop};
-
-
+    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
+    
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
@@ -50,29 +50,29 @@ private:
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
-
-        std::shared_ptr<drawable>(new shop{farmlands, market, clock}),
-        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})};
+        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
     };
-
 
     inventory *silo = dynamic_cast<inventory *>(objects[1].get());
     marketplace *market = dynamic_cast<marketplace *>(objects[2].get());
     tractor *trekker = dynamic_cast<tractor *>(objects[3].get());
     harvester *combine = dynamic_cast<harvester *>(objects[4].get());
     farmhouse *barn = dynamic_cast<farmhouse *>(objects[5].get());
+    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
+    shop winkel = shop(farmlands, market, clock);
 
     saver save = saver(Player, farmlands, silo, market);
     menu Menu = menu(window, save);
     pause_menu pMenu = pause_menu(window, save);
-    saveHouse *saveHome = dynamic_cast<saveHouse *>(objects[6].get());
-    shop winkel = shop(farmlands, market, clock);
+
 
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     player *pPlayer = &Player;
     switchMenu sMenu = switchMenu(window, save, pPlayer);
+    std::vector<drawable *> drawables = {barn, saveHome, market, silo};
 
+  
     action actions[12] = {
         //            action( sf::Keyboard::W, sf::Keyboard::D,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  +1.0, -1.0 )); objectlist["Trekker"].setRotation(45);} ),
         //            action( sf::Keyboard::W, sf::Keyboard::A,   [&](){ objectlist["Trekker"].move( sf::Vector2f(  -1.0, -1.0 )); objectlist["Trekker"].setRotation(315); }),
@@ -106,9 +106,6 @@ private:
         action(sf::Keyboard::P, [&]()
                { SPEEEDDD(); }),
 
-//        action(sf::Keyboard::M, [&]()
-//                { market.show(); }),
-
         action(sf::Keyboard::Escape, [this]{
             if(Menu.getActive() || pMenu.getActive()){
                 return;
@@ -119,7 +116,8 @@ public:
     void runGame()
     {
         loader Loader;
-        pPlayer = Loader.loadPlayer(pPlayer);
+        pPlayer = Loader.loadPlayerAndMoney(pPlayer,market);
+        silo = Loader.loadSilo(silo);
 
         sf::Music music;
         if(!music.openFromFile("audio\\backgroundmusic.ogg")){
@@ -128,10 +126,14 @@ public:
         music.play();
         music.setLoop(true);
 
+        makeTrees(sf::Vector2f(-130, 625), 13);
+        addTreesToVector();
+
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
         makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
         makeFarmLand(sf::Vector2f(-1850, -1000), 80, 20, 3);   //Top
+        farmlands = Loader.loadFarms(farmlands);
 
         if (window.isOpen())
         {
@@ -226,6 +228,7 @@ public:
             combine->showCropAmount(window);
         }
 
+
         if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 2)
         {
 
@@ -240,8 +243,7 @@ public:
 
     void movement(sf::Vector2f speed, int rotation)
     {
-
-        pPlayer->getVehicle()->move(speed, std::vector<drawable *>{barn, saveHome, market, silo});
+        pPlayer->getVehicle()->move(speed, drawables);
         pPlayer->getVehicle()->setRotation(rotation);
         if (pPlayer->getVehicle()->getCollider().intersects(barn->getCollider()))
         {
@@ -251,7 +253,6 @@ public:
 
     void makeFarmLand(sf::Vector2f position, unsigned int width, unsigned int height, unsigned int index)
     {
-
         winkel.addForSaleSign(sf::Vector2f(position.x-96, position.y-64));
         int x = position.x;
         for (unsigned int i = 0; i < height; i++)
@@ -264,6 +265,19 @@ public:
             }
             position.x = x;
             position.y += 32;
+        }
+    }
+
+    void makeTrees(sf::Vector2f position, unsigned int amount){
+        for(unsigned int i = 0; i < amount; i++){
+            objects.push_back(std::shared_ptr<drawable>(new tree{position, rand() % 3}));
+            position.x += 120;
+        }
+    }
+
+    void addTreesToVector(){
+        for(unsigned int i = 7; i < objects.size(); i++){
+            drawables.push_back(dynamic_cast<tree *>(objects[i].get()));
         }
     }
 

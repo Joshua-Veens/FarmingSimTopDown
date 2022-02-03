@@ -7,8 +7,9 @@
 
 class inventory : public drawable{
 private:
-    unsigned int wheatCount = 1694200;
+    unsigned int wheatCount = 69420;
     unsigned int cornCount = 42069;
+    unsigned int weedCount = 6969;
     sf::Texture image;
     sf::Sprite sprite;
     sf::Texture silo_texture;
@@ -21,10 +22,13 @@ private:
     sf::Font font;
     sf::Text wheat_text;
     sf::Text corn_text;
+    sf::Text weed_text;
     sf::Sprite wheatSprite;
     sf::Sprite cornSprite;
+    sf::Sprite weedSprite;
     sf::Texture wheatImage;
     sf::Texture cornImage;
+    sf::Texture weedImage;
 public:
     inventory(sf::Vector2f position);
 
@@ -35,6 +39,14 @@ public:
     int getWheat();
 
     int getCorn();
+
+    int getWeed();
+
+    void setWheat(int newWheat);
+
+    void setCorn(int newCorn);
+
+    void setWeed(int newWeed);
 
     void removeCrops();
     
@@ -47,15 +59,21 @@ public:
 
     void addCorn(unsigned int corn);
 
+    void addWeed(unsigned int weed);
+
     void removeWheat(unsigned int wheat);
 
     void removeCorn(unsigned int corn);
+
+    void removeWeed(unsigned int weed);
 
     void drawInventory(sf::RenderWindow & window);
 
     void drawWheat(sf::RenderWindow &window);
 
     void drawCorn(sf::RenderWindow &window);
+
+    void drawWeed(sf::RenderWindow &window);
 
     sf::FloatRect getCollider() override;
 
@@ -66,6 +84,8 @@ public:
     sf::FloatRect getWheatTextCollider();
 
     sf::FloatRect getCornTextCollider();
+
+    sf::FloatRect getWeedTextCollider();
 };
 
 

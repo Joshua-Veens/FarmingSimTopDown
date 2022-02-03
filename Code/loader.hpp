@@ -12,7 +12,7 @@ public:
     loader();
     static player * loadPlayerAndMoney(player * P, marketplace * market);
     static std::vector<std::vector<dirt *>>   loadFarms(std::vector<std::vector<dirt *>> );
-
+    inventory * loadSilo(inventory * silo);
 
 };
 

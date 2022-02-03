@@ -40,7 +40,7 @@ void shop::draw(sf::RenderWindow &window) {
         }
     }
     for(auto &sign : saleSigns){
-        if(farmlands[counter][0]->getOwned()){
+        if(!farmlands[counter][0]->getOwned()){
             sprite.setTexture(image, true);
             sprite.setPosition(sf::Vector2f(sign.x,sign.y));
             sprite.setScale(2,2);
@@ -67,7 +67,7 @@ void shop::buyLand(sf::Vector2f mouse, sf::RenderWindow &window) {
             if (colliders[i].contains(sf::Vector2f(mouse))) {
                 if (i == 0) {
                     if (market->getMoney() >= 10000) {
-                        if (farmlands[0][0]->getOwned()) {
+                        if (!farmlands[0][0]->getOwned()) {
                             market->removeMoney(10000);
                             for (auto dirt: farmlands[i]) {
                                 dirt->setToOwned();
@@ -79,7 +79,7 @@ void shop::buyLand(sf::Vector2f mouse, sf::RenderWindow &window) {
                 }
                 if (i == 1) {
                     if (market->getMoney() >= 60000) {
-                        if (farmlands[1][0]->getOwned()) {
+                        if (!farmlands[1][0]->getOwned()) {
                             market->removeMoney(60000);
                             for (auto dirt: farmlands[i]) {
                                 dirt->setToOwned();
@@ -91,7 +91,7 @@ void shop::buyLand(sf::Vector2f mouse, sf::RenderWindow &window) {
                 }
                 if (i == 2) {
                     if (market->getMoney() >= 30000) {
-                        if (farmlands[2][0]->getOwned()) {
+                        if (!farmlands[2][0]->getOwned()) {
                             market->removeMoney(30000);
                             for (auto dirt: farmlands[i]) {
                                 dirt->setToOwned();
@@ -102,9 +102,8 @@ void shop::buyLand(sf::Vector2f mouse, sf::RenderWindow &window) {
                     }
                 }
                 if (i == 3) {
-
                     if (market->getMoney() >= 75000) {
-                        if (farmlands[3][0]->getOwned()) {
+                        if (!farmlands[3][0]->getOwned()) {
                             market->removeMoney(75000);
                             for (auto dirt: farmlands[i]) {
                                 dirt->setToOwned();
@@ -116,7 +115,7 @@ void shop::buyLand(sf::Vector2f mouse, sf::RenderWindow &window) {
                 }
                 if (i == 4) {
                     if (market->getMoney() >= 32000) {
-                        if (farmlands[4][0]->getOwned()) {
+                        if (!farmlands[4][0]->getOwned()) {
                             market->removeMoney(32000);
                             for (auto dirt: farmlands[i]) {
                                 dirt->setToOwned();

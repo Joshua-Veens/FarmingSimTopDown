@@ -30,10 +30,10 @@ public:
     std::array<vehicle *, 2> & getVehicles();
     friend std::ostream &operator<<(std::ostream &lhs, player &Player)
     {
-        return lhs << " ActiveVehicle: " << ((Player.getVehicle_type() == trekker) ? "trekker" : "combine") << "@" << Player.getVehicle()->getPosition().x << "," << Player.getVehicle()->getPosition().y <<  '(' << Player.getVehicle()->getRotation() << ")" << " otherVehicle: " 
+        return lhs << " ActiveVehicle: " << ((Player.getVehicle_type() == trekker) ? "trekker" : "combine") << "@" << Player.getVehicle()->getPosition().x << "," << Player.getVehicle()->getPosition().y  << " otherVehicle: "  
         << (Player.getVehicle_type() == trekker ? "combine" : "trekker") << "@" 
         << Player.getInactive()->getPosition().x << ',' 
-        << Player.getInactive()->getPosition().y << '(' << Player.getInactive()->getRotation() << ")";
+        << Player.getInactive()->getPosition().y ;
     }
 
     void setVehicle(active_t nActive);
