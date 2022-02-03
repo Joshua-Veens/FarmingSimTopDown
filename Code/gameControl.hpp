@@ -47,7 +47,7 @@ private:
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
         std::shared_ptr<drawable>(new marketplace{sf::Vector2f(3160, 300)}),
-        std::shared_ptr<drawable>(new vehicle_shop{sf::Vector2f(3050, -957)}),
+        std::shared_ptr<drawable>(new vehicle_shop{sf::Vector2f(3050, -957),clock}),
         std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
@@ -227,7 +227,6 @@ public:
         {
             combine->showCropAmount(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
         }
-
         if (pPlayer->getVehicle() == trekker && trekker->getActiveType() == 2)
         {
             trekker->showCropAmount(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
@@ -240,7 +239,7 @@ public:
         trekker->sellCrops(window, market);
         silo->drawInventory(window);
         market->drawMoney(window, sf::Vector2f((viewingpoint.x - windowsize.x/2), (viewingpoint.y - windowsize.y/2)));
-        vehicleShop->buyVehicle(window, trekker, combine);
+        vehicleShop->buyVehicle(window, trekker, combine, market);
         window.display();
     }
 
