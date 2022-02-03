@@ -5,7 +5,7 @@
 #include "particleSystem.hpp"
 #include "iostream"
 
-particle::particle(sf::Vector2i position, sf::Vector2i velocity, sf::Color color, sf::Vector2f size):
+particle::particle(sf::Vector2f position, sf::Vector2f velocity, sf::Color color, sf::Vector2f size):
     position(position),
     velocity(velocity),
     color(color),
@@ -20,8 +20,8 @@ void particle::draw(sf::RenderWindow &window) {
 }
 
 void particle::update() {
-    position.x += velocity.x;
-    position.y += velocity.y;
+    position.x += velocity.x/3;
+    position.y += velocity.y/3;
     lifetime--;
 }
 
@@ -33,11 +33,11 @@ particlePool::particlePool(unsigned int poolsize):
     poolsize(poolsize)
 {}
 
-void particlePool::generate(sf::Vector2i position, int64_t elapsedTime, sf::Color color, sf::Vector2f size) {
+void particlePool::generate(sf::Vector2f position, int64_t elapsedTime, sf::Color color, sf::Vector2f size) {
     srand(elapsedTime);
     for(unsigned int i = 0; i < poolsize; i++){
-        sf::Vector2i tempPosition = position;
-        sf::Vector2i velocity = sf::Vector2i(0,0);
+        sf::Vector2f tempPosition = position;
+        sf::Vector2f velocity = sf::Vector2f(0,0);
         int randomX = 0;
         int randomY = 0;
         int randomVx = 0;
