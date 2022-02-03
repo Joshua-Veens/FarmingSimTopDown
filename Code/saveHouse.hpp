@@ -2,7 +2,6 @@
 #define SAVEHOUSE_HPP
 
 #include "drawable.hpp"
-#include "rectangle.hpp"
 
 class saveHouse : public drawable{
 private:

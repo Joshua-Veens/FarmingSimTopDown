@@ -54,10 +54,10 @@ private:
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
         std::shared_ptr<drawable>(new marketplace{sf::Vector2f(3160, 300)}),
         std::shared_ptr<drawable>(new vehicle_shop{sf::Vector2f(3050, -957),clock}),
-        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 200)}),
-        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 200)}),
+        std::shared_ptr<drawable>(new tractor{sf::Vector2f(200, 240)}),
+        std::shared_ptr<drawable>(new harvester{sf::Vector2f(200, 240)}),
         std::shared_ptr<drawable>(new farmhouse{sf::Vector2f(10, 320)}),
-        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(900, 750)})
+        std::shared_ptr<drawable>(new saveHouse{sf::Vector2f(2350, 1343)})
     };
 
     inventory *silo = dynamic_cast<inventory *>(objects[1].get());
@@ -144,6 +144,13 @@ public:
         makeTrees(sf::Vector2f(-650, 1530), 14);
         makeTrees(sf::Vector2f(0, 55), 4);
         makeTrees(sf::Vector2f(-130, 625), 13);
+        makeTrees(sf::Vector2f(-1150, -325), 16);
+        makeTrees(sf::Vector2f(3070, -390), 5);
+        makeTrees(sf::Vector2f(3710, -1030), 6, true);
+        makeTrees(sf::Vector2f(3710, -1030), 6, true);
+        makeTrees(sf::Vector2f(3060, 57), 5);
+        makeTrees(sf::Vector2f(3060, 630), 6);
+        makeTrees(sf::Vector2f(3060, 750), 5, true);
 
         makeFarmLand(sf::Vector2f(532, 40), 40, 16, 0);     //Middle
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
