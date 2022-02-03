@@ -32,6 +32,7 @@ private:
     sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
+    sf::Clock updateClock;
     sf::View view = window.getView();
     sf::Time updateTime = sf::seconds(1.f/60.f);
     sf::Music harvesterSound;
@@ -46,8 +47,8 @@ private:
     std::vector<dirt *> farmlandRight{};
     std::vector<dirt *> farmlandTop{};
     std::vector<dirt *> farmlandBottom{};
-    std::vector<dirt *> farmlandLeftTop{};
-    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandLeftTop};
+    std::vector<dirt *> farmlandTopRight{};
+    std::vector<std::vector<dirt *>> farmlands{farmlandMiddle,farmlandLeft,farmlandRight,farmlandTop,farmlandBottom,farmlandTopRight};
     std::vector<std::shared_ptr<drawable>> objects = {
         std::shared_ptr<drawable>(new picture{"images\\topdownfarming_background.png", sf::Vector2f(-1920, -1080)}),
         std::shared_ptr<drawable>(new inventory{sf::Vector2f(222, 300)}),
@@ -72,14 +73,11 @@ private:
     menu Menu = menu(window, save);
     pause_menu pMenu = pause_menu(window, save);
 
-
     std::array<vehicle *, 2> vehicles = {trekker, combine};
     player Player = player(vehicles);
     player *pPlayer = &Player;
     switchMenu sMenu = switchMenu(window, save, pPlayer);
     std::vector<drawable *> drawables = {barn, saveHome, market, silo, vehicleShop};
-
-
   
     action actions[12] = {
             action(sf::Keyboard::W, [&]()
@@ -151,6 +149,8 @@ public:
         makeFarmLand(sf::Vector2f(-1600, 340), 40, 34, 1);  //Left
         makeFarmLand(sf::Vector2f(2200, 340), 22, 20, 2);   //Right
         makeFarmLand(sf::Vector2f(-1850, -1000), 80, 20, 3);   //Top
+        makeFarmLand(sf::Vector2f(2220, -1000), 22, 35, 4);   //TopRight
+
         farmlands = Loader.loadFarms(farmlands);
 
         if (window.isOpen())
@@ -162,7 +162,7 @@ public:
 
         while (window.isOpen())
         {
-            timeSinceLastUpdate += clock.restart();
+            timeSinceLastUpdate += updateClock.restart();
             sf::Vector2f windowsize = (sf::Vector2f)window.getSize();
 
             while (timeSinceLastUpdate > updateTime)
@@ -218,7 +218,7 @@ public:
             }
             else
             {
-                updateTime = sf::milliseconds(1);
+                updateTime = sf::milliseconds(4);
                 speedhacks = true;
             }
         }

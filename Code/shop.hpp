@@ -16,7 +16,7 @@ private:
     std::vector<std::vector<dirt *>> & farmlands;
     sf::Clock & clock;
     std::vector<sf::Vector2f> saleSigns;
-    std::vector<int> prices = {10000,60000,30000,75000,32000};
+    std::vector<int> prices = {10000,60000,30000,75000,65000};
     std::vector<sf::FloatRect> colliders;
     marketplace * market;
     bool enoughMoney = true;
