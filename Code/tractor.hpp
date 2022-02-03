@@ -2,7 +2,6 @@
 #define V2CPSE2_EXAMPLES_TRACTOR_HPP
 
 #include "vehicle.hpp"
-#include "rectangle.hpp"
 #include "farmhouse.hpp"
 #include "saveHouse.hpp"
 #include "dirt.hpp"
@@ -27,7 +26,6 @@ private:
     sf::FloatRect seeder_collider;
     sf::FloatRect tractor_collider;
     sf::FloatRect trailer_collider;
-    rectangle blokje;
     type currentCrop = wheat;
     std::string text_string;
     sf::Font font;

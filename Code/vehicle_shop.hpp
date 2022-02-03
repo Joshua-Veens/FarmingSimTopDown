@@ -24,7 +24,6 @@ private:
     bool boughtBigTractor = false;
     bool boughtBigHarvester = false;
     bool enoughMoney = true;
-//    rectangle blokje;
 public:
     vehicle_shop(sf::Vector2f position, sf::Clock & clock);
 

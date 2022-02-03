@@ -13,7 +13,7 @@ class harvester : public vehicle{
 private:
     enum harversterTypes{harvesting=0, notHarvesting=1, overload=2};
     enum sizeTypes{small=0, big=1};
-    sizeTypes active_size = big;
+    sizeTypes active_size = small;
     harversterTypes active_vehicle = notHarvesting;
     sf::Texture image;
     sf::Sprite sprite;
@@ -31,7 +31,6 @@ private:
     int savedRotation = 0;
     sf::FloatRect collider;
     sf::FloatRect auger_collider;
-    rectangle blokje;
     unsigned int wheatCount = 0;
     unsigned int cornCount = 0;
     unsigned int weedCount = 0;

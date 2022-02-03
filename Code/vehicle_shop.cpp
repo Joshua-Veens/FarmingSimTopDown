@@ -8,8 +8,7 @@ vehicle_shop::vehicle_shop(sf::Vector2f position, sf::Clock & clock):
     small_tractor(position.x+410, position.y + 242, 90, 60),
     big_harvester(position.x+230, position.y + 270, 90, 60),
     small_harvester(position.x+410, position.y + 430, 90, 60),
-    shop_collider(position.x+210, position.y + 430, 90, 60)
-//    blokje(sf::Vector2f(position.x+210, position.y + 430), sf::Vector2f(90, 60))
+    shop_collider(position.x, position.y + 231, 512, 281)
 {
     image.loadFromFile("images\\shop.png");
     sprite.setTexture(image);
@@ -54,7 +53,6 @@ void vehicle_shop::draw(sf::RenderWindow &window) {
             enoughMoney = true;
         }
     }
-//    blokje.draw(window);
 }
 
 sf::FloatRect vehicle_shop::getCollider() {
@@ -65,7 +63,7 @@ sf::FloatRect vehicle_shop::getCollider() {
 void vehicle_shop::buyVehicle(sf::RenderWindow & window, tractor * trekker, harvester * combine, marketplace * market) {
     auto mouse_pos = sf::Mouse::getPosition(window);
     auto translated_pos = window.mapPixelToCoords(mouse_pos);
-    if(trekker->getCollider().intersects(shop_collider)){
+    if(trekker->getCollider().intersects(shop_collider) && trekker->getActiveType() == 0){
         if(trekker->getSize() == 0){
             if(!boughtBigTractor){
                 drawTractorPrice(window);
@@ -87,7 +85,7 @@ void vehicle_shop::buyVehicle(sf::RenderWindow & window, tractor * trekker, harv
             }
         }
     }
-    if(combine->getCollider().intersects(shop_collider)){
+    if(combine->getCollider().intersects(shop_collider) && combine->getActiveType() == 1){
         if(combine->getSize() == 0){
             if(!boughtBigHarvester){
                 drawHarvesterPrice(window);
