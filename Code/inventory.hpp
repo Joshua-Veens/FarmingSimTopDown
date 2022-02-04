@@ -5,6 +5,9 @@
 #include "dirt.hpp"
 #include "rectangle.hpp"
 
+/// \brief Inventory Class
+/// \details This holds everything that is in the silo. It also has colliders so that when you collide with the vent you can store your crops in its inventory.
+
 class inventory : public drawable{
 private:
     unsigned int wheatCount = 69420;

@@ -3,6 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
+
+/// \brief drawable Class
+/// \details This class holds all the drawables that are made in gamecontrol.
+
 class drawable {
 public:
     virtual void draw( sf::RenderWindow & window ){};

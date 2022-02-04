@@ -26,6 +26,9 @@
 #include "vehicle_shop.hpp"
 #include "map.hpp"
 
+/// \brief Gamecontrol Class
+/// \details This is the class that runs the game. Here all drawable are created and drawn in a loop.
+
 class gameControl
 {
 private:

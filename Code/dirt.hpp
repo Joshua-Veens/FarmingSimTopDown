@@ -13,6 +13,9 @@
 
 enum type {wheat=0,corn=1,weed=2};
 
+/// \brief dirt Class
+/// \details This class makes a dirt plot on which you can farm multiple crops. It can be owned and not owned and has multiple growing stages.
+
 class dirt : public drawable
 {
 public:

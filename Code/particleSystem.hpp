@@ -9,6 +9,8 @@
 #include "drawable.hpp"
 #include <random>
 
+/// \brief Particle Class
+/// \details This class creates one particle which will be moving in a random direction. And it will also have a random lifetime.
 
 class particle : public drawable {
 private:
@@ -29,6 +31,9 @@ public:
     int getLife();
 
 };
+
+/// \brief ParticlePool Class
+/// \details In this class particles are generated and put into a vector. The vector will be drawn and when the lifetime of the particle is 0 it will be removed from the vector. Everytime the tractor or harvester collides with a dirt plot a new set of particles is generated.
 
 class particlePool {
 private:

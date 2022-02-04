@@ -9,6 +9,9 @@
 #include <functional>
 #include "SFML/Graphics.hpp"
 
+/// \brief action Class
+/// \details This class gets the actions from gamecontrol and returns what it needs to do.
+
 class action {
 private:
     std::function< bool() > condition;

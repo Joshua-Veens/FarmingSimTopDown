@@ -7,6 +7,9 @@
 #include "dirt.hpp"
 #include "farmhouse.hpp"
 
+/// \brief Harvester Class
+/// \details This class creates the harvester. With it you can harvest the crops that are planted by the tractor from the dirt class.
+
 class harvester : public vehicle
 {
 private:

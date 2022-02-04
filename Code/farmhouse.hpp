@@ -4,6 +4,9 @@
 #include "rectangle.hpp"
 #include "drawable.hpp"
 
+/// \brief farmhouse Class
+/// \details The farmhouse class makes the farmhouse in the game. It has colliders so you cant drive through it. And it had its one image which will be rendered by the drawables class.
+
 class farmhouse : public drawable{
 private:
     sf::Vector2f position;
