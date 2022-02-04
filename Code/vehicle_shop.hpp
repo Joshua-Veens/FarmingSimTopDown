@@ -43,7 +43,7 @@ public:
     void setBigTractor(bool bought);
 
     void setBigHarvester(bool bought);
-
+    ///@brief ostream operator for vehicleShop, prints data about vehicleShop, also useful for saving
     friend std::ostream &operator<<(std::ostream &lhs, vehicle_shop &shop)
     {
         return lhs << " BT: " << shop.boughtBigTractor << " BH: " << shop.boughtBigHarvester;

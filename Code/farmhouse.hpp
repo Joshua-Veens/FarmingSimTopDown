@@ -14,12 +14,19 @@ private:
     sf::FloatRect upper_collider, left_collider, right_collider, lower_left_collider, lower_right_collider, collider_change;
     std::vector<sf::FloatRect> colliders = {upper_collider, left_collider, right_collider, lower_left_collider, lower_right_collider};
 public:
+
+    /// @brief constructor of the farmhouse object
     farmhouse(sf::Vector2f position);
 
+
+    /// @brief draws the farmhouse to the screen
     void draw(sf::RenderWindow & window) override;
 
+    /// @brief sends the cords of the collision box of the farmhosue
     std::vector<sf::FloatRect> getColliders() override;
 
+
+    /// @brief send the collision box of the farmhouse
     sf::FloatRect getCollider() override;
 
 };
