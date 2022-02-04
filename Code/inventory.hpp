@@ -38,7 +38,6 @@ private:
     void drawCorn(sf::RenderWindow &window);
 
     void drawWeed(sf::RenderWindow &window);
-
 public:
     /// @brief constructor of inventory
     inventory(sf::Vector2f position);

@@ -103,6 +103,7 @@ public:
     /// @briefs send if the dirt object is owned or isn't
     bool getOwned();
     ///@brief ostream operator for dirt, prints data about dirt, also useful for saving
+
     friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
     {
         return lhs << "Dirt@" <<  std::setfill('0') <<std::setw(5) <<  Dirt.position.x << ',' << std::setw(5) << std::setfill('0') << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type << "owned=" << Dirt.getOwned();

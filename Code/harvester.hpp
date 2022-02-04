@@ -145,7 +145,6 @@ public:
     /// @brief changes the type of harvester (big / small)
     void setSize(bool size);
 
-
     /// @brief sets the state of harvester  (nothing / harvesting / dumping)
     void setState(int newType);
     ///@brief ostream operator for harvester, prints data about harvester, also useful for saving
