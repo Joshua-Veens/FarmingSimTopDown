@@ -102,6 +102,7 @@ public:
 
     /// @briefs send if the dirt object is owned or isn't
     bool getOwned();
+    ///@brief ostream operator for dirt, prints data about dirt, also useful for saving
 
     friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
     {

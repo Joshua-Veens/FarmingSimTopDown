@@ -32,6 +32,8 @@ private:
     sf::Texture weedImage;
 
     void drawWheat(sf::RenderWindow &window);
+    void drawCorn(sf::RenderWindow &window);
+    void drawWeed(sf::RenderWindow &window);
 
     void drawCorn(sf::RenderWindow &window);
 
@@ -66,7 +68,7 @@ public:
 
     /// @brief set all crops to 0
     void removeCrops();
-    
+    ///@brief ostream operator for inventory, prints data about inventory, also useful for saving
     friend std::ostream &operator<<(std::ostream &lhs, inventory & inv)
     {
         return lhs << "Wheat: " << inv.wheatCount << " Corn: "<< inv.cornCount << "weed: " << inv.weedCount;

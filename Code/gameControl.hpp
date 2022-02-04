@@ -144,6 +144,10 @@ private:
 public:
     ///@brief runs the game.
     void runGame();
+
+
+
+   void runGame();
 };
 
 #endif // V2CPSE2_EXAMPLES_GAMECONTROL_HPP

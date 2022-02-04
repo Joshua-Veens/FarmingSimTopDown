@@ -118,7 +118,7 @@ public:
 
     ///@brief sets new active_type
     void setState(int newType);
-
+    ///@brief ostream operator for tractor, useful for saving too
     friend std::ostream & operator<<(std::ostream& lhs, tractor &trekker){
         return lhs << "wheat: " << trekker.wheatCount << " corn: " << trekker.cornCount << " weed: " << trekker.weedCount << " size: " << trekker.active_size << " active_type: " << trekker.active_type;
     }
