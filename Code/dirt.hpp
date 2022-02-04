@@ -1,4 +1,5 @@
 // Justin van der Wiel 19-1-22
+//this file contains Doxygen lines
 
 #ifndef DIRT_HPP
 #define DIRT_HPP
@@ -13,8 +14,9 @@
 
 enum type {wheat=0,corn=1,weed=2};
 
-/// \brief dirt Class
-/// \details This class makes a dirt plot on which you can farm multiple crops. It can be owned and not owned and has multiple growing stages.
+/// @file coins the dirt class
+/// @brief dirt Class
+/// @details This class makes a dirt plot on which you can farm multiple crops. It can be owned and not owned and has multiple growing stages.
 
 class dirt : public drawable
 {
@@ -61,21 +63,47 @@ private:
     particlePool particles = particlePool(40);
 
 public:
+
     dirt(sf::Vector2f position, sf::Clock & clock);
+
+    /// @brief draws the dirt object
     void draw(sf::RenderWindow &window);
+
+    /// @brief checks if the dirt is unseeded and owned by player before going to a growing stage
     void seed();
+
+    /// @brief checks if the dirt is ready to harvest
     bool harvest(); // changes img_file back to unseeded if it's possible to harvest and returns true, retruns false if it not possible to harvest
+
+    /// @brief updates the dirt object to the next growing stages
     void update();
+
+    /// @brief sends the collision box
     sf::FloatRect getBounds();
+
+    /// @brief return enum which seed has been planted
     type getActiveType();
+
+    /// @brief changes the type to wheat
     void changeToWheat();
+    /// @brief changes the type to corn
     void changeToCorn();
+    /// @brief changes the type to weed
     void changeToWeed();
+    /// @brief sets new position of the dirt object
     void setPosition(sf::Vector2f newPos);
+    /// @brief send the currect enum state_t of the dirt tile
     state_t getState();
+
+    /// @brief set the type of seed planted
     void setState(state_t newState);
+
+    /// @brief sets the dirt to be owned by the player
     void setToOwned();
+
+    /// @briefs send if the dirt object is owned or isn't
     bool getOwned();
+
     friend std::ostream &operator<<(std::ostream &lhs, dirt Dirt)
     {
         return lhs << "Dirt@" <<  std::setfill('0') <<std::setw(5) <<  Dirt.position.x << ',' << std::setw(5) << std::setfill('0') << Dirt.position.y << " state=" << Dirt.state << " crop=" << Dirt.active_type << "owned=" << Dirt.getOwned();
