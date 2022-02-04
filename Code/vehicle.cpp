@@ -1,7 +1,3 @@
-//
-// Created by joshu on 20-1-2022.
-//
-
 #include "vehicle.hpp"
 
 vehicle::vehicle(sf::Vector2f position):position(position){}

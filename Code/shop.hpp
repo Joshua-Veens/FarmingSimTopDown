@@ -21,14 +21,14 @@ private:
     marketplace * market;
     bool enoughMoney = true;
 
+    void drawPrice(sf::RenderWindow &window, int price, sf::Vector2f position);
+
+    void drawNotEnoughMoney(sf::RenderWindow &window);
+
 public:
     shop(std::vector<std::vector<dirt *>> & farmlands, marketplace * market, sf::Clock & clock);
 
     void draw(sf::RenderWindow &window);
-
-    void drawPrice(sf::RenderWindow &window, int price, sf::Vector2f position);
-
-    void drawNotEnoughMoney(sf::RenderWindow &window);
 
     void addForSaleSign(sf::Vector2f position);
 

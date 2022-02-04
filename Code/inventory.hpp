@@ -3,7 +3,6 @@
 
 #include "drawable.hpp"
 #include "dirt.hpp"
-#include "rectangle.hpp"
 
 /// \brief Inventory Class
 /// \details This holds everything that is in the silo. It also has colliders so that when you collide with the vent you can store your crops in its inventory.
@@ -20,7 +19,6 @@ private:
     sf::Vector2f position;
     sf::FloatRect collider;
     sf::FloatRect silo_collider;
-    rectangle blokje;
     std::string text_string;
     sf::Font font;
     sf::Text wheat_text;
@@ -36,6 +34,11 @@ private:
     void drawWheat(sf::RenderWindow &window);
     void drawCorn(sf::RenderWindow &window);
     void drawWeed(sf::RenderWindow &window);
+
+    void drawCorn(sf::RenderWindow &window);
+
+    void drawWeed(sf::RenderWindow &window);
+
 public:
     /// @brief constructor of inventory
     inventory(sf::Vector2f position);

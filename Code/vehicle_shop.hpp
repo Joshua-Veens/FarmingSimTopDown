@@ -3,7 +3,6 @@
 
 #include "drawable.hpp"
 #include "tractor.hpp"
-#include "rectangle.hpp"
 #include "marketplace.hpp"
 
 class vehicle_shop : public drawable
@@ -26,6 +25,12 @@ private:
     bool boughtBigHarvester = false;
     bool enoughMoney = true;
 
+    void drawTractorPrice(sf::RenderWindow &window);
+
+    void drawHarvesterPrice(sf::RenderWindow &window);
+
+    void drawNotEnoughMoney(sf::RenderWindow &window);
+
 public:
     vehicle_shop(sf::Vector2f position, sf::Clock &clock);
 
@@ -35,13 +40,8 @@ public:
 
     void buyVehicle(sf::RenderWindow &window, tractor *trekker, harvester *combine, marketplace *market);
 
-    void drawTractorPrice(sf::RenderWindow &window);
-
-    void drawHarvesterPrice(sf::RenderWindow &window);
-
-    void drawNotEnoughMoney(sf::RenderWindow &window);
-
     void setBigTractor(bool bought);
+
     void setBigHarvester(bool bought);
 
     friend std::ostream &operator<<(std::ostream &lhs, vehicle_shop &shop)

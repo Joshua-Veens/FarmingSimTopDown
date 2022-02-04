@@ -2,7 +2,6 @@
 #define SAVEHOUSE_HPP
 
 #include "drawable.hpp"
-#include "rectangle.hpp"
 #include "tractor.hpp"
 #include "saver.hpp"
 
@@ -19,6 +18,9 @@ private:
     sf::Text text;
     tractor * trekker;
     saver * save;
+
+    void drawSaveHelp(sf::RenderWindow &window,tractor * trekker);
+
 public:
     saveHouse(sf::Vector2f position);
 
@@ -31,8 +33,6 @@ public:
     void setTractor(tractor * trekker);
 
     void setSaver(saver * newSave);
-
-    void drawSaveHelp(sf::RenderWindow &window,tractor * trekker);
 };
 
 

@@ -39,6 +39,18 @@ private:
     unsigned int wheatCount = 0;
     unsigned int cornCount = 0;
     unsigned int weedCount = 0;
+
+    void updateCollider();
+
+    void drawWheat(sf::RenderWindow &window, sf::Vector2f position);
+
+    void drawCorn(sf::RenderWindow &window, sf::Vector2f position);
+
+    void drawWeed(sf::RenderWindow &window, sf::Vector2f position);
+
+    void drawUnloadHelp(sf::RenderWindow &window, inventory * silo);
+
+    void drawSellHelp(sf::RenderWindow &window, marketplace * market);
 public:
 
 
@@ -64,8 +76,6 @@ public:
 
     void changeToTrailer() override;
 
-    void updateCollider();
-
     int getRotation();
 
     sf::Vector2f getPosition();
@@ -74,21 +84,9 @@ public:
 
     sf::FloatRect getCollider() override;
 
-    void drawWheat(sf::RenderWindow &window, sf::Vector2f position);
-
-    void drawCorn(sf::RenderWindow &window, sf::Vector2f position);
-
-    void drawWeed(sf::RenderWindow &window, sf::Vector2f position);
+    void showCropAmount(sf::RenderWindow &window, sf::Vector2f position);
 
     void drawWhatSeeding(sf::RenderWindow &window, sf::Vector2f position);
-
-    void drawWeed(sf::RenderWindow &window);
-
-    void drawUnloadHelp(sf::RenderWindow &window, inventory * silo);
-
-    void drawSellHelp(sf::RenderWindow &window, marketplace * market);
-
-    void showCropAmount(sf::RenderWindow &window, sf::Vector2f position);
 
     int getActiveType();
 
