@@ -56,7 +56,7 @@ public:
 
     /// @brief removes an amount of money from the current money amount
     void removeMoney(float moneyToRemove);
-    
+    ///@brief ostream operator for marketplace
     friend std::ostream & operator<<(std::ostream & lhs, marketplace & Market){
         return  lhs << "Money:" << Market.getMoney();
     }

@@ -1,9 +1,9 @@
 #include "loader.hpp"
-#include "base64.hpp"
 #include <array>
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "base64.hpp"
 loader::loader() {}
 
 player *loader::loadPlayerAndMoney(player *P, marketplace *market)

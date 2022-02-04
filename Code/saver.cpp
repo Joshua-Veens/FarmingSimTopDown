@@ -1,6 +1,7 @@
 #include "saver.hpp"
 #include <fstream>
 #include <sstream>
+#include "base64.hpp"
 
 saver::saver(player &Player, std::vector<std::vector<dirt *>> &farmlands, inventory *inv, marketplace *Market, harvester * combine, tractor * trekker,  vehicle_shop * VS) : Player(Player), farmlands(farmlands), inv(inv), Market(Market), combine(combine), trekker(trekker), VS(VS)  {}
 

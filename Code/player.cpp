@@ -28,17 +28,6 @@ void player::swapVehicle(sf::Clock &clock) // tractorOrHarvester
     }
 }
 
-void player::setMoney(uint64_t newMoney){
-    money = newMoney;
-}
-
-uint64_t player::getMoney(){
-    return money;
-}
-
-void player::addMoney(uint64_t delta){
-    money += delta;
-}
 
 void player::setVehicle(active_t nActive) {
     this->active = nActive;

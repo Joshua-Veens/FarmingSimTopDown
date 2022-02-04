@@ -147,7 +147,6 @@ public:
 
 
 
-   void runGame();
 };
 
 #endif // V2CPSE2_EXAMPLES_GAMECONTROL_HPP

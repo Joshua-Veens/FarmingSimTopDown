@@ -8,7 +8,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <sstream>
-#include "base64.hpp"
 #include <iomanip>
 
 enum type {wheat=0,corn=1,weed=2};
