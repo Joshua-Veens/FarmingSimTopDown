@@ -30,7 +30,7 @@ class gameControl
 {
 private:
     bool speedhacks = false;
-    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
+    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window",sf::Style::Fullscreen};
     bool busy = false;
     sf::Clock clock;
     sf::Clock updateClock;
