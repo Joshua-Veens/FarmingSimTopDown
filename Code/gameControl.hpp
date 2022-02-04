@@ -123,9 +123,6 @@ private:
                 }pMenu.show(); })
     };
 
-public:
-    void runGame();
-
     void SPEEEDDD();
 
     void input();
@@ -143,6 +140,12 @@ public:
     void makeTrees(sf::Vector2f position, unsigned int amount, bool vertical = false);
 
     void changeLocation(sf::Vector2f windowsize);
+
+public:
+    ///@brief runs the game.
+    void runGame();
+
+
 
 };
 
