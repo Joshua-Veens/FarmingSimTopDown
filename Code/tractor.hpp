@@ -9,7 +9,8 @@
 #include "marketplace.hpp"
 #include <memory>
 
-
+///@file this file contains the class that creates the object tractor
+///@details tractor class draws the tractor with corresponding colliders
 class tractor : public vehicle{
 
 private:
@@ -52,8 +53,6 @@ private:
 
     void drawSellHelp(sf::RenderWindow &window, marketplace * market);
 public:
-
-
     tractor( sf::Vector2f position);
 
     void draw( sf::RenderWindow & window ) override;
