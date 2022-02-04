@@ -3,6 +3,8 @@
 
 #include "drawable.hpp"
 #include "rectangle.hpp"
+#include "tractor.hpp"
+#include "saver.hpp"
 
 class saveHouse : public drawable{
 private:
@@ -10,6 +12,13 @@ private:
     sf::Texture image;
     sf::Sprite sprite;
     sf::FloatRect save_collider, house_collider;
+    std::string text_string;
+    sf::Font font;
+    sf::Color color = sf::Color::White;
+    sf::Clock saveClock;
+    sf::Text text;
+    tractor * trekker;
+    saver * save;
 public:
     saveHouse(sf::Vector2f position);
 
@@ -18,6 +27,12 @@ public:
     sf::FloatRect getCollider() override;
 
     sf::FloatRect getSavePoint() override;
+
+    void setTractor(tractor * trekker);
+
+    void setSaver(saver * newSave);
+
+    void drawSaveHelp(sf::RenderWindow &window,tractor * trekker);
 };
 
 

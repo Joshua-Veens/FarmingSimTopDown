@@ -6,6 +6,9 @@
 
 void gameControl::runGame()
 {
+    saveHome->setTractor(trekker);
+    saver * pSave = &save;
+    saveHome->setSaver(pSave);
     objects.insert(objects.begin()+8,std::shared_ptr<drawable>(new picture{"images\\splash.png", sf::Vector2f(0,0)}));
     render();
     window.display();
@@ -93,7 +96,6 @@ void gameControl::runGame()
             if (event.type == sf::Event::Closed)
             {
                 window.close();
-                save.save("save.txt");
             }
             if (event.type == sf::Event::Resized)
             {

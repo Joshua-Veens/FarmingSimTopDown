@@ -6,7 +6,6 @@
 #include <memory>
 #include "dirt.hpp"
 #include "farmhouse.hpp"
-#include "saveHouse.hpp"
 
 class harvester : public vehicle
 {
