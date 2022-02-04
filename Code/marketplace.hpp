@@ -1,12 +1,7 @@
-//
-// Created by joshu on 28-1-2022.
-//
-
 #ifndef V2CPSE2_EXAMPLES_MARKETPLACE_HPP
 #define V2CPSE2_EXAMPLES_MARKETPLACE_HPP
 
 #include "drawable.hpp"
-#include "rectangle.hpp"
 
 class marketplace : public drawable{
 private:

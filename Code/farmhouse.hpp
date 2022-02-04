@@ -1,7 +1,6 @@
 #ifndef FARMHOUSE_HPP
 #define FARMHOUSE_HPP
 
-#include "rectangle.hpp"
 #include "drawable.hpp"
 
 /// \brief farmhouse Class

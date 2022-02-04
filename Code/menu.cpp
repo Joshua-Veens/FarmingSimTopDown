@@ -2,9 +2,7 @@
 #include <iostream>
 #include "picture.hpp"
 
-menu::menu(sf::RenderWindow &window, saver &Save) : window(window), Save(Save)
-{
-}
+menu::menu(sf::RenderWindow &window, saver &Save) : window(window), Save(Save){}
 
 void menu::create()
 {

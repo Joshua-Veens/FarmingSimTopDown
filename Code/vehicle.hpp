@@ -1,7 +1,3 @@
-//
-// Created by joshu on 20-1-2022.
-//
-
 #ifndef V2CPSE2_EXAMPLES_VEHICLE_HPP
 #define V2CPSE2_EXAMPLES_VEHICLE_HPP
 

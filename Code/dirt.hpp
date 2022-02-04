@@ -3,7 +3,6 @@
 #ifndef DIRT_HPP
 #define DIRT_HPP
 #include "drawable.hpp"
-#include "rectangle.hpp"
 #include "particleSystem.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>

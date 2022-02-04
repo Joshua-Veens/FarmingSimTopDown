@@ -46,7 +46,6 @@ public:
     void generate(sf::Vector2f position, int64_t elapsedTime, sf::Color color, sf::Vector2f size);
 
     void updatePool(sf::RenderWindow &window);
-
 };
 
 

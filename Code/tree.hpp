@@ -2,7 +2,6 @@
 #define TREE_HPP
 
 #include "drawable.hpp"
-#include "rectangle.hpp"
 
 class tree : public drawable{
 private:

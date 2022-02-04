@@ -4,9 +4,11 @@
 #include "player.hpp"
 
 class switchMenu : public menu{
-public:
+private:
     player * Player;
+public:
     switchMenu(sf::RenderWindow & window, saver save, player * Player);
+
     void create() override;
 };
 #endif

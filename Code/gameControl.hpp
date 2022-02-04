@@ -33,7 +33,7 @@ class gameControl
 {
 private:
     bool speedhacks = false;
-    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window",sf::Style::Fullscreen};
+    sf::RenderWindow window{sf::VideoMode{1920, 1080}, "SFML window"};
     bool busy = false;
     sf::Clock clock;
     sf::Clock updateClock;
@@ -123,9 +123,6 @@ private:
                 }pMenu.show(); })
     };
 
-public:
-    void runGame();
-
     void SPEEEDDD();
 
     void input();
@@ -144,6 +141,8 @@ public:
 
     void changeLocation(sf::Vector2f windowsize);
 
+public:
+    void runGame();
 };
 
 #endif // V2CPSE2_EXAMPLES_GAMECONTROL_HPP
