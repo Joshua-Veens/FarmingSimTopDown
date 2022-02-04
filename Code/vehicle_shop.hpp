@@ -5,6 +5,8 @@
 #include "tractor.hpp"
 #include "marketplace.hpp"
 
+///@file this file contains the class that creates the object vehicle_shop
+///@details vehicle_shop class draws the vehicle shop with corresponding colliders
 class vehicle_shop : public drawable
 {
 private:
@@ -30,18 +32,23 @@ private:
     void drawHarvesterPrice(sf::RenderWindow &window);
 
     void drawNotEnoughMoney(sf::RenderWindow &window);
-
 public:
+    ///@brief vehicle_shop class constructor
     vehicle_shop(sf::Vector2f position, sf::Clock &clock);
 
+    ///@brief draws the vehicle shop
     void draw(sf::RenderWindow &window) override;
 
+    ///@brief returns the Floatrect of the collider from the building
     sf::FloatRect getCollider() override;
 
+    ///@brief Allows you to buy a vehicle if you have enough money and if the harvester or tractor is in the shop_collider
     void buyVehicle(sf::RenderWindow &window, tractor *trekker, harvester *combine, marketplace *market);
 
+    ///@brief Sets boughtBigTractor bool to true if big tractor has been bought
     void setBigTractor(bool bought);
 
+    ///@brief Sets boughtBigHarvester bool to true if big tractor has been bought
     void setBigHarvester(bool bought);
 
     friend std::ostream &operator<<(std::ostream &lhs, vehicle_shop &shop)

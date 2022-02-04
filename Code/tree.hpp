@@ -3,6 +3,8 @@
 
 #include "drawable.hpp"
 
+///@file this file contains the class that creates the object tree
+///@details tree class draws the tree with corresponding colliders
 class tree : public drawable{
 private:
     sf::Vector2f position;
@@ -14,10 +16,14 @@ private:
     sf::Sprite sprite;
     sf::FloatRect collider;
 public:
+    ///@brief tree class constructor
+    ///@param index decides which tree image will be used
     tree(sf::Vector2f position, int index = 0);
 
+    ///@brief draws the tree
     void draw(sf::RenderWindow & window) override;
 
+    ///@brief returns the Floatrect of the collider from the tree
     sf::FloatRect getCollider() override;
 };
 
